@@ -1,0 +1,78 @@
+﻿@using IEE.Infrastructure.DbContext
+@model List<IEE.Infrastructure.DbContext.Post>
+@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Shared/_Page.cshtml";
+}
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Tìm kiếm 
+                        </li>
+
+                    </ol>
+                    <ol class="breadcrumb">
+                        <li>
+                            Từ khóa <strong>"@ViewBag.CurrentFilter"</strong>
+                          
+                        </li>
+                       
+                    </ol>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row">
+            <div class="col-lg-12">
+                @foreach (var post in Model)
+                {
+                <div class="col-md-4 news-item m-b-md">
+                    <div class="news-item-photo">
+                        <img src="~/Photo/post/@post.Photo" />
+                        <div class="news-item-photo-bg">
+                            <div class="council-summarize">
+                                @{
+                                    Random rnd = new Random();
+                                    var cate = new Category();
+                                    if (post.PostCategories.Select(c => c.Category).Count()>0)
+                                    {
+                                        cate = post.PostCategories.Select(c => c.Category).OrderByDescending(t => rnd.Next()).FirstOrDefault();
+                                    }
+                                  
+                                }
+                                <a href="@Url.RouteUrl("CatSEORoute",new {Category=cate.Name.ToSeoUrl() })"><h5 class="text-uppercase oranges">@cate.Name</h5></a>
+                                <a href="@Url.Action("content","news",new {id=post.Id, title=post.Title.ToSeoUrl() })"><h4>@post.Title</h4></a>
+                                <h6>
+                                    @{
+                                        string dayStr = string.Empty;
+                                        int day = (int)DateTime.Now.Subtract(post.PublishedDate.Value).TotalDays;
+                                    }
+                                    @if (day != 0)
+                                    {
+                                        dayStr = day + " ngày trước";
+                                    }
+                                    else
+                                    {
+                                        dayStr = "Hôm nay";
+                                    }
+                                    @dayStr
+
+                                </h6>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

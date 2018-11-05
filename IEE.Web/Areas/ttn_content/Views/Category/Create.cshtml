@@ -1,0 +1,182 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.ViewModel;
+@model CategoryViewModel
+@{
+    ViewBag.Title = "Tạo mới phân nhóm";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+    //List<Category> parents = (List<Category>)ViewBag.Parents;
+    List<Category> listCategory = (List<Category>)ViewBag.Categories;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Tạo mới phân nhóm</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("Create", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề</label>
+
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Phân nhóm</label>
+
+                        <div class="col-sm-6">
+                            <input type="checkbox" value="true" name="isParent" id="parentChk" />Danh mục cha
+                            @Html.DropDownListFor(model => model.ParentId,
+                                          new SelectList(listCategory, "Id", "Name"),
+                                          "Lựa chọn chương trình",
+                                          new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ParentId)
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tóm lược</label>
+                        <div class="col-sm-10">
+                            @Html.TextAreaFor(model => model.Summarize, new { @class = "form-control", rows = "5", maxlength = "250" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Trạng thái</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+
+                                <label class="i-checks">
+                                    @Html.CheckBoxFor(model => model.IsMenu) Mục này là Menu
+                                </label>
+                                <label class="i-checks">
+
+                                    @Html.CheckBoxFor(model => model.IsSystem) Mục này là hệ thống
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Keyword</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.keyword, new { @class = "form-control", maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Thứ tự</label>
+                        <div class="col-sm-10">
+                            <label class="checkbox-inline i-checks">
+                                @Html.TextBoxFor(model => model.OrderNumber, new { @class = "form-control", maxlength = "10", type = "number", step = "any" })
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Vị trí</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="CatPosition" value="Home" /> Trang chủ &nbsp;
+
+                                    </label>
+                                    <label class="i-checks">
+
+                                        <input type="checkbox" name="CatPosition" value="Header" /> Đầu trang &nbsp;
+                                    </label>
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="CatPosition" value="Footer" /> Cuối trang &nbsp;
+                                    </label>
+                                    <label class="i-checks">
+                                        <input type="checkbox" name="CatPosition" value="Right" /> Bên phải &nbsp;
+
+                                    </label>
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Kiểu hiển thị</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="i-checks">
+                                        <input type="radio" name="DisplayType" value="Blog" checked="checked" /> Blog &nbsp;
+                                    </label>
+                                    <label class="i-checks">
+                                        <input type="radio" name="DisplayType" value="List" /> Danh sách &nbsp;
+
+                                    </label>
+                                    <label class="i-checks">
+
+                                        <input type="radio" name="DisplayType" value="Grid" /> Lưới &nbsp;
+                                    </label>
+                                   
+                                    <label class="i-checks">
+
+                                        <input type="radio" name="DisplayType" value="Content" /> Nội dung &nbsp;
+                                    </label> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="col-sm-2 control-label">Hình ảnh đại diện</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="btn-group">
+                                            <label title="Upload image file" for="file" class="btn btn-primary" onclick="document.getElementById('files').click()">
+                                                <input type="file" multiple="multiple" name="file" id="files" onchange="preview(this)" class="hide">
+
+                                                Upload hình ảnh
+                                            </label>
+                                            <div id='previewImg'></div>
+                                        </div>
+                                        <span class="help-block m-b-none"></span>
+                                        <span class="help-block m-b-none"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+
+        $('#parentChk').on('ifChecked', function (event) {
+            //alert(event.type + ' callback');
+            $('select').prop('disabled', 'disabled');
+        });
+        $('#parentChk').on('ifUnchecked', function (event) {
+            //alert(event.type + ' callback');
+            $('select').removeAttr('disabled');
+        });
+
+    </script>
+
+}

@@ -1,0 +1,22 @@
+﻿@model List<IEE.Infrastructure.DbContext.Banner>
+
+    <div id="confuse">
+        <p>Bạn muốn biết khả năng SAT của mình ?</p>
+        <a href="/SatOnline/"><p id="confuse-button">Test ngay >> </p></a>
+    </div>
+    <hr>
+    <div id="introduce">
+        <p>Khóa học có thể phù hợp với bạn</p>
+        <a href="#"><p id="introduce-button">SAT Advance</p></a>
+    </div>
+    <hr>
+    @{
+        var rightBanner = Model.Where(b => b.Position != null && b.Position.Contains("Right")).ToList();
+
+    }
+    <div id="right-advetise">
+        @foreach (var item in rightBanner)
+        {
+            <a href="@item.Link"><img src="~/Photo/banner/@item.Photo"></a>
+        }
+    </div>

@@ -1,0 +1,131 @@
+﻿@model IEE.ViewModel.UniversityHighlightViewModel
+
+@{
+    ViewBag.Title = "Chi tiết thông tin trường đại học";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins white-bg">
+            <div class="ibox-title">
+                <h5>Chi tiết thông tin trường đại học</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("edit", "university", null, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Photo)
+                    @Html.HiddenFor(model => model.CreatedBy)
+                    @Html.HiddenFor(model => model.CreatedDate)
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tên trường</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hạng</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Ranking, new { @class = "form-control", })
+                                    @Html.ValidationMessageFor(model => model.Ranking)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Website</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Website, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Website)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Địa chỉ</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Address)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điện thoại</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", maxlength = "15", type = "number" })
+                                    @Html.ValidationMessageFor(model => model.Phone)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tóm lược</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.Summarize, new { @class = "form-control", rows = "5", maxlength = "250" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hình ảnh</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @if (!string.IsNullOrEmpty(Model.Photo))
+                                    {
+                                    <img src="/photo/university/@Model.Photo" style="max-width:100%;" />
+                                    }
+                                </div>
+                                <div class="col-md-12 m-t-md">
+                                    <div class="btn-group">
+                                        <label title="Upload image file" for="file" class="btn btn-primary">
+                                            <input type="file" multiple="multiple" name="file" id="file" class="hide">
+                                            Upload image
+                                        </label>
+                                    </div>
+                                    <span class="help-block m-b-none">Hình ảnh nên có kích thước 215px X 215px, là ảnh png hoặc jpg và không lớn hơn 2mb.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

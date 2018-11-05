@@ -1,0 +1,107 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.StudentHighlight>
+@{
+    ViewBag.Title = "Bảng vàng học viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string domain;
+    Uri url = HttpContext.Current.Request.Url;
+    domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+
+    var currentUrl = domain + "/about/student";
+
+    var photo = domain + "/photo/post/header-logo.png";
+}
+@section MetaTags
+{
+    <meta property="og:url" content="@currentUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@ViewBag.TopCat" />
+    <meta property="og:image" content="@photo" />
+
+}
+<style>
+    .oranges {
+        color: #ff6a00;
+    }
+</style>
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="#"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="@url.PathAndQuery"><p class="active"> @ViewBag.TopCat</p></a>
+
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+                    @*<ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Giới thiệu
+                        </li>
+                        <li>
+                            Bảng vàng học viên
+                        </li>
+                    </ol>*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md">
+                <div class="col-md-12 p-md council-title">
+                    <h3 style="text-align:center;">Bảng vàng học viên</h3>
+                    <h5 style="text-align:center;">Gặp gỡ những học viên đã và đang trên con đường hiện thực ước mơ du học cùng IEE</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md council-content">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 m-b-lg">
+                        <div class="news-item-photo">
+                            <img src="~/Photo/student/@item.Photo" class="img-responsive" />
+                            
+                        </div>
+                        <h5 class="oranges text-uppercase m-t" style="text-align:center;">@item.Title</h5>
+                        <h3 style="text-align:center;">@item.Name</h3>
+                        @{
+                            string program = string.Empty;
+                            string score = string.Empty;
+                            if (url != null && url.PathAndQuery.Contains("/top-sat"))
+                            {
+                                program = "SAT";
+                                score = item.SAT;
+                            }
+                            else if (url != null && url.PathAndQuery.Contains("/top-toefl"))
+                            {
+                                program = "TOEFL";
+                                score =item.TOEFL;
+                            }
+                            else
+                            {
+                                program = "IELTS";
+                                score = item.IELTS;
+                            }
+                        }
+                        <h4 class="oranges text-uppercase"  style="text-align:center;">
+                           @program : @score
+                        </h4>
+                        <div class="council-summarize">
+                            <p style="text-align:center;">   @Html.Raw(@item.Summarize)</p>
+                        </div>
+                    </div>
+                            }
+
+            </div>
+        </div>
+    </div>
+</section>

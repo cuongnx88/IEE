@@ -1,0 +1,44 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.Web.Areas.ttn_content.Models
+@model PartialViewModel
+
+
+@if (Model.Cate != null && Model.ListPost != null && Model.ListPost.Count > 0)
+{
+    var cat = Model.Cate.Name;
+    var listPost = Model.ListPost;
+   
+    <div class="big-title-home-news">
+        <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+        <hr>
+    </div>
+    
+    
+        <div class="tab-pane active">
+            <div class="row">
+               
+
+                   @foreach (var item in listPost)
+                   {
+                        <div class="col-xs-4 video-home">
+                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id =item.Id })"><img src="~/Photo/post/@item.Photo"></a>
+                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id =item.Id })"><p>@item.Title</p></a>
+                        </div>
+                   }
+            
+            </div>
+            <div style="clear:both"></div>
+
+        </div>
+
+}
+else if (Model.Cate != null)
+{
+    var cat = Model.Cate.Name;
+    <div class="big-title-home-news">
+        <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+        <hr>
+    </div>
+}
+    
+

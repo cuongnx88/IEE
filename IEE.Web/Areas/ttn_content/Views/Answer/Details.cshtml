@@ -1,0 +1,59 @@
+﻿@model IEE.Infrastructure.DbContext.SATAnswer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SATAnswer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AnswerContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnswerContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsRightAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsRightAnswer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnswerType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnswerType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SATQuestion.QuestionContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SATQuestion.QuestionContent)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,151 @@
+﻿@using IEE.Infrastructure.DbContext
+@model IEnumerable<Post>
+@{
+    StudentHighlight student = (StudentHighlight)ViewBag.Student;
+
+    var score = string.Empty;
+    if (!string.IsNullOrEmpty(student.SAT))
+    {
+        score = student.SAT;
+    }
+    else
+    {
+        if (!string.IsNullOrEmpty(student.TOEFL))
+        {
+            score = student.TOEFL;
+        }
+        else
+        {
+            score = student.IELTS;
+        }
+    }
+
+    Setting sat = (Setting)ViewBag.Sat;
+
+    Setting toefl = (Setting)ViewBag.Toefl;
+
+    Setting ielfs = (Setting)ViewBag.Ielfs;
+    IEnumerable<Category> listCategory = (IEnumerable<Category>)ViewBag.Categories;
+
+}
+<div class="col-lg-4 news-content-left about-left">
+    <div class="col-md-12 news-item comman-item">
+        <a href="/dang-ky-tu-van" class="oranges-section p-xs">Đăng ký tư vấn</a>
+        <a href="/lich-hoc" class="black-section p-xs">Lịch học</a>
+    </div>
+    @if (listCategory != null && listCategory.Count() > 0)
+    {
+    <div class="col-md-12  news-item">
+        <ul class="menu-item">
+            @foreach (var Category in listCategory)
+            {
+            <li>
+                <a href="/chuong-trinh/@Category.Name.ToSeoUrl()">@Category.Name</a>
+            </li>
+            }
+        </ul>
+    </div>
+    }
+    @foreach (var post in Model)
+    {
+    <div class="col-md-12 news-item">
+        <div class="news-photo news-item-photo">
+            <img src="~/photo/post/@post.Photo" />
+            <div class="news-item-photo-bg">
+                <div class="news-item-summarize">
+                    @{ var Category = post.PostCategories.Select(c=>c.Category).FirstOrDefault();}
+                    <a href="/tin-tuc/@Category.Name.ToSeoUrl()"><h5><strong>@Category.Name</strong></h5></a>
+                    <a href="@Url.RouteUrl("NewsSEORoute", new {title= post.Title.ToSeoUrl(),id=post.Id })"><h5><strong>@post.Title</strong></h5></a>
+
+                    <h6>
+                        @{
+                            string dayStr = string.Empty;
+                            int day = (int)DateTime.Now.Subtract(@post.PublishedDate.Value).TotalDays;
+                        }
+                        @if (day != 0)
+                        {
+                            dayStr = day + " ngày trước";
+                        }
+                        else
+                        {
+                            dayStr = "Hôm nay";
+                        }
+                        @dayStr
+                    </h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    }
+
+    <div class="col-md-12 news-item ">
+        <div class="highline-member">
+            <h4 class="title">Gương mặt nổi bật</h4>
+            <div class="highline-member-container">
+                <div class="member-photo">
+                    @if (!string.IsNullOrEmpty(student.Photo))
+                    {
+                    <img src="~/Photo/student/@student.Photo" class="border-radisus" />
+                    }
+                    else
+                    {
+                    <img src="~/Photo/logo.png" class="border-radisus" />
+                    }
+                    <h5 class="text-uppercase text-center">@student.Name</h5>
+                </div>
+                @{
+                    string program = string.Empty;
+                    string color = string.Empty;
+
+                    if (!string.IsNullOrEmpty(student.SAT))
+                    {
+                        program = "SAT";
+                        color = "blue";
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(student.TOEFL))
+                        {
+                            program = "TOEFL";
+                            color = "green";
+                        }
+                        else
+                        {
+                            program = "IELTS";
+                            color = "pink";
+                        }
+                    }
+                }
+
+                <div class="point-circle @program.ToLower()">
+                    <h5>@program.ToUpper()</h5>
+                    <h2 class="@color">@score</h2>
+                    <p class="grey-line"></p>
+                    <h4>
+                        @if (!string.IsNullOrEmpty(student.SAT))
+                        {
+                        @sat.Value
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(student.TOEFL))
+                            {
+                            @toefl.Value
+                            }
+                            else
+                            {
+                            @ielfs.Value
+                            }
+                        }
+                    </h4>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

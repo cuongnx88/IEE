@@ -1,0 +1,41 @@
+﻿@using IEE.Infrastructure.DbContext
+@model IEE.Infrastructure.DbContext.Post
+@{
+    string title = Model != null ? Model.Title : "";
+    ViewBag.Title = title;
+    Layout = "~/Views/Shared/_Page.cshtml";
+    Category Category = (Category)ViewBag.Category;
+
+    ViewBag.MetaKeys = Model.MetaKey != null ? Model.MetaKey : "";
+    ViewBag.MetaDescription = !string.IsNullOrEmpty(Model.MetaDescription) ? Model.MetaDescription : "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+
+}
+
+
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Chương trình đào tạo
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md">
+                @if (Model != null)
+                {
+                    @Html.Raw(Model.Detail)
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

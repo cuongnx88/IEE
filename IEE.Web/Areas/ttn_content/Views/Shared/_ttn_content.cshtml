@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/content/img/favicon.png">
+    <title>Học viên anh ngữ IEE - @ViewBag.Title</title>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="~/content/ttn_content/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="~/Scripts/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="~/content/ttn_content/animate.css" rel="stylesheet">
+    <link href="~/content/ttn_content/style.css" rel="stylesheet">
+
+    <link href="~/content/ttn_content/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="~/content/ttn_content/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="~/content/ttn_content/plugins/dropzone/dropzone.css" rel="stylesheet">
+
+    <!-- Mainly scripts -->
+    <script src="~/scripts/jquery-2.1.1.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+</head>
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom white-bg">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-header">
+                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                            <i class="fa fa-reorder"></i>
+                        </button>
+                        <a href="/" class="navbar-brand">IEE</a>
+                    </div>
+                    <div class="navbar-collapse collapse" id="navbar">
+                        @{Html.RenderAction("Menu", "Dashboard", new { areas= "ttn_content" });}
+                    </div>
+                </nav>
+            </div>
+            <div class="wrapper wrapper-content">
+                @RenderBody()
+
+                <!-- modal placeholder-->
+                <div id='myModal' class='modal fade in'>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div id='myModalContent'></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                <div>
+                    <strong>Copyright</strong> IEE &copy; @DateTime.Now.Year
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="~/scripts/plugins/pace/pace.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="~/scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- GITTER -->
+    <script src="~/scripts/plugins/gritter/jquery.gritter.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/scripts/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- Sparkline demo data  -->
+    <script src="~/scripts/demo/sparkline-demo.js"></script>
+    <!-- ChartJS-->
+    <script src="~/scripts/plugins/chartJs/Chart.min.js"></script>
+    <!-- Toastr -->
+    <script src="~/scripts/plugins/toastr/toastr.min.js"></script>
+    <!-- SUMMERNOTE -->
+    <link href="~/content/ttn_content/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="~/content/ttn_content/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <script src="~/scripts/plugins/summernote/summernote.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/scripts/plugins/iCheck/icheck.min.js"></script>
+
+    <link href="~/content/ttn_content/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <script src="~/scripts/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+
+    <link href="~/content/ttn_content/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <!-- Steps -->
+    <script src="~/scripts/plugins/staps/jquery.steps.min.js"></script>
+    <!-- Jquery Validate -->
+    <script src="~/scripts/plugins/validate/jquery.validate.min.js"></script>
+    <script src="~/scripts/plugins/nestable/jquery.nestable.js"></script>
+    
+    <script src="~/scripts/ttn_content.js"></script>
+    @RenderSection("scripts",false)
+</body>
+</html>

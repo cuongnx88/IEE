@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<IEE.Infrastructure.DbContext.Testimonial>
+
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+            <div class="col-md-9" style="padding-right:2%; padding-left:0;">
+                <div id="main-left">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="#"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="/Cam-nhan-hoc-vien"><p class="active">Cảm nhận</p></a>
+
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        var skip = (int)ViewBag.PageCount * (int)ViewBag.Trang;
+                        var testimonialModel = Model.Where(p => p != null).Skip(skip).Take((int)ViewBag.PageCount).OrderByDescending(p => p.CreatedDate).ToList();
+                        @Html.Partial("_Testimonials", testimonialModel)
+                    }
+                    <!-- end main-left-content -->
+                    <div style="clear:both"></div>
+                </div>
+                <div class="paging">
+                    <ul>
+                        @if (ViewBag.TotalPage != null && ViewBag.TotalPage > 1)
+                        {
+                            <li><a href="@Url.RouteUrl("Testimonial",new  {  trang=1 })"> << </a></li>
+                            for (int i = 1; i < ViewBag.TotalPage + 1; i++)
+                            {
+
+                                <li> <a href="@Url.RouteUrl("Testimonial",new { trang=i })">@i </a></li>
+
+                            }
+                            <li><a href="@Url.RouteUrl("Testimonial",new { trang=(int)ViewBag.TotalPage })"> >> </a></li>
+                        }
+                    </ul>
+                </div>
+                <!-- end main-left -->
+            </div>
+            <div class="col-md-3" id="main-right">
+                @Html.Partial("_RightPart", ViewBag.Banners as List<IEE.Infrastructure.DbContext.Banner>)
+            </div>
+        </div>
+    </div>
+</article>

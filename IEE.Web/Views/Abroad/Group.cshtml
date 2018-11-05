@@ -1,0 +1,10 @@
+﻿@model IEE.Infrastructure.DbContext.Post
+@{
+    string title = Model != null ? Model.Title : "";
+    ViewBag.Title = title;
+    Layout = "~/Views/Shared/_Program.cshtml";
+}
+@if (Model != null)
+{
+    @Html.Raw(Model.Detail)
+}

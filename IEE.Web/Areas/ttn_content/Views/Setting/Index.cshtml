@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<IEE.Infrastructure.DbContext.Setting>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Danh sách thiết lập";
+    Layout = "~/areas/ttn_content/views/shared/_ttn_content.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Danh sách thiết lập</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-9 m-b-xs">
+                        
+                    </div>
+                    <div class="col-sm-3">
+                        @using (Html.BeginForm("Index", "setting", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                        {
+                        <div class="input-group">
+                            @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @class = "input-sm form-control", @placeholder = "Tìm kiếm" })
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary"> Go!</button>
+                            </span>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+
+                                <th style="width:60px">#</th>
+                                <th>Key </th>
+                                <th>Value </th>
+                                <th style="width:60px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Key</td>
+                                <td>@item.Value</td>
+                                <td class="center tooltip-command">
+                                    <a href="@Url.Action("edit", "setting" , new { id=item.Id.ToString()})" class="btn btn-outline btn-primary dim" title="Sửa dữ liệu"><i class="fa fa-pencil"></i></a>
+                                </td>
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

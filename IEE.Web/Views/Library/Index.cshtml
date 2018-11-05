@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Thư viện";
+    Layout = "~/Views/Shared/_Page.cshtml";
+    ViewBag.MetaKeys = "";
+    ViewBag.MetaDescription = "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+}
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Thư viện
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12" id="news-list">
+                @Html.Partial("_Library", (ViewBag.Posts as Dictionary<int, IEE.Infrastructure.DbContext.Post>))
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_Loading")
+</section>
+@section scripts{
+    <script src="~/scripts/infiniteScroll.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("div#loading").hide();
+        });
+        var moreRowsUrl = '@Url.Action("index", "library")';
+        $(window).scroll(divScrollHandler);
+    </script>
+}

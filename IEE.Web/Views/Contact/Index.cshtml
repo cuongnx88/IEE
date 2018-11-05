@@ -1,0 +1,89 @@
+﻿@model IEE.ViewModel.ContactViewModel
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MetaKeys = "";
+    ViewBag.MetaDescription = "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+}
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-lg-12">
+                @if (TempData.ContainsKey("Message"))
+                {
+                    <div class="row">
+                        <h5 style="text-align:center">@TempData["message"]</h5>
+                    </div>
+                }
+                <div class="col-md-7">
+                    <div class="ibox-title">
+                        <h4><strong>Liên hệ với chúng tôi</strong> <small>Bạn vui lòng gửi yêu cầu cho chúng tôi bằng mẫu dưới đây</small></h4>
+                    </div>
+                    <div class="ibox-content">
+                        @using (Html.BeginForm("index", "contact", null, FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
+                        {
+                            <div class="form-group">
+                                @Html.TextBoxFor(model=>model.Name, new {@class="form-control", placeholder = "Tên của bạn", maxlength = "250" })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", placeholder = "Địa chỉ", maxlength = "250" })
+                                
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email", type="email", maxlength = "250" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", placeholder = "Điện thoại", type="number" })
+                                @Html.ValidationMessageFor(model => model.Phone)
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder = "Tiêu đề", maxlength = "250" })
+                                @Html.ValidationMessageFor(model => model.Title)
+                            </div>
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", placeholder = "Nội dung", rows = "5", maxlength = "250" })
+                                @Html.ValidationMessageFor(model => model.Content)
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Gửi</button>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5><strong>TRUNG TÂM ANH NGỮ IEE | International English Education</strong></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <address>
+                                <abbr title="Địa chỉ">Addr:</abbr>@ViewBag.Address<br>
+                            </address>
+                            <address>
+                                <abbr title="Điện thoại">P:</abbr> @ViewBag.Phone
+                            </address>
+                            <address>
+                                <abbr title="Email">E:</abbr> <a href="mailto:info@iee.edu.vn">info@iee.edu.vn</a>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+<section id="contact-map">
+    <div class="google-map" id="map-address">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5979262209394!2d105.78870001543459!3d21.008748486009303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135aca8dffef313%3A0x92c846ed0dcc2696!2sAnh+ng%E1%BB%AF+International+English+Education%7C+IEE!5e0!3m2!1sen!2s!4v1475148103026" frameborder="0" style="width:100%; height:100%; border:0" allowfullscreen></iframe>
+    </div>
+    
+</section>
+
+
+

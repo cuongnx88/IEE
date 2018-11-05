@@ -1,0 +1,63 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.StudentHighlight>
+<div class="student-regular slider">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <img src="/Photo/student/@item.Photo">
+            <div class="member-infor">
+                <h6 class="text-uppercase">@item.Title</h6>
+                <h5 class="text-uppercase"><strong>@item.Name</strong></h5>
+                <p class="grey-line"></p>
+                @{
+                    string program = string.Empty;
+                    string color = string.Empty;
+                    string sat = string.Empty;
+                    string satColor = string.Empty;
+                    string toefl = string.Empty;
+                    string toeflColor = string.Empty;
+                    string ielts = string.Empty;
+                    string ieltsColor = string.Empty;
+
+                    if (!string.IsNullOrEmpty(item.SAT))
+                    {
+                        sat = "SAT : " + item.SAT;
+                        satColor = "blue";
+                    }
+                    if (!string.IsNullOrEmpty(item.TOEFL))
+                    {
+                        toefl = "TOEFL : " + item.TOEFL;
+                        toeflColor = "green";
+                    }
+                    if (!string.IsNullOrEmpty(item.IELTS))
+                    {
+                        ielts = "IELTS : " + item.IELTS;
+                        ieltsColor = "pink";
+                    }
+
+                    
+                }
+                <p class="text-uppercase">
+                    @if (!string.IsNullOrEmpty(toefl))
+                    {
+                    <h5 class="@toeflColor">@toefl</h5>
+                    }
+                    @if (!string.IsNullOrEmpty(sat))
+                    {
+                    <h5 class="@satColor">@sat</h5>
+                    }
+                    @if (!string.IsNullOrEmpty(ielts))
+                    {
+                    <h5 class="@ieltsColor">@ielts</h5>
+                    }
+                    
+                </p>
+                <h5>@item.Summarize</h5>
+
+            </div>
+        </div>
+    }
+    
+</div>
+<div class="col-lg-4 col-lg-offset-4 text-center m-t-lg white">
+    Gặp gỡ những học viên đã và đang trên con đường hiện thực ước mơ du học cùng IEE
+</div>

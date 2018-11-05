@@ -1,0 +1,58 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.TeacherHighlight>
+<div class="teacher-regular slider fade in">
+    @foreach (var item in Model)
+    {
+        <div>
+            @if (!string.IsNullOrEmpty(item.Photo))
+            {
+            <img src="/photo/teacher/@item.Photo">
+            }
+            
+            <div class="member-infor">
+                <h6>
+                    @item.Title
+                </h6>
+                <h5 class="text-uppercase ">
+                    @Html.NoEncodeActionLink("<strong>" + item.Name + "</strong>", item.Name, "teacherpopup", "cmsbase", routeValues: new { id = item.Id }, htmlAttributes: new { data_modal = "", @class = "black" })
+                </h5>
+                <p class="grey-line"></p>
+                <h4 class="text-uppercase oranges">@item.Position</h4>
+                <h5 class="oranges">@item.Experience năm kinh nghiệm</h5>
+                <h5>@item.Summarize</h5>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-lg-4 col-lg-offset-4 text-center m-t-lg white">
+    Với đội ngũ giáo viên tâm huyết và nhiệt tình sẽ là điểm tự vững vàng giúp bạn thực hiện mơ ước du học cùng IEE
+</div>
+<script type="text/javascript">
+
+
+    $(function () {
+        $.ajaxSetup({ cache: false });
+
+        $("a[data-modal]").on("click", function (e) {
+            $('body').append("<div id='myModal' class='modal fade in teacher-highline'>"
+                    + "<div class='modal-dialog'>"
+                    + "<div class='modal-content'>"
+                    + "<div id='myModalContent'></div>"
+                    + "</div>"
+                    + "</div>"
+                    + "</div>");
+
+            $('#myModalContent').load(this.href, function () {
+                $('#myModal').modal({
+
+                    keyboard: true
+                }, 'show').one('hidden.bs.modal', function (e) {
+                    $('#myModal').remove();
+                });
+
+            });
+            return false;
+        });
+    });
+
+</script>
+

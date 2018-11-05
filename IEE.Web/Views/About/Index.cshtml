@@ -1,0 +1,59 @@
+﻿@model IEE.Infrastructure.DbContext.Post
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Page.cshtml";
+
+    string domain;
+    Uri url = HttpContext.Current.Request.Url;
+    domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+
+    var currentUrl = domain + "/prog/group/" + Model.Id;
+
+    var summarize = Model.Summarize.Length <= 200 ? Model.Summarize : Model.Summarize.Substring(0, 200) + "...";
+    var photo = domain + "/photo/post/" + Model.Photo;
+}
+@section MetaTags
+{
+    <meta property="og:url" content="@url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@summarize" />
+    <meta property="og:image" content="@photo" />
+
+}
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Giới thiệu
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md">
+                <div class="m-b-md">
+
+                    <div class="fb-like" data-href="@currentUrl" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                </div>
+
+                <div>
+                    @if (Model != null)
+                    {
+                        @Html.Raw(Model.Detail)
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

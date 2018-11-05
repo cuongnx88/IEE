@@ -1,0 +1,156 @@
+﻿@using IEE.Web.Models
+@model List<IEE.Infrastructure.DbContext.Medium>
+@{
+    ViewBag.Title = "ListMedia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+
+            <div class="col-md-9" style="padding-right:2%; padding-left:0;">
+                <div id="main-left">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="/"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="/media/listmedia"><p class="active">Tài liệu</p></a>
+                            <div style="float:right;text-align:center;">
+                                <div style=" display:inline;float:left;">
+                                    <input type="text" id="txtfileSearch" class="form-control" placeholder="Tìm tên tài liệu" />
+                                </div>
+                                <div style=" display:inline;float:right;">
+                                    <button class="btn btn-default" id="btnSearchFile"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+
+                    <!-- end main-left-content -->
+                    <div style="clear:both"></div>
+                    <div id="main-left-content">
+                        <div id="video" class="row">
+                            @{
+                                var satFile = Model.Where(s => s.FileSource == "SAT").ToList();
+                                var ieltFile = Model.Where(s => s.FileSource == "IELTS").ToList();
+
+                            }
+                            <h3><b>Tài liệu SAT</b></h3>
+                            @foreach (var item in satFile)
+                            {
+                                <div class="video-each" style="width:15%;" satItem itemName="@item.DisplayName">
+                                    <div class="video-each-main-img" style="height:4.5vw;">
+
+                                        <a href="@item.Link"><i class="fa fa-file-text video-each-main-img" style="color:#0094ff;font-size:70px;"></i></a>
+
+                                    </div>
+                                    <a href="@item.Link"><p style="text-align:left;">@item.DisplayName</p></a>
+                                </div>
+                            }
+                        </div>
+                        <div id="video" class="row">
+
+                            <h3><b>Tài liệu IELTS</b></h3>
+                            @foreach (var item in ieltFile)
+                            {
+                                <div class="video-each" style="width:15%;" ieltItem ieltItemName="@item.DisplayName">
+                                    <div class="video-each-main-img" style="height:4.5vw;">
+
+                                        <a href="@item.Link"><i class="fa fa-file-text video-each-main-img" style="color:#0094ff;font-size:70px;"></i></a>
+
+                                    </div>
+                                    <a href="@item.Link"><p style="text-align:left;">@item.DisplayName</p></a>
+                                </div>
+                            }
+                        </div>
+                        <!-- end video -->
+                        @*<hr style="margin:1% 0;">
+                            <div class="paging">
+                                <ul>
+                                    <a href="#"><li> << </li></a>
+                                    <a href="#"><li> < </li></a>
+                                    <a href="#"><li> 1 </li></a>
+                                    <a href="#"><li> 2 </li></a>
+                                    <a href="#"><li> 3 </li></a>
+                                    <li> ..... </li>
+                                    <a href="#"><li>8 </li></a>
+                                    <a href="#"><li> 9 </li></a>
+                                    <a href="#"><li> 10 </li></a>
+                                    <a href="#"><li> > </li></a>
+                                    <a href="#"><li> >> </li></a>
+                                </ul>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3" id="main-right">
+                @{
+                    var listRightMenu = Utils.Instance.GetListRightMenu();
+                    var utils = Utils.Instance;
+                }
+
+                @{
+                    var banner = utils.GetListBanner().Where(b => b.Position != null && b.Position.Contains("Right"));
+                    if (banner != null)
+                    {
+                        @Html.Partial("_RightPart", banner.ToList())
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</article>
+<script>
+    $('#btnSearchFile').click(function () {
+        var arr = $('[satItem]');
+        var ieltArr = $('[ieltItem]');
+        if ($('#txtfileSearch').val().trim() != "") {
+            var searchText = $('#txtfileSearch').val().trim().toLowerCase();
+
+            $.each(arr, function (index, value) {
+                var $value = $(value);
+                var _item = $value.attr('itemName').toLowerCase();
+
+                //alert(searchText);
+                //alert(_item.toLowerCase());
+                if (!_item.includes(searchText)) {
+
+                    $(arr[index]).fadeOut(800);
+                }
+                else {
+                    $(arr[index]).fadeIn(800);
+                } 
+            });
+
+            $.each(ieltArr, function (index, value) {
+                var $value = $(value);
+                var _item = $value.attr('ieltItemName').toLowerCase();
+
+                //alert(searchText);
+                //alert(_item.toLowerCase());
+                if (!_item.includes(searchText)) {
+
+                    $(ieltArr[index]).fadeOut(800);
+                }
+                else {
+                    $(ieltArr[index]).fadeIn(800);
+                }
+            });
+
+        }
+        else {
+            $.each(arr, function (index, value) {
+                $(arr[index]).fadeIn(800);
+            });
+            $.each(ieltArr, function (index, value) {
+                $(ieltArr[index]).fadeIn(800);
+            });
+        }
+    });
+
+</script>

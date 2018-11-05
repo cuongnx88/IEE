@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Tin tức
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12" id="news-list">
+                @Html.Partial("_Articles", (ViewBag.Posts as Dictionary<int, IEE.Infrastructure.DbContext.Post>))
+            </div>
+        </div>
+    </div>
+   @Html.Partial("_Loading")
+</section>*@
+
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+            <div class="col-md-9" style="padding-right:2%; padding-left:0;">
+                <div id="main-left">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="#"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="#"><p class="active">Tin tức</p></a>
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+                  
+                    <!-- end main-left-content -->
+                    <div style="clear:both"></div>
+                </div>
+                <!-- end main-left -->
+            </div>
+            <div class="col-md-3" id="main-right">
+                <div id="confuse">
+                    <p>Bạn muốn biết khả năng SAT của mình ?</p>
+                    <a href="#"><p id="confuse-button">Test ngay >> </p></a>
+                </div>
+                <hr>
+                <div id="introduce">
+                    <p>Khóa học có thể phù hợp với bạn</p>
+                    <a href="#"><p id="introduce-button">SAT Advance</p></a>
+                </div>
+                <hr>
+                <div id="right-advetise">
+                    <a href="#"><img src="images/adv2.png"></a>
+                    <a href="#"><img src="images/adv1.png"></a>
+                    <a href="#"><img src="images/adv3.png"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+@*@section scripts{
+    <script src="~/scripts/infiniteScroll.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("div#loading").hide();
+        });
+        var moreRowsUrl = '@Url.Action("index", "news")';
+        $(window).scroll(divScrollHandler);
+    </script>
+}*@

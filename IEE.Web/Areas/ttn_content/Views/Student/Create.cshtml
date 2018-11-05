@@ -1,0 +1,147 @@
+﻿@model IEE.ViewModel.StudentHighlightViewModel
+
+@{
+    ViewBag.Title = "Tạo mới thành viên";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+    List<IEE.Web.Areas.ttn_content.Controllers.Program> programs
+        = (List<IEE.Web.Areas.ttn_content.Controllers.Program>)ViewBag.Programs;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Tạo mới thành viên</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("create", "student", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control", maxlength = "150" })
+                                    @Html.ValidationMessageFor(model => model.Title)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Họ và tên</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điểm SAT</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(model => model.SAT, new { @class = "form-control", maxlength = "4", type = "number", step = "any" })
+                                    @Html.ValidationMessageFor(model => model.SAT)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điểm TOEFL</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(model => model.TOEFL, new { @class = "form-control", maxlength = "4", type = "number", step = "any" })
+                                    @Html.ValidationMessageFor(model => model.TOEFL)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điểm IELTS</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(model => model.IELTS, new { @class = "form-control", maxlength = "4", type = "number", step = "any" })
+                                    @Html.ValidationMessageFor(model => model.IELTS)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Apply</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.ApplySchool, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ApplySchool)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Học bổng</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(model => model.Scholarship, new { @class = "form-control", maxlength = "10",placeHolder="xxx xxx $" })
+                                    @Html.ValidationMessageFor(model => model.Scholarship)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tóm lược</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.Summarize, new { @class = "form-control", rows = "5", maxlength = "250" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hình ảnh đại diện</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="btn-group">
+                                        <label title="Upload image file" for="file" class="btn btn-primary">
+                                            <input type="file" multiple="multiple" name="file" id="file" class="hide">
+                                            Upload hình ảnh
+                                        </label>
+                                    </div>
+                                    <span class="help-block m-b-none">Hình ảnh học viên nên có kích thước 215px X 215px, là ảnh png hoặc jpg và không lớn hơn 2mb.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

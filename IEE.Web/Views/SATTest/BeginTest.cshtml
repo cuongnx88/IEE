@@ -1,0 +1,458 @@
+﻿@model  IEE.Web.Areas.ttn_content.Models.TestViewModel
+@using IEE.Web.Models
+@using IEE.Infrastructure.DbContext
+@{
+
+    ViewBag.Title = "BeginTest";
+    Layout = "~/Views/Shared/_LayoutTest.cshtml";
+    var testform = (SATExamForm)ViewBag.TestForm;
+    var formContent = (SATExamContent)ViewBag.Content;
+    var contenLines = (List<SATContentLine>)ViewBag.Lines;
+    var questions = (List<SATQuestion>)ViewBag.Questions;
+    var contentIndex = Session["ContentIndex"] != null ? int.Parse(Session["ContentIndex"].ToString()) : 0;
+    var lastContentIndex = Session["LastContent"] != null ? int.Parse(Session["LastContent"].ToString()) : 0;
+    List<int> userAnsw = new List<int>();
+}
+@using (Html.BeginForm("BeginTest", "SATTest", FormMethod.Post, new { id = "frmTest" }))
+{
+    @Html.HiddenFor(model => model.Test.ID)
+    @Html.HiddenFor(model => model.Test.rowguid)
+    @Html.HiddenFor(model => model.TypeName)
+    @*<h2></h2>
+        <h3>@testform.Duration , @testform.NumberQuestion</h3>
+        <p>
+            @testform.Direction
+        </p>*@
+    <style>
+    </style>
+    <header>
+        <section class="container-fluid" style="padding:0; z-index:9">
+            <!-- logo + menu -->
+            <div id="headerQuiz" class="row" style="margin:0">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 headerTitleQuiz">
+                    <h3>@Utils.Instance.GetSectionName(int.Parse(Session["Section"].ToString()))</h3>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 headerLogoQuiz">
+                    <a href="#"><img id="logoQuiz" src="~/Content/img/logo.png" class="img-responsive" /></a>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-3 headerButtonQuiz">
+                    <h3 id="timeLeft">Thời gian còn lại: 11:00:09</h3>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <!-- end logo + menu -->
+        </section>
+    </header>
+
+    <article>
+        <div class="wrapContentQuiz" style="width:100%;overflow-x:auto">
+            <div class="container-fluid contentQuiz">
+                <div class="startQuiz">
+                    <div class="col-xs-8" id="read-bg">
+                        <div id="read">
+                            <div>
+                                <div class="read-child-numb" style="border:1px solid transparent"></div>
+                                <div class="read-child-text">
+                                    <h4 style="margin-top:0px">@testform.Title</h4>
+                                    @{
+                                        if (formContent != null)
+                                        {
+
+                                            @formContent.Intro
+                                        }
+                                    }
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+
+                            @if (testform.SATType != null && testform.SATType.TypeName.Contains("Writing"))
+                            {
+
+                                @*<p>@formContent.Contents</p>*@
+                                <div>
+                                    <div class="read-child-numb"></div>
+                                    <div class="read-child-text" style="text-indent:5em">
+                                        @formContent.Contents
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            }
+                            else if (testform.SATType != null && testform.SATType.TypeName.Contains("Reading"))
+                            {
+
+                                int lineIdx = 0;
+                                string lineContent = "";
+                                var max = 0;
+                                if (contenLines != null)
+                                {
+                                    foreach (var item in contenLines)
+                                    {
+                                        //if (item.LineIndex == 0)
+                                        //{
+                                        //    lineIdx = "1";
+                                        //    lineContent += item.LineText;
+                                        //}
+                                        //else if (item.LineIndex > 0 && ((item.LineIndex + 2) % 5 == 0)|| ((item.LineIndex + 2) % 5 < 0))
+                                        //{
+                                        //    lineContent += item.LineText;
+                                        //}
+                                        //else if (item.LineIndex > 0 && (item.LineIndex + 1) % 5 == 0)
+                                        //{
+                                        //    lineIdx = (item.LineIndex + 1).ToString();
+                                        //    lineContent = item.LineText;
+
+                                        //}
+                                        //else
+                                        //{
+                                        //    lineIdx = string.Empty;
+                                        //}
+
+                                        lineContent += item.LineText + "<br/>";
+                                        if ((item.LineIndex + 1) % 5 == 0)
+                                        {
+                                            lineIdx = item.LineIndex + 1;
+
+                                            if (lineContent.EndsWith("<br/>"))
+                                            {
+                                                var displayContent = lineContent.Substring(0, lineContent.Count() - 5);
+                                                displayContent = lineContent.Replace(" ", "&nbsp;");
+
+                                                <div style="display: flex;">
+                                                    @*<div class="read-child-numb" style="border:1px solid transparent;flex: 1;vertical-align:bottom;">*@
+                                                    <div class="read-child-numb" style="border:1px solid transparent;align-self: flex-end;">
+
+                                                        @lineIdx
+                                                    </div>
+
+                                                    @*<div class="read-child-text" style="text-indent:1em;">*@
+                                                    <div class="read-child-text">
+
+
+                                                        @MvcHtmlString.Create(displayContent)
+
+                                                    </div>
+
+                                                    <div style="clear:both"></div>
+                                                </div>
+                                                max = (item.LineIndex + 1);
+                                                lineContent = "";
+                                            }
+
+                                        }
+                                        else if ((contenLines.Count - max) < 5)
+                                        {
+
+                                            <div style="display: flex;">
+                                                <div class="read-child-numb" style="border:1px solid transparent;flex: 1;vertical-align:bottom;">
+
+                                                </div>
+
+                                                <div class="read-child-text">
+                                                    @item.LineText
+
+                                                </div>
+
+                                                <div style="clear:both"></div>
+                                            </div>
+
+                                            lineContent = "";
+                                        }
+
+                                    }
+                                }
+
+
+
+                            }
+                            else
+                            {
+                                <div>
+                                    <div class="read-child-numb"></div>
+                                    <div class="read-child-text" style="text-indent:5em">
+                                        @if (formContent != null && !string.IsNullOrEmpty(formContent.AttachImage))
+                                        {
+                                            <img src="@formContent.AttachImage" />
+                                        }
+                                        @if (formContent != null)
+                                        {
+                                            @formContent.Contents
+                                        }
+
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <!-- end read -->
+                    <div class="col-xs-4" id="ans">
+                        @if (testform != null)
+                        {
+                            @testform.Title
+                        }
+
+                        <hr>
+                        @if (questions != null)
+                        {
+                            foreach (var item in questions)
+                            {
+                                @*@Html.HiddenFor(model => model.ListAnswer[questions.IndexOf(item)].QuestionID)*@
+
+                                <p class="q-number"><b>Question @item.QuestionNo of @questions.Max(q => q.QuestionNo)</b></p>
+                                @item.QuestionNo <label>.</label> @item.Title
+                                if (item.HasInputAnswer != null && item.HasInputAnswer == true)
+                                {
+                                    foreach (var answerItem in item.SATAnswers)
+                                    {
+                                        <div>
+                                            <hr class="ans-hr">
+                                            <div class="ans-div">
+                                                @*<p class="ans-letter"></p>*@
+                                                @Html.TextBoxFor(model => model.ListAnswer[questions.IndexOf(item)].AnswerContent, new { onkeyup = "checkQuestion(" + item.ID + ")" })
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    var actv = "";
+                                    <div>
+
+                                        @if (ViewBag.UserAnswerId != null)
+                                        {
+                                            userAnsw = (List<int>)ViewBag.UserAnswerId;
+
+                                        }
+                                        @foreach (var answerItem in item.SATAnswers)
+                                        {
+                                            if (userAnsw.Contains(answerItem.ID))
+                                            {
+                                                actv = "active";
+                                            }
+                                            else
+                                            {
+                                                actv = "";
+
+                                            }
+                                            <hr class="ans-hr">
+                                            <div class="ans-div" id="div_@answerItem.ID">
+                                                <p class="ans-letter @actv" onclick="checkAnswer(@answerItem.ID,@item.ID)" id="p_@answerItem.ID">@answerItem.Mark</p>
+
+                                                @Html.RadioButtonFor(model => model.ListAnswer[questions.IndexOf(item)].UserAnswer, answerItem.ID, new { id = "answerID_" + answerItem.ID, @style = "display:none"}) <span> @answerItem.AnswerContent</span>
+                                            </div>
+
+                                        }
+                                    </div>
+                                }
+                            }
+
+                        }
+
+
+
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!-- end answer -->
+                <div class="container-fluid" id="quiz-bot">
+                    <b style="float:left; margin-right:5px">Đã trả lời</b>
+                    <input type="hidden" id="answeredQuestion" name="answeredQuestion" />
+                    <ul style="">
+                        @{
+                            var _bold = "font-weight:bold;";
+                            var _actv = "";
+                        }
+                        @if (questions != null)
+                        {
+                            foreach (var item in questions)
+                            {
+                                if (ViewBag.AnsweredQuestion!=null && ViewBag.AnsweredQuestion.Contains(item.ID))
+                                {
+                                    _actv = "active";
+                                }
+                                else
+                                {
+                                    _actv = "";
+                                }
+                                <li id="asw_@item.ID" class="@_actv"><span>@item.QuestionNo</span></li>
+                            }
+
+                        }
+                    </ul>
+
+                    @if (contentIndex >= lastContentIndex)
+                    {
+                        <a href="#" id="btnNext"><p>Kết thúc</p></a>
+
+                    }
+                    else
+                    {
+
+                        <a href="#" id="btnNext">
+                            <p>Làm tiếp</p>
+                        </a>
+
+                    }
+                    @if (contentIndex > 1 && contentIndex < lastContentIndex)
+                    {
+
+                        <a href="#" id="btnPrev"><p>Trở lại</p></a>
+                    }
+
+
+                    @* <input type="submit" class="btn-success" value="Next" />*@
+                    <input type="hidden" name="submitBtnPress" id="submitBtnPress" value="" />
+                </div>
+
+            </div>
+        </div>
+        <!-- end quiz -->
+
+    </article>
+    <div style="right: 170px;
+    position: absolute;
+    bottom: 121px;
+    width: 250px;
+    height: 50px;
+    border:solid 1px #ff0000;
+    z-index:999;color:red;text-align:center;align-content:center;display:none;" id="divTimeWarning"><div style="margin:0 auto;font-size:18px">Thời gian còn lại 5 phút</div></div>
+
+
+}
+<script>
+
+    var remain = 0;
+    $(document).ready(function () {
+        $('#timeLeft').text('Thời gian còn lại');
+
+        $.get('/sattest/GetEndTime?guid=' + $('#Test_rowguid').val(), function (data) {
+
+            remain = data;
+
+            if (sessionStorage.remain) {
+                sessionStorage.remain = Number(sessionStorage.remain);
+                $('#timeLeft').text('Thời gian còn lại ' + millisToMinutesAndSeconds(sessionStorage.remain));
+            }
+            else {
+                $('#timeLeft').text('Thời gian còn lại ' + millisToMinutesAndSeconds(remain));
+                sessionStorage.remain = remain;
+            }
+
+        });
+
+    });
+    var _interval = setInterval(function () { setRemain() }, 1000);
+
+    function setRemain() {
+
+        if (sessionStorage.remain) {
+            sessionStorage.remain = Number(sessionStorage.remain) - 1000;
+            var _remain = sessionStorage.remain;
+            if (_remain >= 0) {
+                $('#timeLeft').text('Thời gian còn lại ' + (millisToMinutesAndSeconds(_remain)));
+                if (_remain <= 300000) {
+
+                    $('#divTimeWarning').fadeIn(500);
+                }
+            }
+            else {
+                stopFunction(_interval);
+
+            }
+
+        }
+        else {
+            remain = remain - 1000;
+            if (remain >= 0) {
+                $('#timeLeft').text('Thời gian còn lại ' + (millisToMinutesAndSeconds(_remain)));
+                if (remain <= 300000) {
+                    alert(remain);
+                    $('#divTimeWarning').fadeIn(500);
+                }
+            }
+            else {
+                stopFunction(_interval);
+                alert('Bạn đã hết thời gian làm bài');
+                $('#btnNext').trigger('click');
+            }
+            sessionStorage.remain = remain;
+        }
+
+
+
+    }
+    function stopFunction(_interval) {
+        clearInterval(_interval);
+    }
+    function millisToMinutesAndSeconds(millis) {
+        var minutes = Math.floor(millis / 60000);
+        var seconds = ((millis % 60000) / 1000).toFixed(0);
+        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    }
+    function checkQuestion(qId) {
+        $('#asw_' + qId).attr('class', 'active');
+    }
+
+    function checkAnswer(id, qId) {
+
+
+
+        var listChild = $("#div_" + id + "").siblings();
+
+        $.each(listChild, function (index, value) {
+
+            $(value).find("p").removeClass("active");
+        });
+        $("#p_" + id + "").addClass("active");
+        $("#answerID_" + id + "").trigger("click");
+        //if (sessionStorage._answered) {
+
+        //    var _list = sessionStorage._answered;
+
+        //    _list = "1,2";
+        //    var idx = _list.indexOf(qId.toString());
+        //    alert(_list);
+        //    if (idx <= 0) {
+        //        sessionStorage._answered = _list + qId + ',';
+        //    }
+
+        //}
+        //else {
+
+        //    sessionStorage._answered = qId + ',';
+
+        //}
+        //var _asw = sessionStorage._answered;
+
+        //var _check = _asw.indexOf(qId.toString());
+        //if (_check > 0) {
+        //    $('#asw_' + qId).attr('class', 'active');
+        //    //_asw.replace(qId, '');
+
+        //    //sessionStorage._answered = _asw;
+        //}
+        //else {
+        //    alert(0);
+        //}
+        $('#asw_' + qId).attr('class', 'active');
+        var questId = $('#answeredQuestion').val();
+        questId = questId + qId + ",";
+        $('#answeredQuestion').val(questId);
+
+    }
+    $('#btnNext').click(function () {
+        //$('#submitBtnPress').val('next');
+        $('#frmTest').submit();
+    });
+    $('#btnPrev').click(function () {
+        $('#submitBtnPress').val('prev');
+        $('#frmTest').submit();
+    });
+
+
+</script>

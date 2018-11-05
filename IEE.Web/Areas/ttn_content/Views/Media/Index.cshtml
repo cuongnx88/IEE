@@ -1,0 +1,347 @@
+﻿@using IEE.Infrastructure.DbContext
+@model Medium
+@{
+    ViewBag.Title = "Media";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+    IEnumerable<Medium> medias = (IEnumerable<Medium>)ViewBag.Medias;
+    var mess = ViewBag.ErrorMessage != null ? ViewBag.ErrorMessage.ToString() : "";
+}
+@using (Html.BeginForm("index", "media", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-lg-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+
+                <div class="form-group ">
+                    <label class="control-label col-md-3">
+                        Tên tài liệu
+
+                    </label>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control" })
+
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="form-group ">
+                    <label class="control-label col-md-3">
+                        Danh mục
+
+                    </label>
+                    <div class="col-md-7">@Html.DropDownListFor(model => model.FileSource, ViewBag.ListSource as SelectList, new { @class = "form-control" })</div>
+                </div>
+
+            </div>
+
+            <div class="ibox-content">
+
+                <h5>Tải lên:</h5>
+
+                <div class="hr-line-dashed"></div>
+
+                @Html.HiddenFor(model => model.Id)
+                <div class="btn-group ">
+                    <label title="Upload image file" for="file" class="btn btn-primary btn-block">
+                        <input type="file" @*multiple="multiple"*@ name="file" id="file" class="hide" onchange="GetFileSize()">
+
+                        Lựa chọn tệp tin
+                    </label>
+                    Dung lượng file tải lên phải nhỏ hơn 2Mb.
+                </div>
+
+                <p id="fp"></p>
+
+                <img id='output' style="width:200px;height:auto;">
+            </div>
+            <div class="ibox-content">
+                <div class="file-manager">
+                    <h5> Hoặc</h5>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="form-horizontal">
+                    <h5>Nhập link</h5>
+
+                    <div class="hr-line-dashed"></div>
+
+
+                    <div class="form-group ">
+
+                        <label class="control-label col-md-3">
+                            Link
+
+                        </label>
+                        <div class="col-md-7"> @Html.TextBoxFor(model => model.Link, new { @class = "form-control" })</div>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <div class="col-md-offset-10 col-md-7">
+                            <input class="btn btn-primary" name="submit" type="submit" value="Thêm" />
+                            <input class="btn btn-default" name="submit" type="submit" value="Hủy" />
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                @{ var err = (string)ViewBag.ErrorMessage;}
+
+                @err
+            </div>
+        </div>
+
+
+    </div>
+}
+<div class="col-lg-8 animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            @foreach (var item in medias)
+            {
+                <div class="file-box" id="imgDiv_@item.Id">
+                    <div class="file">
+                        @*<img src="~/Content/img/cancel.png" width="15" style="float:right;z-index:2;" />*@
+                        <span class="corner"></span>
+                        @if (item.Type == 1)
+                        {
+
+                            @*<img alt="image" class="img-responsive" src="~/Content/img/cancel.png" style="margin-top:50px;z-index:9;">*@
+                            <div class="image">
+                                <i class="fa fa-pencil" style="color:deepskyblue;right:20px;position:absolute;z-index:999;font-size:16px;cursor:pointer;" onclick="loadMedia(@item.Id)"></i>
+                                <i class="fa fa-close" style="color:red;right:2px;position:absolute;z-index:999;font-size:16px;cursor:pointer;" onclick="removeFile(@item.Id)"></i>
+                                <a onclick="loadModal(@item.Id)"><img alt="image" class="img-responsive" src="~/Photo/post/@item.Name" style="position:relative;z-index:1;"></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="icon">
+                                <i class="fa fa-pencil" style="color:deepskyblue;right:20px;top:2px;position:absolute;z-index:999;font-size:16px;cursor:pointer;" onclick="loadMedia(@item.Id)"></i>
+                                <i class="fa fa-close" style="color:red;right:2px;top:2px;position:absolute;z-index:999;font-size:16px;cursor:pointer;" onclick="removeFile(@item.Id)"></i>
+
+                                <a onclick="loadModal(@item.Id)"><i class="fa fa-file"></i></a>
+                            </div>
+                        }
+                        <div class="file-name">
+                            <h5>@item.DisplayName</h5>
+                            @if (item.CreatedDate != null && item.ModifiedDate == null)
+                            {
+                                <small>Đã thêm: @item.CreatedDate.Value.ToString("dd/MM/yyyy")</small>
+                            }
+                            else if (item.ModifiedDate != null)
+                            {
+                                <small>Đã sửa: @item.ModifiedDate.Value.ToString("dd/MM/yyyy")</small>
+                            }
+
+                            <br />
+                            <br />
+                            <small>Link:</small>
+                            <br />
+                            @*<a href="@HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)/@item.Link">@Path.GetFileName(item.Link)</a>*@
+                            <a href="javascript:void();" onclick="loadModal(@item.Id)">@item.DisplayName</a>
+                            <small style="overflow-wrap: break-word;"></small>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    var fileTypes = ['jpg', 'jpeg', 'png'];
+    function GetFileSize() {
+        var fi = document.getElementById('file'); // GET THE FILE INPUT.
+
+        // VALIDATE OR CHECK IF ANY FILE IS SELECTED.
+        if (fi.files.length > 0) {
+
+            // RUN A LOOP TO CHECK EACH SELECTED FILE.
+            for (var i = 0; i <= fi.files.length - 1; i++) {
+                var fsize = fi.files.item(i).size;      // THE SIZE OF THE FILE.
+                var roundSize = Math.round((fsize / 1024));
+
+
+
+
+                if (roundSize > 2000) {
+                    $('#file').val('');
+                    // document.getElementById('file').value = "";
+                    $('#fp').html('');
+                    $('#fp').append('&nbsp;<span>File đã vượt quá dung lượng giới hạn!</span>');
+                }
+                else {
+
+                    var extension = fi.files[0].name.split('.').pop().toLowerCase(),  //file extension from input file
+                        isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
+
+                    if (isSuccess) { //yes
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var dataURL = reader.result;
+                            var output = document.getElementById('output');
+                            output.src = dataURL;
+                        };
+
+                        reader.readAsDataURL(fi.files[0]);
+                        $('#fp').html('');
+                        document.getElementById('fp').innerHTML =
+                            document.getElementById('fp').innerHTML + fi.files[0].name + '- ' +
+                            '<b>' + roundSize + '</b> KB';
+                    }
+                    else { //no
+
+                        $('#fp').html('');
+                        document.getElementById('fp').innerHTML =
+                            document.getElementById('fp').innerHTML + fi.files[0].name + '- ' +
+                            '<b>' + roundSize + '</b> KB';
+
+                        $('#fp').append('<div class="icon"><i class="fa fa-file" style="font-size:60px;"></i></div >');
+                        $('#output').attr('src', '');
+                    }
+
+                }
+            }
+        }
+    }
+    function removeFile(fileId) {
+
+        $.ajax({
+            type: 'DELETE',
+            dataType: "json",
+            url: '/Media/Delete',
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            processData: false,
+            cache: false,
+            data: JSON.stringify({ id: fileId }),
+            success: function (res) {
+                $('#imgDiv_' + fileId).remove();
+            },
+            error: function (err) {
+                alert("Không thể xóa file trên server");
+            }
+        });
+    }
+
+    function loadMedia(fileId) {
+        $('[name=submit][value=Thêm]').val('Lưu');
+        $.ajax({
+            type: 'GET',
+            url: '/Media/GetMedia?id=' + fileId,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var res = data.media;
+                $('[name=DisplayName]').val(res.DisplayName);
+                $('[name=FileSource]').val(res.FileSource);
+                $('[name=Id]').val(res.Id);
+                if (res.Name != null) {
+                    var extension = res.Name.split('.').pop().toLowerCase(),  //file extension from input file
+                        isSuccess = fileTypes.indexOf(extension) > -1;  //is extension in acceptable types
+
+                    if (isSuccess) {
+                        var dataURL = data.dataUrl;
+                        var output = document.getElementById('output');
+                        output.src = dataURL;
+                        $('#fp').html('');
+
+                    }
+                    else {
+                        $('#fp').html('');
+                        var roundSize = data.roundSize;
+                        document.getElementById('fp').innerHTML =
+                            document.getElementById('fp').innerHTML + data.media.Name + '- ' +
+                            '<b>' + roundSize + '</b> KB';
+
+                        $('#fp').append('<div class="icon"><i class="fa fa-file" style="font-size:60px;"></i></div >');
+                        $('#output').attr('src', '');
+                    }
+                }
+
+            },
+        });
+
+
+
+    }
+    function loadModal(fileId) {
+      
+        var output = document.getElementById('modal-output');
+        $('#modalContent').html('Đang tải...');
+        $('#modalTitle').text('');
+        output.src = '';
+
+
+            $.ajax({
+                type: 'GET',
+                url: '/Media/GetMedia?id=' + fileId,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var res = data.media;
+                    $('#modalTitle').text(res.DisplayName);
+
+                    if (data.dataUrl != null) {
+
+                        output.src = data.dataUrl;
+                        $('#modalContent').html('');
+                    }
+                    else if (data.content != null) {
+
+                        output.src = '';
+                        $('#modalContent').html('');
+                        $('#modalContent').html(data.content);
+                    }
+                }
+            }).done(function (data) {
+                
+                if (data.docContent != null) {
+                
+                    output.src = '';
+                    $('#modalContent').html('');
+
+                    $('#modalContent').append(data.docContent);
+
+                    //for (var i = 0; i < data.docContent.length; i++) {
+                    //    var line = data.docContent[i] + '</br>';
+                    //    $('#modalContent').append(line);
+                    //}
+                }
+            });
+        
+       
+
+        
+
+        $('#resultModal').modal('show');
+    }
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style=" overflow-y: scroll;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalTitle"><strong id="modalTitle"></strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id='modal-output' style="width:200px;height:auto;">
+                <div style="margin:0 auto;" id="modalContent">
+                    Đang tải...
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">Đóng</button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@model IEE.Infrastructure.DbContext.TeacherHighlight
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<div class="modal-body">
+    <div class="member-content">
+        <div class="row">
+            <div class="col-md-5 member-photo">
+                <img src="/photo/teacher/@Model.Photo" />
+            </div>
+            <div class="col-md-7 m-t-md">
+                <h5>@Model.Title</h5>
+                <h2 class="m-t-n-xs">@Model.Name</h2>
+                <h5 class="m-b-lg m-t-lg text-bold">@Model.Experience Năm kinh nghiệm giảng dạy</h5>
+                <p style="font-style:italic; color:#000;">
+                    @Model.Summarize
+                </p>
+                <p style="font-style:italic; color:#000;">
+                    @Model.Detail
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

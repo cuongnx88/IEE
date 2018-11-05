@@ -1,0 +1,74 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.ViewModel;
+@model ConsultantViewModel
+@{ 
+    IEnumerable<Program> programs = (IEnumerable<Program>)ViewBag.Programs;
+}
+<div id="consultant">
+    <h3 class="title">Đăng ký tư vấn</h3>
+    @using (Html.BeginForm("consultregister", "cmsbase", null, FormMethod.Post, new { @class = "form-horizontal blank_form", id = "cunsult", role = "form" }))
+    {
+    <div class="form-horizontal blank_form">
+        <div id="consultant-form" class="box-shadow">
+            <div class="ibox-content">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Họ và tên</label>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Trịnh Ly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Trường</label>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(model => model.School, new { @class = "form-control", placeholder = "Trường" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Lớp</label>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(model => model.Class, new { @class = "form-control", placeholder = "Lớp" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Điện thoại</label>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", placeholder = "Điện thoại" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Email</label>
+                    <div class="col-lg-8">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Chương trình mong muốn</label>
+                    <div class="col-lg-8">
+                        @Html.DropDownListFor(model => model.Program,
+                               new SelectList(programs, "Id", "Name"),
+                               "Chương trình mà bạn mong muốn",
+                               new { @class = "form-control m-b" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-12 control-label">Thông điệp</label>
+                    <div class="col-lg-12">
+                        @Html.TextAreaFor(mode => mode.Message, new { @class = "form-control text-area", rows = "5" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <h4 id="return_message"></h4>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="consultant-command">
+            <button type="submit" class="btn btn-danger oranges-section btn-rounded" id="consultSubmit">Đăng ký ngay</button>
+        </div>
+    </div>
+    }
+</div>
+
+

@@ -1,0 +1,72 @@
+﻿﻿
+@{
+    ViewBag.Title = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using IEE.Web.Models;
+@using IEE.Web.Areas.ttn_content.Models;
+@model IEE.Infrastructure.DbContext.Category
+@{
+    if (Model == null)
+    {
+        return;
+    }
+    var partialViewModel = new PartialViewModel();
+    partialViewModel.Cate = Model;
+
+    ViewBag.MetaKeys = Model.MetaKey != null ? Model.MetaKey : "";
+    ViewBag.MetaDescription = !string.IsNullOrEmpty(Model.MetaDescription) ? Model.MetaDescription : "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+
+}
+@if (Model.PostCategories != null && Model.PostCategories.Select(p => p.Post).Where(p => p != null).Count() > 0)
+{
+    var skip = (int)ViewBag.PageCount * (int)ViewBag.Trang;
+    var postModel = Model.PostCategories.Select(p => p.Post).Where(p => p != null).Skip(skip).Take((int)ViewBag.PageCount).OrderByDescending(p => p.CreatedDate).ToList();
+    partialViewModel.ListPost = postModel;
+   
+}
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+            <div class="col-md-9" style="padding-right:2%; padding-left:0;">
+                <div id="main-left" style="padding:2%">
+                    @*<div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="#"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="#"><p class="active">Tin tức</p></a>
+                            <p>--</p>
+                            <a href="#"><p class="active">@Model.Name</p></a>
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>*@
+                  
+                    @MvcHtmlString.Create(Utils.Instance.ReturnPartialContent(partialViewModel))
+                    <div style="clear:both"></div>
+                </div>
+               
+
+                <div class="paging">
+                    <ul>
+                        @if (ViewBag.TotalPage != null && ViewBag.TotalPage > 1)
+                        {
+                            <li><a href="@Url.RouteUrl("CatSEORoute",new {Category= ViewBag.Cat,trang=1 })"> << </a></li>
+                            for (int i = 1; i < ViewBag.TotalPage + 1; i++)
+                            {
+
+                                <li> <a href="@Url.RouteUrl("CatSEORoute",new {Category= ViewBag.Cat,trang=i })">@i </a></li>
+
+                            }
+                            <li><a href="@Url.RouteUrl("CatSEORoute",new {Category= ViewBag.Cat,trang=(int)ViewBag.TotalPage })"> >> </a></li>
+                        }
+                    </ul>
+                </div>
+                <!-- end main-left -->
+            </div>
+            <div class="col-md-3" id="main-right">
+            @Html.Partial("_RightPart", ViewBag.Banners as List<IEE.Infrastructure.DbContext.Banner>)
+                </div>
+        </div>
+    </div>
+</article>

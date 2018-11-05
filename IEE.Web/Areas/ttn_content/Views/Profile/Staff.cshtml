@@ -1,0 +1,136 @@
+﻿@using IEE.ViewModel;
+@model TeacherViewModel
+@{
+    ViewBag.Title = "Staff";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins white-bg">
+            <div class="ibox-title">
+                <h5>Thông tin cá nhân</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("staff", "profile", null, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Photo)
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                            </div>
+                            <span class="help-block m-b-none">Sử dụng Email để đăng nhập và nhận thông báo từ hệ thống.</span>
+                        </div>
+
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Họ và tên</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="data_date">
+                        <label class="col-sm-2 control-label">Ngày sinh</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group date ">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        @Html.TextBoxFor(model => model.Birthday, new { @class = "form-control", @Value = System.DateTime.Now.Date.ToShortDateString() })
+                                        @Html.ValidationMessageFor(model => model.Birthday)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Địa chỉ</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điện thoại</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Phone)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hình ảnh</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @if (!string.IsNullOrEmpty(Model.Photo))
+                                    {
+                                        <div class="img-preview img-preview-sm">
+                                            <img height="100" width="100" src="~/photo/staff/@Model.Photo" />
+                                        </div>
+                                    }
+                                    <div class="btn-group">
+                                        <label title="Upload image file" for="file" class="btn btn-primary">
+                                            <input type="file" multiple="multiple" name="file" id="file" class="hide">
+                                            Upload hình ảnh
+                                        </label>
+
+                                        @if (!string.IsNullOrEmpty(Model.Photo))
+                                        {
+                                            <a title="Donload hình ảnh" id="download" class="btn btn-primary" href="/profile/staffdownload?fileName=@Model.Photo">Download</a>
+                                        }
+                                        else
+                                        {
+                                            <a title="Donload hình ảnh" id="download" class="btn btn-primary disabled" href="#">Download</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

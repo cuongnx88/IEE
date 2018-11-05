@@ -1,0 +1,40 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.Web.Areas.ttn_content.Models
+@model PartialViewModel
+@if (Model.Cate != null && Model.ListPost != null && Model.ListPost.Count > 0 && Model.ListPost[0]!=null)
+{
+    var cat = Model.Cate.Name;
+    var listPost = Model.ListPost;
+    <div class="big-title-home-news">
+        <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+        <hr>
+    </div>
+    <div id="main-left-content">
+        <div id="news">
+
+            <h1 id="news-title">@Model.ListPost[0].Title</h1>
+            @*<p id="news-time">
+                @if (Model.PublishedDate.HasValue)
+                {
+                    @Model.PublishedDate.Value.ToString("dd-MM-yyyy")
+
+                }
+            </p>*@
+            <hr>
+            <p id="news-description">
+                @* @Model.Summarize*@
+            </p>
+
+            @MvcHtmlString.Create(Model.ListPost[0].Detail)
+        </div>
+    </div>
+
+}
+else if (Model.Cate != null)
+{
+    var cat = Model.Cate.Name;
+    <div class="big-title-home-news">
+        <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+        <hr>
+    </div>
+}

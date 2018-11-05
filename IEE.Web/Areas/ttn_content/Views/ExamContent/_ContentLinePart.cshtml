@@ -1,0 +1,16 @@
+﻿@model IEE.Web.Areas.ttn_content.Models.ExamContentEditViewModel
+
+
+<div class="form-group">
+    <div class="control-label col-md-2"></div>
+    <div class="col-md-10">
+        @foreach (var item in Model.ContentLines)
+        {
+            
+            <input type="text" placeholder="@item.LineIndex" class="form-control" value="@item.LineText" name="@item.rowguid">
+
+
+        }
+    </div>
+
+</div>

@@ -1,0 +1,245 @@
+﻿
+@model IEE.Web.Areas.ttn_content.Models.QuestionEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+    //var selectList = (List<IEE.Web.Areas.ttn_content.Controllers.QuestionController.ExamContentSelectList>)ViewBag.ExamContentID;
+
+    var selectedID = "";
+    if (ViewBag.SelectedID != 0)
+    {
+        selectedID = ViewBag.SelectedID.ToString();
+    }
+
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>SATQuestion</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        @Html.Hidden("_examContentID", selectedID, new { id = "_examContentID" })
+        @Html.Hidden("chkInputAnswer", Model.HasInputAnswer, new { id = "chkInputAnswer" });
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamContentID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.ExamContentID, new SelectList(ViewBag.ExamContentID as IEnumerable<SelectList>,Model.ExamContentID), htmlAttributes: new { @class = "form-control" })*@
+
+                @Html.DropDownListFor(model => model.ExamContentID, (SelectList)ViewBag.ExamContentID, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamContentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.QuestionNo, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.QuestionNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.QuestionContent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TypeID", (SelectList)ViewBag.Type, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasInputAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBox("HasInputAnswer")
+                    @Html.ValidationMessageFor(model => model.HasInputAnswer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+
+                    @{
+                        var imgPath = "/Content/img/inActiveStatus.png";
+
+                        if (Model.Status)
+                        {
+                            imgPath = "/Content/img/ActiveStatus.png";
+                        }
+                        else
+                        {
+                            imgPath = "/Content/img/inActiveStatus.png";
+                        }
+                        var classStatus = "" + Model.Status + "Status";
+                    }
+                    <input type="button" class="@classStatus" id="lblStatus" style="background:url(@imgPath) no-repeat; height:31px;width:41px;border:none;" />
+                    @Html.CheckBoxFor(model => model.Status, new { @style = "display:none" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Câu trả lời", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @for (int i = 0; i < 4; i++)
+            {
+            <div class="form-horizontal" style="float:left;">
+                @Html.HiddenFor(model => model.Answers[i].ID)
+                @*<div class="form-group">
+            @Html.LabelFor(model => model.Answers[i].AnswerType, htmlAttributes: new { @class = "control-label col-md-7" })
+            <div class="col-md-10">
+                @Html.DropDownList("AnswerType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Answers[i].AnswerType, "", new { @class = "text-danger" })
+
+            </div>
+        </div>*@
+                <div class="form-group" id="markDiv" [Mark]>
+                    @Html.LabelFor(model => model.Answers[i].Mark, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        A @Html.RadioButtonFor(model => model.Answers[i].Mark, "A", null)
+                        B @Html.RadioButtonFor(model => model.Answers[i].Mark, "B", null)
+                        C @Html.RadioButtonFor(model => model.Answers[i].Mark, "C", null)
+                        D @Html.RadioButtonFor(model => model.Answers[i].Mark, "D", null)
+                        @Html.ValidationMessageFor(model => model.Answers[i].Mark, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].AnswerContent, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Answers[i].AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
+                        @Html.ValidationMessageFor(model => model.Answers[i].AnswerContent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].Explanation, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Answers[i].Explanation, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
+                        @Html.ValidationMessageFor(model => model.Answers[i].Explanation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].IsRightAnswer, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @{
+                                var classAnswer = "" + Model.Answers[i].IsRightAnswer + "Answer";
+                            }
+                            @* <input type="button" class="@classAnswer" id="lblRightAnswer" style="background:url(/Content/img/falseIcon.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                            @Html.CheckBoxFor(model => model.Answers[i].IsRightAnswer, new { @style = "display:none" })
+                            @Html.ValidationMessageFor(model => model.Answers[i].IsRightAnswer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].Status, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+
+                            @{
+                                var _classStatus = "" + Model.Answers[i].Status + "Status";
+                            }
+                            @*<input type="button" class="@_classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                            @Html.CheckBoxFor(model => model.Answers[i].Status, new { @style = "display:none" })
+                            @Html.ValidationMessageFor(model => model.Answers[i].Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    $(document).ready(function () {
+        if ($('#_examContentID').val() != "") {
+            $('#ExamContentID').val($('#_examContentID').val());
+        }
+        if ($('chkInputAnswer').val() != "" && $('chkInputAnswer').val() == "True") {
+            $('#HasInputAnswer').attr('checked', 'checked');
+        }
+
+        //if ($('#TypeID').val() == 3)
+        //    $('#calculatorDiv').show();
+    });
+    //$('#TypeID').change(function () {
+    //    if ($('#TypeID').val() == 3) {
+    //        $('#calculatorDiv').show();
+    //    }
+    //    else {
+    //        $('#calculatorDiv').hide();
+    //        $("#UserCalculator").val($("#UserCalculator option:first").val());
+    //    }
+    //});
+    var roxyFileman = '/Scripts/fileman/index.html';
+
+    var editor = CKEDITOR.replace('QuestionContent', {
+
+        filebrowserBrowseUrl: roxyFileman,
+        filebrowserImageBrowseUrl: roxyFileman + '?type=image',
+        removeDialogTabs: 'link:upload;image:upload',
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            { "name": "basicstyles", "groups": ["basicstyles"] },
+            { "name": "links", "groups": ["links"] },
+            { "name": "paragraph", "groups": ["list", "blocks"] },
+            { "name": "document", "groups": ["mode"] },
+            { "name": "insert", "groups": ["insert"] },
+            { "name": "styles", "groups": ["styles"] },
+            { "name": "about", "groups": ["about"] }
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Strike,Subscript,Superscript,Anchor,Styles,Specialchar',
+        // Dialog windows are also simplified.
+        removeDialogTabs: 'link:advanced'
+    });
+
+    $("#HasInputAnswer").on('ifChecked', function () {
+        //if ($('#TypeID').val!=3) {
+        //    $('.Mark').hide();
+        //}
+        $('.Mark').hide();
+
+    });
+    $("#HasInputAnswer").on('ifUnchecked', function () {
+        $('.Mark').show();
+    });
+
+</script>

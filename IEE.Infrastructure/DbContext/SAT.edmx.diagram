@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4595678853a04e12916c76a0d85300da" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="nhieevwp_webModel.Banner" Width="1.5" PointX="12.75" PointY="1" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Calendar" Width="1.5" PointX="12.75" PointY="7" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Category" Width="1.5" PointX="7.75" PointY="1.625" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Consultant" Width="1.5" PointX="14.75" PointY="1" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.ConsultantRegister" Width="1.5" PointX="14.75" PointY="6" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Council" Width="1.5" PointX="9.75" PointY="15" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Medium" Width="1.5" PointX="14.75" PointY="11" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Post" Width="1.5" PointX="7.75" PointY="20.625" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.PostCategory" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Program" Width="1.5" PointX="11.75" PointY="15" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Role" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATAccount" Width="1.5" PointX="13.75" PointY="15" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATAnswer" Width="1.5" PointX="9.75" PointY="11" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATContentLine" Width="1.5" PointX="7.5" PointY="17" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATExamContent" Width="1.5" PointX="5.25" PointY="10.125" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATExamForm" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATScore" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATTest" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATTestSection" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATType" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATUserAnswer" Width="1.5" PointX="12" PointY="11.25" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATWritingUnderlineText" Width="1.5" PointX="9.75" PointY="8.25" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Setting" Width="1.5" PointX="15.75" PointY="15" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.StudentHighlight" Width="1.5" PointX="16.75" PointY="1" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.TeacherHighlight" Width="1.5" PointX="2.75" PointY="17" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.TeacherSchedule" Width="1.5" PointX="4.75" PointY="17" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.Testimonial" Width="1.5" PointX="16.75" PointY="7" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.UniversityHighlight" Width="1.5" PointX="17.75" PointY="12" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.User" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.UserRole" Width="1.5" PointX="3" PointY="14.125" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.ViewSession" Width="1.5" PointX="17.75" PointY="17" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_Category_ParentCategory" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_PostCategory_Categories" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_PostCategory_Posts" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_UserRole_Role" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATUserAnswer_SATAnswer" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATContentLines_SATTestContents" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATTestContents_SATExams" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATExams_SATTypes" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATTestSection_SATExamForm" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATScores_SATTypes" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATTestSection_SATScore" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATTest_User" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATTestSection_SATTest" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATUserAnswer_SATTest" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_UserRole_Users" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.TutorialVideo" Width="1.5" PointX="10" PointY="19.625" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_TutorialVideo_Category" />
+        <EntityTypeShape EntityType="nhieevwp_webModel.SATQuestion" Width="1.5" PointX="7.5" PointY="9.375" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATAnswers_SATQuestions" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATQuestion_SATExamContent" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATQuestions_SATTypes" />
+        <AssociationConnector Association="nhieevwp_webModel.FK_SATWritingUnderlineText_SATQuestions" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

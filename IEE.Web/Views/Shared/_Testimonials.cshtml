@@ -1,0 +1,86 @@
+﻿﻿@model List<IEE.Infrastructure.DbContext.Testimonial>
+
+
+@*<div id="main-left-content">
+
+    @{
+        if (Model.Count > 2)
+        {
+            var big = Model[0];
+            var mediumTop = Model[1];
+            var mediumBot = Model[2];
+            Model.RemoveRange(0, 3);
+            <div id="big-news" class="row">
+
+
+                <div id="big-news-left" class="col-md-8">
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= big.Title.ToSeoUrl(), id = big.Id })"><img class="img-responsive" src="~/Photo/testimonial/@big.Photo"></a>
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= big.Title.ToSeoUrl(), id = big.Id })"><p id="big-news-left-title">@big.Title</p></a>
+                    <p id="big-news-left-description">@big.Summarize</p>
+                </div>
+
+                <div id="big-news-right" class="col-md-4">
+                    <div class="big-news-right-each">
+                        <a href="@Url.RouteUrl("TestimonialDetails", new { student= mediumTop.Title.ToSeoUrl(), id = mediumTop.Id })"><img class="img-responsive" src="~/Photo/testimonial/@mediumTop.Photo"></a>
+                        <a href="@Url.RouteUrl("TestimonialDetails", new { student= mediumTop.Title.ToSeoUrl(), id = mediumTop.Id })"><p class="big-news-right-each-title">@mediumTop.Title</p></a>
+                    </div>
+                    <div class="big-news-right-each">
+                        <a href="@Url.RouteUrl("TestimonialDetails", new { student= mediumBot.Title.ToSeoUrl(), id = mediumBot.Id })"><img class="img-responsive" src="~/Photo/testimonial/@mediumBot.Photo"></a>
+                        <a href="@Url.RouteUrl("TestimonialDetails", new { student= mediumBot.Title.ToSeoUrl(), id = mediumBot.Id })"><p class="big-news-right-each-title">@mediumBot.Title</p></a>
+                    </div>
+
+                </div>
+
+            </div>
+            foreach (var item in Model)
+            {
+
+                <div class="news-each">
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= item.Title.ToSeoUrl(), id = item.Id })"><img class="img-responsive" src="~/Photo/testimonial/@item.Photo"></a>
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= item.Title.ToSeoUrl(), id = item.Id })"><p class="news-each-title">@item.Title</p></a>
+                  
+                    <p class="news-each-description">@item.Subtitle </p>
+                </div>
+                <hr>
+            }
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+
+                <div class="news-each">
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= item.Title.ToSeoUrl(), id = item.Id })"><img class="img-responsive" src="~/Photo/testimonial/@item.Photo"></a>
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= item.Title.ToSeoUrl(), id = item.Id })"><p class="news-each-title">@item.Title</p></a>
+                   
+                    <p class="news-each-description">@item.Subtitle </p>
+                </div>
+                <hr>
+            }
+        }
+    }
+
+
+</div>*@
+
+<div id="main-left-content">
+
+    <div id="video" class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="video-each">
+                <div class="video-each-img-area">
+                    <a href="@Url.RouteUrl("TestimonialDetails", new { student= item.Title.ToSeoUrl(), id = item.Id })">
+                        @*<a href="@Url.RouteUrl("TutorVideo",new {catName=item.Category.Name.ToSeoUrl(), videoName =item.Title,id=item.ID})">*@
+                        <img class="img-responsive" src="~/Photo/testimonial/@item.Photo">
+                    </a>
+                   
+                </div>
+                <a href="#"><p>@item.Title</p></a>
+            </div>
+        }
+
+    </div>
+</div>
+

@@ -1,0 +1,38 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.Web.Areas.ttn_content.Models
+@model PartialViewModel
+
+    @if (Model.Cate != null && Model.ListPost != null && Model.ListPost.Count > 0)
+    {
+        <div class="big-title-home-news">
+            <p class="text-change-tittle">
+                <a style="color:#fff" href="@Url.RouteUrl("CatSEORoute",new { Category=Model.Cate.Name.ToSeoUrl() })">@Model.Cate.Name</a>
+            </p>
+            <hr>
+        </div>
+        <div style="clear:both"></div>
+
+        foreach (var item in Model.ListPost)
+        {
+            <div class="new-term-info-home">
+                <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id =item.Id })"><img src="~/Photo/post/@item.Photo"></a>
+                <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id =item.Id })"><p class="new-term-home-title">@item.Title</p></a>
+                <p class="new-term-home-time">@item.Summarize</p>
+
+
+            </div>
+        }
+
+    }
+    else if (Model.Cate != null)
+    {
+        var cat = Model.Cate.Name;
+        <div class="big-title-home-news">
+            <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+            <hr>
+        </div>
+    }
+
+
+
+

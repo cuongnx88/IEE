@@ -1,0 +1,87 @@
+﻿@model PagedList.IPagedList<IEE.Infrastructure.DbContext.Post>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Bài viết";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Danh sách bài viết</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-9 m-b-xs">
+                        <a href="/ttn_content/post/create" class="btn btn-sm btn-primary">Tạo mới bài viết</a>
+                    </div>
+                    <div class="col-sm-3">
+                        @using (Html.BeginForm("index", "post", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                        {
+                        <div class="input-group">
+                            @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @class = "input-sm form-control", @placeholder = "Tìm kiếm" })
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary"> Go!</button>
+                            </span>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+
+                                <th style="width:50px">#</th>
+                                <th>Tiêu đề </th>
+                                <th style="width:100px">Trạng thái </th>
+                                <th style="width:115px">Ngày xuất bản </th>
+                                <th style="width:100px">Lượt xem </th>
+                                <th style="width:135px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Title</td>
+                                @{
+                                    string status = string.Empty;
+                                    if (item.Status == false)
+                                    {
+                                        status = "Khóa";
+                                    }
+                                    else
+                                    {
+                                        status = "Xuất bản";
+                                    }
+                                }
+                                <td>@status</td>
+                                <td>
+                                    @if (item.PublishedDate.HasValue)
+                                    {
+                                    @item.PublishedDate.Value.ToShortDateString()
+                                    }
+                                </td>
+                                <td>@item.ViewCount</td>
+                                <td class="center tooltip-command">
+                                    <a href="@Url.Action("edit", "post" , new { id=item.Id.ToString()})" class="btn btn-sm btn-primary" title="Sửa dữ liệu"><i class="fa fa-pencil"></i> Sửa</a>
+                                    <a href="@Url.Action("delete", "post" , new { id=item.Id.ToString()})" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có muốn xóa bản ghi này?');"  title="Xóa dữ liệu"><i class="fa fa-trash-o"></i> Xóa</a>
+                                </td>
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

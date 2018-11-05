@@ -1,0 +1,47 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.SATQuestion>
+@using IEE.Infrastructure.DbContext
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<h2>Danh sách Câu hỏi</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.SATType.TypeName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @MvcHtmlString.Create(item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.SATType.TypeName)
+        </td>
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.ID },new {onclick="return confirm('Bạn có chắc chắn muốn xóa?');" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,2300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="nhieevwp_webModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="Link" Type="nvarchar" MaxLength="250" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="Detail" Type="ntext" />
+          <Property Name="IsLock" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="JustPhoto" Type="bit" />
+          <Property Name="IsHeader" Type="bit" />
+          <Property Name="LinkYoutube" Type="nvarchar" MaxLength="250" />
+          <Property Name="BannerIndex" Type="int" />
+          <Property Name="Position" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="FromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="FromTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="ToTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="IsMenu" Type="bit" Nullable="false" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsSystem" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="OrderNumber" Type="int" />
+          <Property Name="keyword" Type="nvarchar" MaxLength="500" />
+          <Property Name="MetaKey" Type="nvarchar" MaxLength="250" />
+          <Property Name="MetaDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="Position" Type="varchar" MaxLength="30" />
+          <Property Name="SEOTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="DisplayType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Consultant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="School" Type="nvarchar" MaxLength="250" />
+          <Property Name="Class" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" />
+          <Property Name="Program" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsComplate" Type="bit" />
+        </EntityType>
+        <EntityType Name="ConsultantRegister">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="Class" Type="nvarchar" MaxLength="150" />
+          <Property Name="School" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nchar" MaxLength="20" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="RegistedDate" Type="datetime" />
+          <Property Name="IsComplate" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Council">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="University" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="250" />
+          <Property Name="FileSource" Type="nvarchar" MaxLength="250" />
+          <Property Name="Link" Type="nvarchar" MaxLength="250" />
+          <Property Name="Type" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="Detail" Type="ntext" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="PublishedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="PhotoCover" Type="nvarchar" MaxLength="250" />
+          <Property Name="OrderNumber" Type="int" />
+          <Property Name="MetaKey" Type="nvarchar" MaxLength="250" />
+          <Property Name="MetaDescription" Type="nvarchar" MaxLength="500" />
+          <Property Name="AttachFiles" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ViewCount" Type="bigint" />
+        </EntityType>
+        <EntityType Name="PostCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="Detail" Type="ntext" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="SATAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnswerContent" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsRightAnswer" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="AnswerType" Type="int" Nullable="false" />
+          <Property Name="Mark" Type="nchar" MaxLength="1" />
+          <Property Name="Explanation" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="SATContentLine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LineText" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="LineIndex" Type="int" Nullable="false" />
+          <Property Name="ExamContentID" Type="int" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="SATExamContent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamContentIndex" Type="int" Nullable="false" />
+          <Property Name="AttachImage" Type="nvarchar" MaxLength="500" />
+          <Property Name="Contents" Type="nvarchar(max)" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="ExamFormID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Intro" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="SATExamForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Direction" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="NumberQuestion" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="Section" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="ExamCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionContent" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ExamContentID" Type="int" />
+          <Property Name="QuestionNo" Type="int" Nullable="false" />
+          <Property Name="HasInputAnswer" Type="bit" />
+        </EntityType>
+        <EntityType Name="SATScore">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RawValue" Type="int" Nullable="false" />
+          <Property Name="ScoreValue" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATTest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="SubmitTime" Type="datetime" Nullable="false" />
+          <Property Name="TotalScore" Type="int" Nullable="false" />
+          <Property Name="ExamCode" Type="int" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATTestSection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+          <Property Name="TotalRightAnswer" Type="int" Nullable="false" />
+          <Property Name="ScoreID" Type="int" Nullable="false" />
+          <Property Name="Section" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATUserAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserAnswer" Type="int" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+          <Property Name="AnswerContent" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SATWritingUnderlineText">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnderlineText" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="StudentHighlight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="Program" Type="int" />
+          <Property Name="Score" Type="varchar" MaxLength="20" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="SAT" Type="varchar" MaxLength="20" />
+          <Property Name="TOEFL" Type="varchar" MaxLength="20" />
+          <Property Name="IELTS" Type="varchar" MaxLength="20" />
+          <Property Name="Scholarship" Type="varchar" MaxLength="10" />
+          <Property Name="ApplySchool" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TeacherHighlight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Position" Type="nvarchar" MaxLength="250" />
+          <Property Name="Experience" Type="nvarchar" MaxLength="250" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="250" />
+          <Property Name="Detail" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DisplayIndex" Type="int" />
+        </EntityType>
+        <EntityType Name="TeacherSchedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="FromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="Repeat" Type="int" />
+          <Property Name="RepeatOn" Type="varchar" MaxLength="500" />
+          <Property Name="FromTime" Type="varchar" MaxLength="50" />
+          <Property Name="ToTime" Type="varchar" MaxLength="50" />
+          <Property Name="IsVerify" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Testimonial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Subtitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="SATScore" Type="nvarchar" MaxLength="50" />
+          <Property Name="Class" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TutorialVideo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CatId" Type="int" />
+          <Property Name="Thumbnail" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UniversityHighlight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="250" />
+          <Property Name="Website" Type="nvarchar" MaxLength="250" />
+          <Property Name="Summarize" Type="nvarchar" MaxLength="500" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Ranking" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsLocked" Type="bit" />
+          <Property Name="Salt" Type="varchar" MaxLength="250" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="250" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsSystem" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="rowguid" Type="uniqueidentifier" />
+          <Property Name="ResetPasswordToken" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="SessionId" Type="nvarchar" MaxLength="250" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Category_ParentCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Category1" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostCategory_Categories">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="PostCategory" Type="Self.PostCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostCategory_Posts">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="PostCategory" Type="Self.PostCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostCategory">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATAnswers_SATQuestions">
+          <End Role="SATQuestion" Type="Self.SATQuestion" Multiplicity="1" />
+          <End Role="SATAnswer" Type="Self.SATAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATQuestion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATAnswer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATContentLines_SATTestContents">
+          <End Role="SATExamContent" Type="Self.SATExamContent" Multiplicity="1" />
+          <End Role="SATContentLine" Type="Self.SATContentLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamContent">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATContentLine">
+              <PropertyRef Name="ExamContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATExams_SATTypes">
+          <End Role="SATType" Type="Self.SATType" Multiplicity="1" />
+          <End Role="SATExamForm" Type="Self.SATExamForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="SATExamForm">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATQuestion_SATExamContent">
+          <End Role="SATExamContent" Type="Self.SATExamContent" Multiplicity="0..1" />
+          <End Role="SATQuestion" Type="Self.SATQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamContent">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATQuestion">
+              <PropertyRef Name="ExamContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATQuestions_SATTypes">
+          <End Role="SATType" Type="Self.SATType" Multiplicity="0..1" />
+          <End Role="SATQuestion" Type="Self.SATQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="SATQuestion">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATScores_SATTypes">
+          <End Role="SATType" Type="Self.SATType" Multiplicity="1" />
+          <End Role="SATScore" Type="Self.SATScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="SATScore">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTest_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SATTest" Type="Self.SATTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SATTest">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestContents_SATExams">
+          <End Role="SATExamForm" Type="Self.SATExamForm" Multiplicity="1" />
+          <End Role="SATExamContent" Type="Self.SATExamContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamForm">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATExamContent">
+              <PropertyRef Name="ExamFormID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestSection_SATExamForm">
+          <End Role="SATExamForm" Type="Self.SATExamForm" Multiplicity="1" />
+          <End Role="SATTestSection" Type="Self.SATTestSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamForm">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATTestSection">
+              <PropertyRef Name="Section" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestSection_SATScore">
+          <End Role="SATScore" Type="Self.SATScore" Multiplicity="1" />
+          <End Role="SATTestSection" Type="Self.SATTestSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATScore">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATTestSection">
+              <PropertyRef Name="ScoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestSection_SATTest">
+          <End Role="SATTest" Type="Self.SATTest" Multiplicity="1" />
+          <End Role="SATTestSection" Type="Self.SATTestSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATTest">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATTestSection">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATUserAnswer_SATAnswer">
+          <End Role="SATAnswer" Type="Self.SATAnswer" Multiplicity="0..1" />
+          <End Role="SATUserAnswer" Type="Self.SATUserAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATAnswer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATUserAnswer">
+              <PropertyRef Name="UserAnswer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATUserAnswer_SATTest">
+          <End Role="SATTest" Type="Self.SATTest" Multiplicity="1" />
+          <End Role="SATUserAnswer" Type="Self.SATUserAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATTest">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATUserAnswer">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATWritingUnderlineText_SATQuestions">
+          <End Role="SATQuestion" Type="Self.SATQuestion" Multiplicity="1" />
+          <End Role="SATWritingUnderlineText" Type="Self.SATWritingUnderlineText" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATQuestion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATWritingUnderlineText">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialVideo_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="TutorialVideo" Type="Self.TutorialVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialVideo">
+              <PropertyRef Name="CatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Users">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="nhieevwp_webModelStoreContainer">
+          <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calendar" EntityType="Self.Calendar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consultant" EntityType="Self.Consultant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsultantRegister" EntityType="Self.ConsultantRegister" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Council" EntityType="Self.Council" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostCategory" EntityType="Self.PostCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Program" EntityType="Self.Program" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATAccount" EntityType="Self.SATAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATAnswer" EntityType="Self.SATAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATContentLine" EntityType="Self.SATContentLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATExamContent" EntityType="Self.SATExamContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATExamForm" EntityType="Self.SATExamForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATQuestion" EntityType="Self.SATQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATScore" EntityType="Self.SATScore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATTest" EntityType="Self.SATTest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATTestSection" EntityType="Self.SATTestSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATType" EntityType="Self.SATType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATUserAnswer" EntityType="Self.SATUserAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SATWritingUnderlineText" EntityType="Self.SATWritingUnderlineText" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentHighlight" EntityType="Self.StudentHighlight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherHighlight" EntityType="Self.TeacherHighlight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherSchedule" EntityType="Self.TeacherSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Testimonial" EntityType="Self.Testimonial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorialVideo" EntityType="Self.TutorialVideo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UniversityHighlight" EntityType="Self.UniversityHighlight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewSession" EntityType="Self.ViewSession" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Category_ParentCategory" Association="Self.FK_Category_ParentCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category1" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostCategory_Categories" Association="Self.FK_PostCategory_Categories">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="PostCategory" EntitySet="PostCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostCategory_Posts" Association="Self.FK_PostCategory_Posts">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostCategory" EntitySet="PostCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATAnswers_SATQuestions" Association="Self.FK_SATAnswers_SATQuestions">
+            <End Role="SATQuestion" EntitySet="SATQuestion" />
+            <End Role="SATAnswer" EntitySet="SATAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATContentLines_SATTestContents" Association="Self.FK_SATContentLines_SATTestContents">
+            <End Role="SATExamContent" EntitySet="SATExamContent" />
+            <End Role="SATContentLine" EntitySet="SATContentLine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATExams_SATTypes" Association="Self.FK_SATExams_SATTypes">
+            <End Role="SATType" EntitySet="SATType" />
+            <End Role="SATExamForm" EntitySet="SATExamForm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATQuestion_SATExamContent" Association="Self.FK_SATQuestion_SATExamContent">
+            <End Role="SATExamContent" EntitySet="SATExamContent" />
+            <End Role="SATQuestion" EntitySet="SATQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATQuestions_SATTypes" Association="Self.FK_SATQuestions_SATTypes">
+            <End Role="SATType" EntitySet="SATType" />
+            <End Role="SATQuestion" EntitySet="SATQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATScores_SATTypes" Association="Self.FK_SATScores_SATTypes">
+            <End Role="SATType" EntitySet="SATType" />
+            <End Role="SATScore" EntitySet="SATScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTest_User" Association="Self.FK_SATTest_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="SATTest" EntitySet="SATTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestContents_SATExams" Association="Self.FK_SATTestContents_SATExams">
+            <End Role="SATExamForm" EntitySet="SATExamForm" />
+            <End Role="SATExamContent" EntitySet="SATExamContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestSection_SATExamForm" Association="Self.FK_SATTestSection_SATExamForm">
+            <End Role="SATExamForm" EntitySet="SATExamForm" />
+            <End Role="SATTestSection" EntitySet="SATTestSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestSection_SATScore" Association="Self.FK_SATTestSection_SATScore">
+            <End Role="SATScore" EntitySet="SATScore" />
+            <End Role="SATTestSection" EntitySet="SATTestSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestSection_SATTest" Association="Self.FK_SATTestSection_SATTest">
+            <End Role="SATTest" EntitySet="SATTest" />
+            <End Role="SATTestSection" EntitySet="SATTestSection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATUserAnswer_SATAnswer" Association="Self.FK_SATUserAnswer_SATAnswer">
+            <End Role="SATAnswer" EntitySet="SATAnswer" />
+            <End Role="SATUserAnswer" EntitySet="SATUserAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATUserAnswer_SATTest" Association="Self.FK_SATUserAnswer_SATTest">
+            <End Role="SATTest" EntitySet="SATTest" />
+            <End Role="SATUserAnswer" EntitySet="SATUserAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATWritingUnderlineText_SATQuestions" Association="Self.FK_SATWritingUnderlineText_SATQuestions">
+            <End Role="SATQuestion" EntitySet="SATQuestion" />
+            <End Role="SATWritingUnderlineText" EntitySet="SATWritingUnderlineText" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialVideo_Category" Association="Self.FK_TutorialVideo_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="TutorialVideo" EntitySet="TutorialVideo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="nhieevwp_webModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SATEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Banners" EntityType="nhieevwp_webModel.Banner" />
+          <EntitySet Name="Calendars" EntityType="nhieevwp_webModel.Calendar" />
+          <EntitySet Name="Categories" EntityType="nhieevwp_webModel.Category" />
+          <EntitySet Name="Consultants" EntityType="nhieevwp_webModel.Consultant" />
+          <EntitySet Name="ConsultantRegisters" EntityType="nhieevwp_webModel.ConsultantRegister" />
+          <EntitySet Name="Councils" EntityType="nhieevwp_webModel.Council" />
+          <EntitySet Name="Media" EntityType="nhieevwp_webModel.Medium" />
+          <EntitySet Name="Posts" EntityType="nhieevwp_webModel.Post" />
+          <EntitySet Name="PostCategories" EntityType="nhieevwp_webModel.PostCategory" />
+          <EntitySet Name="Programs" EntityType="nhieevwp_webModel.Program" />
+          <EntitySet Name="Roles" EntityType="nhieevwp_webModel.Role" />
+          <EntitySet Name="SATAccounts" EntityType="nhieevwp_webModel.SATAccount" />
+          <EntitySet Name="SATAnswers" EntityType="nhieevwp_webModel.SATAnswer" />
+          <EntitySet Name="SATContentLines" EntityType="nhieevwp_webModel.SATContentLine" />
+          <EntitySet Name="SATExamContents" EntityType="nhieevwp_webModel.SATExamContent" />
+          <EntitySet Name="SATExamForms" EntityType="nhieevwp_webModel.SATExamForm" />
+          <EntitySet Name="SATScores" EntityType="nhieevwp_webModel.SATScore" />
+          <EntitySet Name="SATTests" EntityType="nhieevwp_webModel.SATTest" />
+          <EntitySet Name="SATTestSections" EntityType="nhieevwp_webModel.SATTestSection" />
+          <EntitySet Name="SATTypes" EntityType="nhieevwp_webModel.SATType" />
+          <EntitySet Name="SATUserAnswers" EntityType="nhieevwp_webModel.SATUserAnswer" />
+          <EntitySet Name="SATWritingUnderlineTexts" EntityType="nhieevwp_webModel.SATWritingUnderlineText" />
+          <EntitySet Name="Settings" EntityType="nhieevwp_webModel.Setting" />
+          <EntitySet Name="StudentHighlights" EntityType="nhieevwp_webModel.StudentHighlight" />
+          <EntitySet Name="TeacherHighlights" EntityType="nhieevwp_webModel.TeacherHighlight" />
+          <EntitySet Name="TeacherSchedules" EntityType="nhieevwp_webModel.TeacherSchedule" />
+          <EntitySet Name="Testimonials" EntityType="nhieevwp_webModel.Testimonial" />
+          <EntitySet Name="UniversityHighlights" EntityType="nhieevwp_webModel.UniversityHighlight" />
+          <EntitySet Name="Users" EntityType="nhieevwp_webModel.User" />
+          <EntitySet Name="UserRoles" EntityType="nhieevwp_webModel.UserRole" />
+          <EntitySet Name="ViewSessions" EntityType="nhieevwp_webModel.ViewSession" />
+          <AssociationSet Name="FK_Category_ParentCategory" Association="nhieevwp_webModel.FK_Category_ParentCategory">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostCategory_Categories" Association="nhieevwp_webModel.FK_PostCategory_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="PostCategory" EntitySet="PostCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostCategory_Posts" Association="nhieevwp_webModel.FK_PostCategory_Posts">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="PostCategory" EntitySet="PostCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="nhieevwp_webModel.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATUserAnswer_SATAnswer" Association="nhieevwp_webModel.FK_SATUserAnswer_SATAnswer">
+            <End Role="SATAnswer" EntitySet="SATAnswers" />
+            <End Role="SATUserAnswer" EntitySet="SATUserAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATContentLines_SATTestContents" Association="nhieevwp_webModel.FK_SATContentLines_SATTestContents">
+            <End Role="SATExamContent" EntitySet="SATExamContents" />
+            <End Role="SATContentLine" EntitySet="SATContentLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestContents_SATExams" Association="nhieevwp_webModel.FK_SATTestContents_SATExams">
+            <End Role="SATExamForm" EntitySet="SATExamForms" />
+            <End Role="SATExamContent" EntitySet="SATExamContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATExams_SATTypes" Association="nhieevwp_webModel.FK_SATExams_SATTypes">
+            <End Role="SATType" EntitySet="SATTypes" />
+            <End Role="SATExamForm" EntitySet="SATExamForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestSection_SATExamForm" Association="nhieevwp_webModel.FK_SATTestSection_SATExamForm">
+            <End Role="SATExamForm" EntitySet="SATExamForms" />
+            <End Role="SATTestSection" EntitySet="SATTestSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATScores_SATTypes" Association="nhieevwp_webModel.FK_SATScores_SATTypes">
+            <End Role="SATType" EntitySet="SATTypes" />
+            <End Role="SATScore" EntitySet="SATScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestSection_SATScore" Association="nhieevwp_webModel.FK_SATTestSection_SATScore">
+            <End Role="SATScore" EntitySet="SATScores" />
+            <End Role="SATTestSection" EntitySet="SATTestSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTest_User" Association="nhieevwp_webModel.FK_SATTest_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SATTest" EntitySet="SATTests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATTestSection_SATTest" Association="nhieevwp_webModel.FK_SATTestSection_SATTest">
+            <End Role="SATTest" EntitySet="SATTests" />
+            <End Role="SATTestSection" EntitySet="SATTestSections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATUserAnswer_SATTest" Association="nhieevwp_webModel.FK_SATUserAnswer_SATTest">
+            <End Role="SATTest" EntitySet="SATTests" />
+            <End Role="SATUserAnswer" EntitySet="SATUserAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Users" Association="nhieevwp_webModel.FK_UserRole_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <EntitySet Name="TutorialVideos" EntityType="nhieevwp_webModel.TutorialVideo" />
+          <AssociationSet Name="FK_TutorialVideo_Category" Association="nhieevwp_webModel.FK_TutorialVideo_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="TutorialVideo" EntitySet="TutorialVideos" />
+          </AssociationSet>
+          <EntitySet Name="SATQuestions" EntityType="nhieevwp_webModel.SATQuestion" />
+          <AssociationSet Name="FK_SATAnswers_SATQuestions" Association="nhieevwp_webModel.FK_SATAnswers_SATQuestions">
+            <End Role="SATQuestion" EntitySet="SATQuestions" />
+            <End Role="SATAnswer" EntitySet="SATAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATQuestion_SATExamContent" Association="nhieevwp_webModel.FK_SATQuestion_SATExamContent">
+            <End Role="SATExamContent" EntitySet="SATExamContents" />
+            <End Role="SATQuestion" EntitySet="SATQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATQuestions_SATTypes" Association="nhieevwp_webModel.FK_SATQuestions_SATTypes">
+            <End Role="SATType" EntitySet="SATTypes" />
+            <End Role="SATQuestion" EntitySet="SATQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SATWritingUnderlineText_SATQuestions" Association="nhieevwp_webModel.FK_SATWritingUnderlineText_SATQuestions">
+            <End Role="SATQuestion" EntitySet="SATQuestions" />
+            <End Role="SATWritingUnderlineText" EntitySet="SATWritingUnderlineTexts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsLock" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="JustPhoto" Type="Boolean" />
+          <Property Name="IsHeader" Type="Boolean" />
+          <Property Name="LinkYoutube" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BannerIndex" Type="Int32" />
+          <Property Name="Position" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="FromTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="IsMenu" Type="Boolean" Nullable="false" />
+          <Property Name="Controller" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsSystem" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="OrderNumber" Type="Int32" />
+          <Property Name="keyword" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MetaKey" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ChildCategory" Relationship="nhieevwp_webModel.FK_Category_ParentCategory" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Category2" Relationship="nhieevwp_webModel.FK_Category_ParentCategory" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="PostCategories" Relationship="nhieevwp_webModel.FK_PostCategory_Categories" FromRole="Category" ToRole="PostCategory" />
+          <NavigationProperty Name="TutorialVideos" Relationship="nhieevwp_webModel.FK_TutorialVideo_Category" FromRole="Category" ToRole="TutorialVideo" />
+          <Property Name="SEOTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Consultant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="School" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Program" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsComplate" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ConsultantRegister">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="School" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RegistedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsComplate" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Council">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="University" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Medium">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FileSource" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PublishedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="PhotoCover" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNumber" Type="Int32" />
+          <Property Name="MetaKey" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFiles" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ViewCount" Type="Int64" />
+          <NavigationProperty Name="PostCategories" Relationship="nhieevwp_webModel.FK_PostCategory_Posts" FromRole="Post" ToRole="PostCategory" />
+        </EntityType>
+        <EntityType Name="PostCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="nhieevwp_webModel.FK_PostCategory_Categories" FromRole="PostCategory" ToRole="Category" />
+          <NavigationProperty Name="Post" Relationship="nhieevwp_webModel.FK_PostCategory_Posts" FromRole="PostCategory" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRoles" Relationship="nhieevwp_webModel.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="SATAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnswerContent" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsRightAnswer" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="AnswerType" Type="Int32" Nullable="false" />
+          <Property Name="Mark" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="SATUserAnswers" Relationship="nhieevwp_webModel.FK_SATUserAnswer_SATAnswer" FromRole="SATAnswer" ToRole="SATUserAnswer" />
+          <NavigationProperty Name="SATQuestion" Relationship="nhieevwp_webModel.FK_SATAnswers_SATQuestions" FromRole="SATAnswer" ToRole="SATQuestion" />
+          <Property Name="Explanation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SATContentLine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LineText" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LineIndex" Type="Int32" Nullable="false" />
+          <Property Name="ExamContentID" Type="Int32" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" />
+          <NavigationProperty Name="SATExamContent" Relationship="nhieevwp_webModel.FK_SATContentLines_SATTestContents" FromRole="SATContentLine" ToRole="SATExamContent" />
+        </EntityType>
+        <EntityType Name="SATExamContent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamContentIndex" Type="Int32" Nullable="false" />
+          <Property Name="AttachImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="ExamFormID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Intro" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" />
+          <NavigationProperty Name="SATContentLines" Relationship="nhieevwp_webModel.FK_SATContentLines_SATTestContents" FromRole="SATExamContent" ToRole="SATContentLine" />
+          <NavigationProperty Name="SATExamForm" Relationship="nhieevwp_webModel.FK_SATTestContents_SATExams" FromRole="SATExamContent" ToRole="SATExamForm" />
+          <NavigationProperty Name="SATQuestions" Relationship="nhieevwp_webModel.FK_SATQuestion_SATExamContent" FromRole="SATExamContent" ToRole="SATQuestion" />
+        </EntityType>
+        <EntityType Name="SATExamForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Direction" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="NumberQuestion" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="Section" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="ExamCode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SATExamContents" Relationship="nhieevwp_webModel.FK_SATTestContents_SATExams" FromRole="SATExamForm" ToRole="SATExamContent" />
+          <NavigationProperty Name="SATType" Relationship="nhieevwp_webModel.FK_SATExams_SATTypes" FromRole="SATExamForm" ToRole="SATType" />
+          <NavigationProperty Name="SATTestSections" Relationship="nhieevwp_webModel.FK_SATTestSection_SATExamForm" FromRole="SATExamForm" ToRole="SATTestSection" />
+        </EntityType>
+        <EntityType Name="SATScore">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RawValue" Type="Int32" Nullable="false" />
+          <Property Name="ScoreValue" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SATType" Relationship="nhieevwp_webModel.FK_SATScores_SATTypes" FromRole="SATScore" ToRole="SATType" />
+          <NavigationProperty Name="SATTestSections" Relationship="nhieevwp_webModel.FK_SATTestSection_SATScore" FromRole="SATScore" ToRole="SATTestSection" />
+        </EntityType>
+        <EntityType Name="SATTest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SubmitTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TotalScore" Type="Int32" Nullable="false" />
+          <Property Name="ExamCode" Type="Int32" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="nhieevwp_webModel.FK_SATTest_User" FromRole="SATTest" ToRole="User" />
+          <NavigationProperty Name="SATTestSections" Relationship="nhieevwp_webModel.FK_SATTestSection_SATTest" FromRole="SATTest" ToRole="SATTestSection" />
+          <NavigationProperty Name="SATUserAnswers" Relationship="nhieevwp_webModel.FK_SATUserAnswer_SATTest" FromRole="SATTest" ToRole="SATUserAnswer" />
+        </EntityType>
+        <EntityType Name="SATTestSection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="TotalRightAnswer" Type="Int32" Nullable="false" />
+          <Property Name="ScoreID" Type="Int32" Nullable="false" />
+          <Property Name="Section" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="SATExamForm" Relationship="nhieevwp_webModel.FK_SATTestSection_SATExamForm" FromRole="SATTestSection" ToRole="SATExamForm" />
+          <NavigationProperty Name="SATScore" Relationship="nhieevwp_webModel.FK_SATTestSection_SATScore" FromRole="SATTestSection" ToRole="SATScore" />
+          <NavigationProperty Name="SATTest" Relationship="nhieevwp_webModel.FK_SATTestSection_SATTest" FromRole="SATTestSection" ToRole="SATTest" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SATType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SATExamForms" Relationship="nhieevwp_webModel.FK_SATExams_SATTypes" FromRole="SATType" ToRole="SATExamForm" />
+          <NavigationProperty Name="SATScores" Relationship="nhieevwp_webModel.FK_SATScores_SATTypes" FromRole="SATType" ToRole="SATScore" />
+          <NavigationProperty Name="SATQuestions" Relationship="nhieevwp_webModel.FK_SATQuestions_SATTypes" FromRole="SATType" ToRole="SATQuestion" />
+        </EntityType>
+        <EntityType Name="SATUserAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserAnswer" Type="Int32" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SATAnswer" Relationship="nhieevwp_webModel.FK_SATUserAnswer_SATAnswer" FromRole="SATUserAnswer" ToRole="SATAnswer" />
+          <NavigationProperty Name="SATTest" Relationship="nhieevwp_webModel.FK_SATUserAnswer_SATTest" FromRole="SATUserAnswer" ToRole="SATTest" />
+          <Property Name="AnswerContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SATWritingUnderlineText">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnderlineText" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SATQuestion" Relationship="nhieevwp_webModel.FK_SATWritingUnderlineText_SATQuestions" FromRole="SATWritingUnderlineText" ToRole="SATQuestion" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="StudentHighlight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Program" Type="Int32" />
+          <Property Name="Score" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Summarize" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="SAT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TOEFL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IELTS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ApplySchool" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Scholarship" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TeacherHighlight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Experience" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DisplayIndex" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TeacherSchedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="Repeat" Type="Int32" />
+          <Property Name="RepeatOn" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FromTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ToTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsVerify" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Testimonial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Subtitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="SATScore" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UniversityHighlight">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Summarize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Ranking" Type="Int32" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="Salt" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsSystem" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="rowguid" Type="Guid" />
+          <NavigationProperty Name="SATTests" Relationship="nhieevwp_webModel.FK_SATTest_User" FromRole="User" ToRole="SATTest" />
+          <NavigationProperty Name="UserRoles" Relationship="nhieevwp_webModel.FK_UserRole_Users" FromRole="User" ToRole="UserRole" />
+          <Property Name="ResetPasswordToken" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="nhieevwp_webModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="nhieevwp_webModel.FK_UserRole_Users" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ViewSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="SessionId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Category_ParentCategory">
+          <End Type="nhieevwp_webModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostCategory_Categories">
+          <End Type="nhieevwp_webModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.PostCategory" Role="PostCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostCategory_Posts">
+          <End Type="nhieevwp_webModel.Post" Role="Post" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.PostCategory" Role="PostCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostCategory">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Type="nhieevwp_webModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATUserAnswer_SATAnswer">
+          <End Type="nhieevwp_webModel.SATAnswer" Role="SATAnswer" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.SATUserAnswer" Role="SATUserAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATAnswer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATUserAnswer">
+              <PropertyRef Name="UserAnswer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATContentLines_SATTestContents">
+          <End Type="nhieevwp_webModel.SATExamContent" Role="SATExamContent" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATContentLine" Role="SATContentLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamContent">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATContentLine">
+              <PropertyRef Name="ExamContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestContents_SATExams">
+          <End Type="nhieevwp_webModel.SATExamForm" Role="SATExamForm" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATExamContent" Role="SATExamContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamForm">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATExamContent">
+              <PropertyRef Name="ExamFormID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATExams_SATTypes">
+          <End Type="nhieevwp_webModel.SATType" Role="SATType" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATExamForm" Role="SATExamForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="SATExamForm">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestSection_SATExamForm">
+          <End Type="nhieevwp_webModel.SATExamForm" Role="SATExamForm" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATTestSection" Role="SATTestSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamForm">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATTestSection">
+              <PropertyRef Name="Section" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATScores_SATTypes">
+          <End Type="nhieevwp_webModel.SATType" Role="SATType" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATScore" Role="SATScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="SATScore">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestSection_SATScore">
+          <End Type="nhieevwp_webModel.SATScore" Role="SATScore" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATTestSection" Role="SATTestSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATScore">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATTestSection">
+              <PropertyRef Name="ScoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTest_User">
+          <End Type="nhieevwp_webModel.User" Role="User" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATTest" Role="SATTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SATTest">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATTestSection_SATTest">
+          <End Type="nhieevwp_webModel.SATTest" Role="SATTest" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATTestSection" Role="SATTestSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATTest">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATTestSection">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATUserAnswer_SATTest">
+          <End Type="nhieevwp_webModel.SATTest" Role="SATTest" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATUserAnswer" Role="SATUserAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATTest">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATUserAnswer">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Users">
+          <End Type="nhieevwp_webModel.User" Role="User" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TutorialVideo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CatId" Type="Int32" />
+          <Property Name="Thumbnail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category" Relationship="nhieevwp_webModel.FK_TutorialVideo_Category" FromRole="TutorialVideo" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_TutorialVideo_Category">
+          <End Type="nhieevwp_webModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.TutorialVideo" Role="TutorialVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialVideo">
+              <PropertyRef Name="CatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SATQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionContent" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ExamContentID" Type="Int32" />
+          <Property Name="QuestionNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SATAnswers" Relationship="nhieevwp_webModel.FK_SATAnswers_SATQuestions" FromRole="SATQuestion" ToRole="SATAnswer" />
+          <NavigationProperty Name="SATExamContent" Relationship="nhieevwp_webModel.FK_SATQuestion_SATExamContent" FromRole="SATQuestion" ToRole="SATExamContent" />
+          <NavigationProperty Name="SATType" Relationship="nhieevwp_webModel.FK_SATQuestions_SATTypes" FromRole="SATQuestion" ToRole="SATType" />
+          <NavigationProperty Name="SATWritingUnderlineTexts" Relationship="nhieevwp_webModel.FK_SATWritingUnderlineText_SATQuestions" FromRole="SATQuestion" ToRole="SATWritingUnderlineText" />
+          <Property Name="HasInputAnswer" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_SATAnswers_SATQuestions">
+          <End Type="nhieevwp_webModel.SATQuestion" Role="SATQuestion" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATAnswer" Role="SATAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATQuestion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATAnswer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATQuestion_SATExamContent">
+          <End Type="nhieevwp_webModel.SATExamContent" Role="SATExamContent" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.SATQuestion" Role="SATQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATExamContent">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATQuestion">
+              <PropertyRef Name="ExamContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATQuestions_SATTypes">
+          <End Type="nhieevwp_webModel.SATType" Role="SATType" Multiplicity="0..1" />
+          <End Type="nhieevwp_webModel.SATQuestion" Role="SATQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="SATQuestion">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SATWritingUnderlineText_SATQuestions">
+          <End Type="nhieevwp_webModel.SATQuestion" Role="SATQuestion" Multiplicity="1" />
+          <End Type="nhieevwp_webModel.SATWritingUnderlineText" Role="SATWritingUnderlineText" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SATQuestion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SATWritingUnderlineText">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="nhieevwp_webModelStoreContainer" CdmEntityContainer="SATEntities">
+          <EntitySetMapping Name="Banners">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Banner">
+              <MappingFragment StoreEntitySet="Banner">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="BannerIndex" ColumnName="BannerIndex" />
+                <ScalarProperty Name="LinkYoutube" ColumnName="LinkYoutube" />
+                <ScalarProperty Name="IsHeader" ColumnName="IsHeader" />
+                <ScalarProperty Name="JustPhoto" ColumnName="JustPhoto" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsLock" ColumnName="IsLock" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calendars">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Calendar">
+              <MappingFragment StoreEntitySet="Calendar">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="ToTime" ColumnName="ToTime" />
+                <ScalarProperty Name="FromTime" ColumnName="FromTime" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="DisplayType" ColumnName="DisplayType" />
+                <ScalarProperty Name="SEOTitle" ColumnName="SEOTitle" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKey" ColumnName="MetaKey" />
+                <ScalarProperty Name="keyword" ColumnName="keyword" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consultants">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Consultant">
+              <MappingFragment StoreEntitySet="Consultant">
+                <ScalarProperty Name="IsComplate" ColumnName="IsComplate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsultantRegisters">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.ConsultantRegister">
+              <MappingFragment StoreEntitySet="ConsultantRegister">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsComplate" ColumnName="IsComplate" />
+                <ScalarProperty Name="RegistedDate" ColumnName="RegistedDate" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Councils">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Council">
+              <MappingFragment StoreEntitySet="Council">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="University" ColumnName="University" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Media">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Medium">
+              <MappingFragment StoreEntitySet="Media">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="FileSource" ColumnName="FileSource" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="AttachFiles" ColumnName="AttachFiles" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKey" ColumnName="MetaKey" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="PhotoCover" ColumnName="PhotoCover" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PublishedDate" ColumnName="PublishedDate" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostCategories">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.PostCategory">
+              <MappingFragment StoreEntitySet="PostCategory">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programs">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Program">
+              <MappingFragment StoreEntitySet="Program">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATAccounts">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATAccount">
+              <MappingFragment StoreEntitySet="SATAccount">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATAnswers">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATAnswer">
+              <MappingFragment StoreEntitySet="SATAnswer">
+                <ScalarProperty Name="Explanation" ColumnName="Explanation" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="AnswerType" ColumnName="AnswerType" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsRightAnswer" ColumnName="IsRightAnswer" />
+                <ScalarProperty Name="AnswerContent" ColumnName="AnswerContent" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATContentLines">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATContentLine">
+              <MappingFragment StoreEntitySet="SATContentLine">
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ExamContentID" ColumnName="ExamContentID" />
+                <ScalarProperty Name="LineIndex" ColumnName="LineIndex" />
+                <ScalarProperty Name="LineText" ColumnName="LineText" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATExamContents">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATExamContent">
+              <MappingFragment StoreEntitySet="SATExamContent">
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="Intro" ColumnName="Intro" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ExamFormID" ColumnName="ExamFormID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="AttachImage" ColumnName="AttachImage" />
+                <ScalarProperty Name="ExamContentIndex" ColumnName="ExamContentIndex" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATExamForms">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATExamForm">
+              <MappingFragment StoreEntitySet="SATExamForm">
+                <ScalarProperty Name="ExamCode" ColumnName="ExamCode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="NumberQuestion" ColumnName="NumberQuestion" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATScores">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATScore">
+              <MappingFragment StoreEntitySet="SATScore">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="ScoreValue" ColumnName="ScoreValue" />
+                <ScalarProperty Name="RawValue" ColumnName="RawValue" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATTests">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATTest">
+              <MappingFragment StoreEntitySet="SATTest">
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ExamCode" ColumnName="ExamCode" />
+                <ScalarProperty Name="TotalScore" ColumnName="TotalScore" />
+                <ScalarProperty Name="SubmitTime" ColumnName="SubmitTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATTestSections">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATTestSection">
+              <MappingFragment StoreEntitySet="SATTestSection">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="ScoreID" ColumnName="ScoreID" />
+                <ScalarProperty Name="TotalRightAnswer" ColumnName="TotalRightAnswer" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATTypes">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATType">
+              <MappingFragment StoreEntitySet="SATType">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATUserAnswers">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATUserAnswer">
+              <MappingFragment StoreEntitySet="SATUserAnswer">
+                <ScalarProperty Name="AnswerContent" ColumnName="AnswerContent" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="UserAnswer" ColumnName="UserAnswer" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATWritingUnderlineTexts">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATWritingUnderlineText">
+              <MappingFragment StoreEntitySet="SATWritingUnderlineText">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="UnderlineText" ColumnName="UnderlineText" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Setting">
+              <MappingFragment StoreEntitySet="Setting">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentHighlights">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.StudentHighlight">
+              <MappingFragment StoreEntitySet="StudentHighlight">
+                <ScalarProperty Name="Scholarship" ColumnName="Scholarship" />
+                <ScalarProperty Name="ApplySchool" ColumnName="ApplySchool" />
+                <ScalarProperty Name="IELTS" ColumnName="IELTS" />
+                <ScalarProperty Name="TOEFL" ColumnName="TOEFL" />
+                <ScalarProperty Name="SAT" ColumnName="SAT" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Program" ColumnName="Program" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherHighlights">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.TeacherHighlight">
+              <MappingFragment StoreEntitySet="TeacherHighlight">
+                <ScalarProperty Name="DisplayIndex" ColumnName="DisplayIndex" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherSchedules">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.TeacherSchedule">
+              <MappingFragment StoreEntitySet="TeacherSchedule">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsVerify" ColumnName="IsVerify" />
+                <ScalarProperty Name="ToTime" ColumnName="ToTime" />
+                <ScalarProperty Name="FromTime" ColumnName="FromTime" />
+                <ScalarProperty Name="RepeatOn" ColumnName="RepeatOn" />
+                <ScalarProperty Name="Repeat" ColumnName="Repeat" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Testimonials">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.Testimonial">
+              <MappingFragment StoreEntitySet="Testimonial">
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="SATScore" ColumnName="SATScore" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Subtitle" ColumnName="Subtitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UniversityHighlights">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.UniversityHighlight">
+              <MappingFragment StoreEntitySet="UniversityHighlight">
+                <ScalarProperty Name="Ranking" ColumnName="Ranking" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Summarize" ColumnName="Summarize" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewSessions">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.ViewSession">
+              <MappingFragment StoreEntitySet="ViewSession">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorialVideos">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.TutorialVideo">
+              <MappingFragment StoreEntitySet="TutorialVideo">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="CatId" ColumnName="CatId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SATQuestions">
+            <EntityTypeMapping TypeName="nhieevwp_webModel.SATQuestion">
+              <MappingFragment StoreEntitySet="SATQuestion">
+                <ScalarProperty Name="HasInputAnswer" ColumnName="HasInputAnswer" />
+                <ScalarProperty Name="QuestionNo" ColumnName="QuestionNo" />
+                <ScalarProperty Name="ExamContentID" ColumnName="ExamContentID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

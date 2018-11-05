@@ -1,0 +1,540 @@
+﻿@model IEE.Infrastructure.DbContext.SATExamContent
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<style>
+    #dim {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background: url('/Content/img/dim.png');
+        display: none;
+        text-align: left;
+        margin: 0 auto;
+    }
+
+    #contextDiv {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 300px;
+        height: 350px;
+        border: solid 2px #0094ff;
+        background-color: #ffffff;
+        padding: 0px 8px 0 8px;
+        margin: 0 auto;
+    }
+</style>
+<h2>Nội dung Bài thi</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Tạo mới nội dung</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamFormID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ExamFormID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamFormID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Intro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Intro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Intro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamContentIndex, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ExamContentIndex, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExamContentIndex, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AttachImage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.AttachImage, new { @class = "form-control", style = "display:none;" })
+                <img id="attImg" src="" />
+                <input type="file" name="attachImage" id="attachImageInput" accept="image/x-png,image/gif,image/jpeg" />
+                @Html.ValidationMessageFor(model => model.AttachImage, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col-md-5" style="float:right;display:none;z-index:1000;" id="contentInfo" >
+                <span class="btn-info">
+                    &nbsp; Chọn nội dung và chuột phải để thêm câu hỏi&nbsp;
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contents, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="inputMethodDiv" style="display:none;">
+                    <div>
+                        <input type="radio" name="contentInputMethod" id="fileInputRBtn" value="file" />Nhập từ file (text hoặc word)
+                        <input type="file" name="fileInputMethod" id="fileInputMethod" accept=".txt,.doc,.docx" />
+                    </div>
+
+                    <div>
+                        <input type="radio" name="contentInputMethod" id="manualInputRBtn" value="manual" />Nhập từng dòng
+                        <input name="manualInputMethod" id="manualInputMethod" placeholder="số dòng" type="number" min="0" max="99" />
+                    </div>
+                </div>
+                @Html.TextAreaFor(model => model.Contents, htmlAttributes: new { @class = "form-control", width = "90%", rows = "12", @style = "resize:none;" })
+                @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2"></div>
+
+            @{
+                if (ViewBag.ContentLines != null && ((List<string>)ViewBag.ContentLines).Count > 0)
+                {
+                    <div class="col-md-10" id="contentLinesDiv" style="display:block;">
+                        @{
+                            var listContentLines = (List<string>)ViewBag.ContentLines;
+                            foreach (var item in listContentLines)
+                            {
+                                <input type="text" value="@item" class='form-control' />
+                            }
+                        }
+                    </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-10" id="contentLinesDiv" style="display:none;">
+
+                                </div>
+                            }
+            }
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.Status, new { @checked = "checked" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Tạo mới" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    <div id="dim">
+        <div style="border:solid 1px; height:25%;width:70%;" id="contextDiv">
+            <div style="height:30px;color:#ffffff ;background-color:#808080;text-align:center;">
+                <h4 style="position: relative;top: 50%;transform: translateY(-50%); ">Thêm câu hỏi</h4>
+            </div>
+            <div class="form-horizontal" style="margin-top:10px;">
+                <div id="listInputHidden">
+                    @if (ViewBag.ListInputHidden != null)
+                    {
+                        var list = (List<string>)ViewBag.ListInputHidden;
+                        foreach (var item in list)
+                        {
+                            <input type="hidden" name="questionToAdd" value="@item" />
+                        }
+                    }
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SATQuestions.First().ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+
+                        @Html.DropDownList("listQuestion", (SelectList)ViewBag.ListQuestion, new { id = "listQuestion", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="button" id="addQuestionBtn" value="Thêm" class="btn btn-success" />
+                            <input type="button" id="closeDiv" value="Đóng" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            }
+<div>
+    @Html.ActionLink("Về danh sách", "Index")
+</div>
+
+<script>
+    var currentListCount = 0;
+    $(document).ready(function () {
+        
+        $('#ExamFormID').trigger('change');
+        $('#fileInputRBtn').trigger('click');
+        $('#fileInputRBtn').trigger('change');
+
+        $("#dim").css("height", $(document).height());
+        var roxyFileman = '/Scripts/fileman/index.html';
+
+        var editor = CKEDITOR.replace('Contents', {
+
+            filebrowserBrowseUrl: roxyFileman,
+            filebrowserImageBrowseUrl: roxyFileman + '?type=image',
+            removeDialogTabs: 'link:upload;image:upload',
+            // Define the toolbar groups as it is a more accessible solution.
+            //toolbarGroups: [
+            //    { "name": "basicstyles", "groups": ["basicstyles"] },
+            //    { "name": "links", "groups": ["links"] },
+            //    { "name": "paragraph", "groups": ["list", "blocks"] },
+            //    { "name": "document", "groups": ["mode"] },
+            //    { "name": "insert", "groups": ["insert"] },
+            //    { "name": "styles", "groups": ["styles"] },
+            //    { "name": "about", "groups": ["about"] }
+            //],
+            //// Remove the redundant buttons from toolbar groups defined above.
+            //removeButtons: 'Strike,Subscript,Superscript,Anchor,Styles,Specialchar',
+            // Dialog windows are also simplified.
+            removeDialogTabs: 'link:advanced'
+        });
+        editorReady(editor);
+    });
+
+
+    function editorReady(editor) {
+        editor.on('instanceReady', function (e) {
+            // define command
+            var myCommand = {
+                label: "Add Question",
+                command: 'myCommand',
+                group: 'button'
+            };
+            editor.addCommand("myCommand", {
+                exec: function (editor) {
+                    var div = $("#contextDiv");
+                    $('#dim').fadeIn();
+                    //if (currentListCount!=0) {
+
+                    $.ajax({
+                        url: '/ttn_content/ExamContent/GetListUnsetQuestion',
+                        method: 'POST'
+                    }).success(function (res) {
+                        $('#listQuestion').html('');
+
+                        for (var i = 0; i < res.list.length; i++) {
+                            $('#listQuestion').append($('<option>').attr('value', res.list[i].ID).text(res.list[i].Title));
+                        }
+
+                    }).error(function (res) {
+                        console.log(res);
+                    });
+                    //  }
+                    div.show();
+
+
+                }
+            });
+
+            if (editor.contextMenu) {
+                var getSelect = editor.getSelection();
+                var selectText = getSelect.getSelectedText();
+
+
+                // add command
+                editor.addMenuItems({
+                    myCommand: {
+                        label: "Thêm câu hỏi",
+                        command: 'myCommand',
+                        group: 'button',
+                        order: 1
+                    }
+                });
+                // add listener
+                editor.contextMenu.addListener(function (element, selection) {
+                    if (selection.getSelectedText() == "") {
+                        return null;
+                    }
+                    return {
+                        myCommand: CKEDITOR.TRISTATE_ON
+                    };
+                });
+
+            }
+        });
+    }
+
+
+    function getSelectTextFromCK() {
+        var ck = CKEDITOR.instances['Contents'];
+        var selectText = ck.getSelection();
+        return selectText.getSelectedText();
+    }
+    $('#addQuestionBtn').click(function () {
+        var qID = $('#listQuestion').val();
+        var selectText = getSelectTextFromCK();
+        $.ajax({
+            url: '/ttn_content/ExamContent/AddQuestionToLine?questionID=' + qID + '&selectedText=' + selectText,
+            method: 'POST'
+        }).success(function (res) {
+            $('#listInputHidden').append(res.inputHidden);
+            currentListCount = res.countListQuestion;
+            $("#contextDiv").hide();
+            $("#dim").fadeOut();
+            var ck = CKEDITOR.instances['Contents'];
+            var ckData = ck.getData();
+            var numb = "<a href='#question" + res.number + "' target='_self'><strong><span style='background-color: rgb(192, 57, 43);'>&nbsp;<span style='color: #fff;'>" + res.number + "</span>&nbsp;</span></strong>";
+            var newText = "<u>" + selectText + "</u></a>";
+            var replaced_text = ckData.replace(selectText, numb + "." + newText);
+            ck.setData(replaced_text);
+            ck.getSelection().removeAllRanges();
+
+
+        });
+    });
+    $('#ExamFormID').change(function () {
+
+        var formID = $('#ExamFormID').val();
+        $.ajax({
+            url: '/ttn_content/ExamContent/GetType?formID=' + formID,
+            method: 'POST'
+        }).done(function (data) {
+            
+            if (data.typeName === "Reading") {
+                $('#inputMethodDiv').show();
+                CKEDITOR.instances['Contents'].destroy();
+                $("#Contents").hide();
+                $("#Contents").val('');
+            }
+            else if (data.typeName === "Writing") {
+                $('#inputMethodDiv').hide();
+                $('#contentLinesDiv').hide();
+                var editor = CKEDITOR.replace('Contents');
+                editorReady(editor);
+                
+                $('#contentInfo').show();
+
+                var hide = setTimeout(function () {
+                    $('#contentInfo').fadeOut();
+                }, 10000);
+               
+            }
+            else if (data.typeName.includes("Math")) {
+                $('#inputMethodDiv').hide();
+                $('#contentLinesDiv').hide();
+                var editor = CKEDITOR.replace('Contents');
+                editorReady(editor);
+
+            }
+
+        });
+    });
+    
+    var myfile = "";
+    $('#fileInputRBtn').change(function () {
+
+        if ($('#fileInputRBtn').prop('checked')) {
+            $('#manualInputMethod').prop('disabled', 'disabled');
+            $('#fileInputMethod').removeAttr('disabled');
+        }
+
+    });
+    $('#fileInputMethod').change(function (ev) {
+        myfile = $(this).val();
+
+        var ext = myfile.split('.').pop();
+        if (ext.toLowerCase() != "txt" && ext.toLowerCase() != "docx" && ext.toLowerCase() != "doc") {
+            alert('File chưa đúng định dạng');
+            $('#fileInputMethod').val('');
+        }
+        else if (ext.toLowerCase() == "docx" || ext.toLowerCase() == "doc") {
+            {
+                var formData = new FormData();
+                var totalFiles = document.getElementById("fileInputMethod").files.length;
+                for (var i = 0; i < totalFiles; i++) {
+                    var file = document.getElementById("fileInputMethod").files[i];
+                    formData.append("uploadFile", file);
+                }
+                var lineIdx = 0;
+                $.ajax({
+                    url: '/ttn_content/ExamContent/UploadContentFile',
+                    data: formData,
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    method: 'POST'
+                }).success(function (uploadData) {
+                    var docTexts = uploadData.texts;
+                    var arr = docTexts.split(';');
+                    var docLines = "";
+                    //for (var i in arr) {
+                    //    if (i != '') {
+                    //        lineIdx = lineIdx;
+                    //        docLines += "<input type='text' placeholder='" + lineIdx++ + "' class = 'form-control' name='inputLine[" + lineIdx + "]' value='" + i + "' >";
+                    //    }
+
+                    //}
+                    arr.forEach(function (line) {
+                        if (line != '') {
+
+                            var replaceLine = line.replace(/'/g, "&#39;");
+                            lineIdx = lineIdx;
+                            docLines += "<input type='text' placeholder='" + lineIdx++ + "' class = 'form-control' name='inputLine' value='" + replaceLine + "' >";
+                        }
+
+                    });
+                    $("#contentLinesDiv").html(docLines);
+                    $("#contentLinesDiv").show();
+                });
+            }
+
+        }
+        else {
+            var lines = "";
+            var reader = new FileReader();
+            var input = ev.target;
+            var index = 0;
+            reader.onloadend = function (ev) {
+
+                var texts = reader.result.split(/\r?\n/);
+                texts.forEach(function (line) {
+                    if (line != '') {
+
+                        var replaceLine = line.replace(/'/g, "&#39;");
+                        index = index;
+                        lines += "<input type='text' placeholder='" + index++ + "' class = 'form-control' name='inputLine' value='" + replaceLine + "' >";
+                    }
+
+                });
+
+                $("#contentLinesDiv").html(lines);
+                $("#contentLinesDiv").show();
+            };
+            reader.readAsText(input.files[0], 'UTF-8');
+        }
+
+    });
+    $('#manualInputRBtn').change(function () {
+        if ($('#manualInputRBtn').prop('checked')) {
+            $('#manualInputMethod').removeAttr('disabled');
+            $('#fileInputMethod').prop('disabled', 'disabled');
+
+        }
+    });
+
+
+    $("#manualInputMethod").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+    var oldValue;
+    $("#manualInputMethod").keyup(function () {
+        var lineValue = $("#manualInputMethod").val();
+        if ($.isNumeric(lineValue)) {
+            var lines = "";
+            if (oldValue !== lineValue) {
+                // gen line here
+                setTimeout(function () {
+                    for (var i = 0; i < lineValue; i++) {
+                        lines += "<input type='text' placeholder='" + (i + 1) + "' class = 'form-control' name='inputLine[" + i + "]'>";
+                    }
+                    $("#contentLinesDiv").html(lines);
+                    $("#contentLinesDiv").show();
+                }, 500);
+
+                oldValue = lineValue;
+            }
+
+        }
+    });
+
+    $('#attachImageInput').change(function (ev) {
+
+        var formData = new FormData();
+        var totalFiles = document.getElementById("attachImageInput").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("attachImageInput").files[i];
+            formData.append("uploadFile", file);
+        }
+
+        $.ajax({
+            url: '/ttn_content/ExamContent/UploadImage',
+            data: formData,
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            method: 'POST'
+        }).success(function (uploadData) {
+            $('#AttachImage').val(uploadData.url);
+        });
+
+
+
+        var reader = new FileReader();
+        var input = ev.target;
+        var index = 0;
+        reader.onloadend = function (ev) {
+
+            var url = reader.result;
+
+            $("#attImg").attr('src', url);
+        };
+        reader.readAsDataURL(input.files[0], 'UTF-8');
+
+    });
+    $('#closeDiv').click(function () {
+        $('#contextDiv').hide();
+        $('#dim').fadeOut();
+
+    });
+    $(document).on('click', 'a[href^="#"]', function (e) {
+        // target element id
+        var id = $(this).attr('href');
+
+        // target element
+        var $id = $(id);
+        if ($id.length === 0) {
+            return;
+        }
+
+        // prevent standard hash navigation (avoid blinking in IE)
+        e.preventDefault();
+
+        // top position relative to the document
+        var pos = $id.offset().top;
+
+        // animated top scrolling
+        $('body, html').animate({ scrollTop: pos }, 1000);
+    });
+</script>

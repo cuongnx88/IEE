@@ -1,0 +1,254 @@
+﻿@model List<IEE.Infrastructure.DbContext.SATTest>
+@using IEE.Web.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var utils = Utils.Instance;
+}
+
+@if (Model.Count > 0)
+{
+    <h2>Danh sách các bài thi</h2>
+    <table class="table">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Section
+            </th>
+            <th>
+                Thời gian thi
+            </th>
+            <th>
+                Số câu trả lời đúng
+            </th>
+            <th>
+                Tổng số điểm
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.SATTestSections != null && item.SATTestSections.Count > 0)
+            {
+                <tr>
+                    <td>@(Model.IndexOf(item) + 1)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalScore)</td>
+                </tr>
+                foreach (var sectionItem in item.SATTestSections)
+                {
+                    if (utils.GetSectionScore(sectionItem.ID) == 0)
+                    {
+                        continue;
+                    }
+                    <tr>
+                        <td></td>
+                        <td>
+                            @utils.GetSectionName(sectionItem.Section)
+                        </td>
+                        <td>
+                            @sectionItem.StartTime
+                        </td>
+                        <td>@sectionItem.TotalRightAnswer</td>
+                        <td>
+                            @utils.GetSectionScore(sectionItem.ID)
+                        </td>
+
+
+                        <td></td>
+                    </tr>
+                }
+            }
+
+
+        }
+
+    </table>
+    if (Model.Count < 2)
+    {
+        <p><a href="@Url.RouteUrl("SATTest")" class="btn-success"><h3>Vào thi</h3></a></p>
+    }
+}
+else
+{
+
+    <header style="margin-top:20px">
+        <section class="container-fluid" style="padding:0; z-index:9">
+            <!-- logo + menu -->
+            <div id="headerQuiz">
+                <div class="col-md-1"></div>
+                <div class="col-md-2 headerTitleQuiz">
+                    <h3></h3>
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-5 headerTitleQuiz">
+                    <h3>Entrance test</h3>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2 headerButtonQuiz">
+                    <h3></h3>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <!-- end logo + menu -->
+        </section>
+    </header>
+    <article>
+        <div class="container-fluid contentQuiz" style="padding:0 8.3%">
+            <div class="row quizGuide" style="padding:2%">
+                <div class="col-md-1"></div>
+                @using (Html.BeginForm("Test", "SATTest", FormMethod.Post))
+                {
+                    <input type="hidden" name="examCode" id="examCode" />
+                    <input type="hidden" name="sectionValue" id="sectionValue" />
+                    <div class="col-md-10">
+                        <h3>Hướng dẫn</h3>
+                        <ul class="nav nav-pill" style="margin-bottom:20px;">
+                            <li class="col-sm-6 first active" style="text-align:center"><a href="" data-toggle="tab" onclick="chooseExam(1);"><span><b> Đề 1</b></span></a><input style="display:none" type="radio" name=" chooseExam" value="1" id="" /></li>
+                            <li class="col-sm-6 two" style="text-align:center"><a href="" data-toggle="tab" onclick="chooseExam(2);"><span><b>Đề 2</b></span></a><input style="display:none" type="radio" name="chooseExam" value="2" id="" /></li>
+
+                        </ul>
+                        <ul class="nav nav-pill">
+                          
+                            @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(1))
+                            {
+                                <li class="col-sm-3 first active"><a href="#1b" data-toggle="tab" onclick="chooseSection(1);"><span><b> 1 - Reading</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="1" id="readingTab" /></li>
+                            }
+                            else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(1))
+                            {
+                                <li class="col-sm-3 first"><a href="#1b" data-toggle="tab"><span><b> 1 - Reading</b></span></a></li>
+                            }
+
+                            @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(2))
+                            {
+                                <li class="col-sm-3 two "><a href="#2b" data-toggle="tab" onclick="chooseSection(2);"><span><b> 2 - Writing & Language</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="2" id="writingTab" /></li>
+                            }
+                            else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(2))
+                            {
+                                <li class="col-sm-3 two"><a href="#2b" data-toggle="tab" ><span><b> 2 - Writing & Language</b></span></a></li>
+                            }
+
+
+                            @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(3))
+                            {
+                                <li class="col-sm-3 two three "><a href="#3b" data-toggle="tab" onclick="chooseSection(3);"><span><b> 3 - Math No Calculator</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="3" id="math1Tab" /></li>
+                            }
+                            else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(3))
+                            {
+                                <li class="col-sm-3 two three"><a href="#3b" data-toggle="tab" ><span><b> 3 - Math No Calculator</b></span></a></li>
+                            }
+
+                            @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(4))
+                            {
+                                <li class="col-sm-3 last "><a href="#4b" data-toggle="tab" onclick="chooseSection(4);"><span><b> 4 - Math Calculator</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="4" id="math2Tab" /></li>
+                            }
+                            else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(4))
+                            {
+                                <li class="col-sm-3 last"><a href="#4b" data-toggle="tab" ><span><b> 4 - Math Calculator</b></span></a></li>
+                            }
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="1b">
+                                <h3>Reading</h3>
+                                <p>
+                                    Kỹ năng Reading được thực hiện trong vòng 65 phút, 52 câu hỏi.<br />
+                                    Chuyển đến phần Section 1 của phiếu trả lời để trả lời câu hỏi của phần này. <br />
+                                </p>
+                                Mỗi đoạn văn/ mỗi cặp đoạn văn dưới đây đi kèm với một số câu hỏi. Sau khi đọc xong đoạn văn/ cặp đoạn văn, hãy chọn câu trả lời dựa trên những ý kiến được biểu đạt tường minh hay hàm ẩn trong đoạn văn và trong các biểu đồ (ví dụ như biểu đồ cột hay biểu đồ đường).
+
+
+                                @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(1))
+                                {
+                                    <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+                                }
+                                <div class="clear"></div>
+                            </div>
+                            <div class="tab-pane" id="2b">
+                                <h3>Writing & Language</h3>
+                                <p>Kỹ năng Writing được thực hiện trong vòng 35 phút, 44 câu hỏi. Chuyển đến phần Section 2 của phiếu trả lời để trả lời câu hỏi của phần này. </p>
+                                <p>Hướng dẫn:</p>
+                                -	Mỗi đoạn văn đều có kèm theo các câu hỏi. Một số câu hỏi sẽ hỏi bạn xem tác giả nên viết lại và tăng cường tính biểu đạt của đoạn văn như thế nào. Một số câu hỏi sẽ yêu cầu bạn sửa lỗi trong câu trúc câu, cách sử dụng hay dấu câu. Sẽ có những câu hỏi yêu cầu bạn phải xem kĩ một biểu đồ khi bạn viết lại hay sửa đoạn văn.<br />
+                                -	Một số câu hỏi sẽ liên quan đến một phần của đoạn văn được gạch chân. Một số câu hỏi sẽ liên quan đến những chi tiết trong đoạn văn hoặc yêu cầu bạn phải đọc toàn bộ đoạn văn.<br />
+                                -	Sau khi bạn đọc đoạn văn, hãy chọn câu trả lời giúp cải thiện đoạn văn hiệu quả nhất hay giúp đoạn văn tuân theo quy chuẩn văn viết tiếng Anh. Rất nhiều câu hỏi có lựa chọn “NO CHANGE”. Hãy chọn câu trả lời “NO CHANGE” khi bạn thấy rằng các phần còn lại của đoạn văn nên được giữ nguyên.<br />
+
+                                @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(2))
+                                {
+                                    <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+                                }
+                                <div class="clear"></div>
+                            </div>
+                            <div class="tab-pane" id="3b">
+                                <h3>Math No Calculator</h3>
+                                <p>Kỹ năng Math No Calculator được thực hiện trong vòng 25 phút, 20 câu hỏi. Chuyển đến phần Section 3 của phiếu trả lời để trả lời câu hỏi của phần này. </p>
+                                <p>Hướng dẫn:</p>
+                                Câu hỏi số 1 – 15 yêu cầu bạn phải tìm ra câu trả lời đúng cho câu hỏi bằng cách chọn lựa một trong bốn đáp án được đưa ra và tô kín hình tròn tương ứng với đáp án trong phiếu trả lời. Câu hỏi 16-20 yêu cầu bạn trả lời câu hỏi và điền đáp án của bạn vào ô cho sẵn trong phiếu trả lời. Sẽ có các hướng dẫn chi tiết về cách điền câu trả lời vào ô cho sẵn trước câu hỏi số 16. Bạn có thể sử dụng quyển đề bài để ghi nháp.
+                                <p>Ghi chú:</p>
+                                1.	Bạn không được sử dụng máy tính bỏ túi.<br />
+                                2.	Các biến số và kí hiệu là biểu hiện cho số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+                                3.	Hình vẽ được vẽ theo tỉ lệ (nếu không có ghi chú đặc biệt nào khác).<br />
+                                4.	Hình vẽ nằm trên mặt phẳng (nếu không có ghi chú đặc biệt nào khác).<br />
+                                5.	Tập xác định của hàm số f(x) là tập số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+                                <img src="~/Content/img/step3.png" />
+                                @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(3))
+                                {
+                                    <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+                                }
+                                <div class="clear"></div>
+                            </div>
+                            <div class="tab-pane" id="4b">
+                                <h3>Math Calculator</h3>
+                                <p>Kỹ năng Math Calculator được thực hiện trong vòng 55 phút, 38 câu hỏi. Chuyển đến phần Section 4 của phiếu trả lời để trả lời câu hỏi của phần này. </p>
+                                -	Câu hỏi số 1 – 30 yêu cầu bạn phải tìm ra câu trả lời đúng cho câu hỏi bằng cách chọn lựa một trong bốn đáp án được đưa ra và tô kín hình tròn tương ứng với đáp án trong phiếu trả lời. Câu hỏi 31 - 38 yêu cầu bạn trả lời câu hỏi và điền đáp án của bạn vào ô cho sẵn trong phiếu trả lời. Sẽ có các hướng dẫn chi tiết về cách điền câu trả lời vào ô cho sẵn trước câu hỏi số 16. Bạn có thể sử dụng quyển đề bài để ghi nháp.
+                                <p>Ghi chú:</p>
+                                1.	Bạn không được sử dụng máy tính bỏ túi.<br />
+                                2.	Các biến số và kí hiệu là biểu hiện cho số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+                                3.	Hình vẽ được vẽ theo tỉ lệ (nếu không có ghi chú đặc biệt nào khác).<br />
+                                4.	Hình vẽ nằm trên mặt phẳng (nếu không có ghi chú đặc biệt nào khác).<br />
+                                5.	Tập xác định của hàm số f(x) là tập số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+                                <img src="~/Content/img/step4.png" />
+                                @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(4))
+                                {
+                                    <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+                                }
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </article>
+}
+
+@*<p>
+
+        @Html.ActionLink("Đăng xuất","Logout","Account",null,new { @class="btn-info"})
+
+    </p>*@
+<script>
+    $(document).ready(function () {
+        chooseSection(1);
+        chooseExam(1);
+
+    });
+    function chooseSection(sectionId) {
+        //$('' + sectionId + '').prop("checked", true);
+        $('#sectionValue').val(sectionId);
+    }
+
+    function chooseExam(sectionId) {
+        //$('' + sectionId + '').prop("checked", true);
+        $('#examCode').val(sectionId);
+    }
+</script>

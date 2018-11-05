@@ -1,0 +1,95 @@
+﻿@model IEE.Web.Areas.ttn_content.Models.ScoreViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+<style>
+    .score {
+        float: left;
+        width: 25%;
+        border-bottom: 1px solid #808080;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+</style>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới", "Create")
+</p>
+<div>
+    <div style="width:25%;float:left;">
+        <p><strong>Reading</strong></p>
+        <div style="width:25%;float:left;"><p><strong>Câu trả lời đúng</strong></p></div>
+        <div style="width:25%;float:left;"><p><strong>Điểm</strong></p></div>
+        <div style="clear:both"></div>
+        <div>
+            @foreach (var item in Model.Reading)
+            {
+                <div class="score">@item.RawValue</div>
+                <div class="score">@item.ScoreValue</div>
+                <div class="score" style="width:20%">
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+            </div>
+            <div style="clear:both"></div>
+        }
+        </div>
+    </div>
+    <div style="width:25%;float:left;">
+        <p><strong>Writring</strong></p>
+        <div style="width:25%;float:left;"><p><strong>Câu trả lời đúng</strong></p></div>
+        <div style="width:25%;float:left;"><p><strong>Điểm</strong></p></div>
+        <div style="clear:both"></div>
+        <div>
+            @foreach (var item in Model.Writing)
+            {
+                <div class="score">@item.RawValue</div>
+                <div class="score">@item.ScoreValue</div>
+                <div class="score" style="width:20%">
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+                </div>
+                <div style="clear:both"></div>
+            }
+        </div>
+    </div>
+    <div style="width:25%;float:left;">
+        <p><strong>Math</strong></p>
+        <div style="width:25%;float:left;"><p><strong>Câu trả lời đúng</strong></p></div>
+        <div style="width:25%;float:left;"><p><strong>Điểm</strong></p></div>
+        <div style="clear:both"></div>
+        <div>
+            @foreach (var item in Model.Math)
+            {
+                <div class="score">@item.RawValue</div>
+                <div class="score">@item.ScoreValue</div>
+                <div class="score" style="width:20%">
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+                </div>
+                <div style="clear:both"></div>
+            }
+        </div>
+    </div>
+    <div style="width:25%;float:left;">
+        <p><strong>Math(Calculator)</strong></p>
+        <div style="width:25%;float:left;"><p><strong>Câu trả lời đúng</strong></p></div>
+        <div style="width:25%;float:left;"><p><strong>Điểm</strong></p></div>
+        <div style="clear:both"></div>
+        <div>
+            @foreach (var item in Model.MathWithCalculator)
+            {
+                <div class="score">@item.RawValue</div>
+                <div class="score">@item.ScoreValue</div>
+                <div class="score" style="width:20%">
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+                </div>
+                <div style="clear:both"></div>
+            }
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+</div>

@@ -1,0 +1,98 @@
+﻿@using IEE.Infrastructure.DbContext
+
+@{ 
+    IEnumerable<Category> listCategory = (IEnumerable<Category>)ViewBag.Categories;
+    string facebook     = ViewBag.Facebook;
+    string youtube      = ViewBag.Youtube;
+    string linked       = ViewBag.Linked;
+    string gplus        = ViewBag.Gplus;
+    string instagram    = ViewBag.Instagram;
+
+    string hotline = ViewBag.Hotline;
+    string phone = ViewBag.Phone;
+    string address = ViewBag.Address;
+}
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <ul>
+                    <li class="header">@phone</li>
+                    <li class="header"><a href="mailto:info@iee.edu.vn">info@iee.edu.vn</a> </li>
+                    <li class="header">@address</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul>
+
+                            <li class="header">Chương trình</li>
+                            <li><a href="/chuong-trinh/ielts">IELTS</a> </li>
+                            <li><a href="/chuong-trinh/toefl">TOEFL</a> </li>
+                            <li><a href="/chuong-trinh/sat">SAT</a> </li>
+                            <li><a href="/chuong-trinh/chuong-trinh-khac">Chương trình khác</a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li class="header">Giới thiệu</li>
+                            <li><a href="/about/teachers">Đội ngũ giáo viên</a> </li>
+                            <li><a href="/about/students">Bảng vàng học viên</a> </li>
+                            <li><a href="/recruitment">Tuyển dụng</a> </li>
+                            <li><a href="/contact">Liên hệ</a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul>
+                            <li class="header">Tin tức</li>
+                            <li><a href="/tin-tuc/cam-nang">Cẩm nang</a> </li>
+                            <li><a href="/library/">Thư viện</a> </li>
+                            <li><a href="/workshop/">Hội thảo</a> </li>
+                            <li><a href="/notification/">Thông báo</a> </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <ul class="connect">
+                    <li class="header">Kết nối với chúng tôi</li>
+                    <li>
+                        <ul class="list-inline social-icon">
+                            <li>
+                                <a href="@facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="@linked" target="_blank"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="@gplus" target="_blank"><i class="fa fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="@instagram" target="_blank"><i class="fa fa-instagram"></i></a>
+                            </li>
+                            <li>
+                                <a href="@youtube" target="_blank"><i class="fa fa-youtube"></i></a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="header">
+                        <div class="footer-hotline">
+                            <span>Hotline </span><span>@hotline</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row m-b-lg">
+            <div class="col-lg-12">
+                ©Copyright @System.DateTime.Now.Year IEE giữ bản quyền nội dung trên website này
+            </div>
+        </div>
+        <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+    </div>
+    
+</footer>
+

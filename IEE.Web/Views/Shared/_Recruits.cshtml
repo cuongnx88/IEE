@@ -1,0 +1,32 @@
+﻿@model Dictionary<int, IEE.Infrastructure.DbContext.Post>
+
+@foreach (var post in Model)
+{
+    <div class="col-md-4 news-item m-b-md">
+        <div class="news-item-photo">
+            <img src="~/photo/post/@post.Value.Photo" />
+            <div class="news-item-photo-bg">
+                <div class="council-summarize">
+                    <a href="@Url.Action("content","recruitment",new {id=post.Value.Id, title=post.Value.Title.ToSeoUrl()})"><h4>@post.Value.Title</h4></a>
+                    <h6>
+                        @{
+                            string dayStr = string.Empty;
+                            int day = (int)DateTime.Now.Subtract(post.Value.PublishedDate.Value).TotalDays;
+                        }
+                        @if (day != 0)
+                        {
+                            dayStr = day + " ngày trước";
+                        }
+                        else
+                        {
+                            dayStr = "Hôm nay";
+                        }
+                        @dayStr
+
+                    </h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

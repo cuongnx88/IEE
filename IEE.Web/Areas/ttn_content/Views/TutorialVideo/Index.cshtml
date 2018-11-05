@@ -1,0 +1,54 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.TutorialVideo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<h2>Danh sách</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Thumbnail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CatId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="@Url.Action("Edit", new { id = item.ID })">
+                <img src="~/Photo/Uploads/@Html.DisplayFor(modelItem => item.Thumbnail)" width="120" />
+            </a>
+        </td>
+        <td>
+            <a href="@Html.DisplayFor(modelItem => item.Link)"> @Html.DisplayFor(modelItem => item.Title)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new {  id=item.ID }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+        </td>
+    </tr>
+}
+
+</table>

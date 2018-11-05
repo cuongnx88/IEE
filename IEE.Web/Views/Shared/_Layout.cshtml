@@ -1,0 +1,266 @@
+﻿﻿@using IEE.Web.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học viên anh ngữ IEE - @ViewBag.Title</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="@ViewBag.MetaKeys" />
+    <meta name="description" content="@ViewBag.MetaDescription">
+    <meta name="author" content="HỌC VIÊN ANH NGỮ IEE">
+    @*@{
+        if (Request.Path.Contains("begintest"))
+        {
+            <script type="text/javascript" language="javascript">
+                function DisableBackButton() {
+                    window.history.forward()
+                }
+                DisableBackButton();
+                window.onload = DisableBackButton;
+                window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+                window.onunload = function () { void (0) }
+            </script>
+        }
+    }*@
+    <!-- Add Your favicon here -->
+    <!--<link rel="icon" href="img/favicon.ico">-->
+    @RenderSection("MetaTags", false)
+    <link rel="shortcut icon" href="~/content/img/favicon.png">
+    <!-- Bootstrap core CSS -->
+
+
+    <link rel="stylesheet" href="~/content/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/content/css/styles.css" />
+    <link rel="stylesheet" href="~/content/css/swiper.css" />
+    <link rel="stylesheet" href="~/content/css/slick.css" />
+    <script type="text/javascript" src="~/content/bootstrap/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/content/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/scripts/slick.js"></script>
+    <link rel="stylesheet" href="~/scripts/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/content/font-awesome/css/font-awesome.min.css" />
+    <style>
+        #contact {
+            margin: 40px 0px;
+        }
+
+        .google-map {
+            height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <section class="container-fluid" style="padding:0; z-index:9">
+            <!-- regist -->
+            <div id="regist">
+                <ul>
+                    <li id="triangle-left"></li>
+                    @if (Session["AccountEmail"] != null)
+                    {
+                        <li>Xin chào,<a href="@Url.RouteUrl("SATTestIndex")">@Session["AccountEmail"].ToString()</a></li>
+                        <li><a href="/Account/LogOut">Đăng xuất</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/SATOnline/Login">Đăng nhập</a></li>
+                        <li><a href="/SATOnline/dang-ky">Đăng ký</a></li>
+                        <li><a href="/contact">Liên hệ</a></li>
+                    }
+                    
+                    <li id="triangle-right"></li>
+                </ul>
+            </div>
+            <!-- end regist -->
+            <div style="background:#f60; margin-top:15px; min-height:15px;"></div>
+            <!-- logo + menu -->
+            <div id="logMenu">
+                <a href="/" style="float:left"><img id="logo" src="/content/img/logo.png" class="img-responsive" /></a>
+                <div id="menu" style="margin-top:75px;">
+                    <nav class="navbar" role="navigation" style="margin-bottom:0; border:none">
+                        <div class="">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#IEENavbar">
+                                    <!--<span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>-->
+                                    <div id="menu-border">
+                                        <b style="color:#fff;">Menu</b>
+                                    </div>
+                                </button>
+                                <!--<a class="navbar-brand" href="#">IEE Site</a>-->
+                            </div>
+                            <div class="collapse navbar-collapse" id="IEENavbar">
+                                <ul class="nav navbar-nav">
+                                    <li class="mainmenu">
+                                        <a id="homeicon" href="/">
+                                            <img src="/content/img/home-icon-white.png"
+                                                 width="40"
+                                                 class="img-responsive">
+                                        </a>
+                                    </li>
+                                    @{
+
+                                        var utils = Utils.Instance;
+
+                                        var cats = utils.GetListMenu();
+                                        cats = cats.Where(c => c.Position != null && c.Position.Contains("Header")).ToList();
+
+                                    }
+                                    @foreach (var item in cats)
+                                    {
+                                        <li class="mainmenu">
+                                            <a href="@Url.RouteUrl("CatSEORoute",new {Category= item.Name.ToSeoUrl() })" class="mainmenuLink">@item.Name.ToUpper()</a>
+                                            <ul class="submenu">
+                                                @foreach (var childItem in item.ChildCategory.Where(child=>child.IsMenu&&child.IsDeleted==null||child.IsDeleted==false).OrderBy(c=>c.OrderNumber).ToList())
+                                                {
+                                                    <li><a href="@Url.RouteUrl("CatSEORoute",new {Category= childItem.Name.ToSeoUrl() })">@childItem.Name</a></li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <!-- end logo + menu -->
+        </section>
+    </header>
+
+
+    <div id="regis-button">
+        <a href="@Url.RouteUrl("SATTestIndex")" id="regis-button-testonline">Test Online</a><br>
+        <a href="@Url.RouteUrl("SATTestIndex")" id="regis-button-registclass">Đăng ký lớp học</a>
+    </div>
+    @*<div id="banner-command">
+            <a class="oranges-section" href="/dang-ky-tu-van">Đăng ký tư vấn</a>
+            <a class="black-section" href="/lich-hoc">Lịch học</a>
+            <a style="background:#ffc200" target="_blank" href="http://app.iee.edu.vn">Lớp học IEE</a>
+        </div>*@
+
+    @RenderBody()
+    <footer class=" animatedParent">
+        <div class="container-fluid animated growIn"
+             style="background:#3d3d3d; padding:30px 8%; color:#fff; font-size:0.9em">
+            <div class="col-md-3">
+                <p><b>@ViewBag.Phone</b></p>
+                <p><b>info@iee.edu.vn</b></p>
+                <p>@ViewBag.Address</p>
+                @*<p>Cầu Giấy Dist,. Hà Nội</p>*@
+            </div>
+            <div class="col-md-2">
+
+
+                <p class="header"><b>Chương trình</b></p>
+                <p><a href="/chuong-trinh/ielts">IELTS</a> </p>
+                <p><a href="/chuong-trinh/toefl">TOEFL</a> </p>
+                <p><a href="/chuong-trinh/sat">SAT</a> </p>
+                <p><a href="/chuong-trinh/chuong-trinh-khac">Chương trình khác</a> </>
+
+            </div>
+            <div class="col-md-2">
+
+                <p class="header"><b>Giới thiệu</b></p>
+                <p><a href="/about/teachers">Đội ngũ giáo viên</a> </p>
+                <p><a href="/about/students">Bảng vàng học viên</a> </p>
+                <p><a href="/recruitment">Tuyển dụng</a> </p>
+                <p><a href="/contact">Liên hệ</a> </p>
+
+            </div>
+            <div class="col-md-2">
+
+                <p class="header"><b>Tin tức</b></p>
+                <p><a href="/tin-tuc/cam-nang">Cẩm nang</a> </p>
+                <p><a href="/library/">Thư viện</a> </p>
+                <p><a href="/workshop/">Hội thảo</a> </p>
+                <p><a href="/notification/">Thông báo</a> </p>
+
+            </div>
+
+            <div class="col-md-3">
+                <p style="padding-left:10%"><b>Kết nối với chúng tôi</b></p>
+                <div style="padding-left:10%; margin-bottom:10px">
+                    <a href="@ViewBag.Facebook"><img src="/content/img/fb-icon.png" style="margin-right:2%" width="35"></a>
+                    <a href="@ViewBag.Linked"><img src="/content/img/in-icon.png" style="margin-right:2%" width="35"></a>
+                    <a href="@ViewBag.Gplus"><img src="/content/img/g-icon.png" style="margin-right:2%" width="35"></a>
+                    <a href="@ViewBag.Instagram"><img src="/content/img/c-icon.png" style="margin-right:2%" width="35"></a>
+                    <a href="@ViewBag.Youtube"><img src="/content/img/youtube-icon.png" style="margin-right:2%" width="35"></a>
+                </div>
+                <p style="padding-left:10%">Hotline: <font size="+2"><b>@ViewBag.Hotline</b></font></p>
+            </div>
+        </div>
+    </footer>
+    @*@{Html.RenderAction("FooterBanner", "CmsBase");}
+        @{Html.RenderAction("Footer", "CmsBase");}*@
+    <!-- modal placeholder-->
+
+    <script type='text/javascript'>window._sbzq || function (e) { e._sbzq = []; var t = e._sbzq; t.push(["_setAccount", 62528]); var n = e.location.protocol == "https:" ? "https:" : "http:"; var r = document.createElement("script"); r.type = "text/javascript"; r.async = true; r.src = n + "//static.subiz.com/public/js/loader.js"; var i = document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(r, i) }(window);</script>
+    <script type="text/javascript" src="scripts/swiper.min.js"></script>
+    <script type="text/javascript" src="scripts/scripts.js"></script>
+
+
+
+    @*<script src="~/scripts/wow.min.js"></script>
+        <script src="~/scripts/inspinia.js"></script>
+        <script src="~/scripts/slick.js"></script>
+        <script src="~/scripts/jquery.jmslideshow.js"></script>
+        <script src="~/scripts/skdslider.min.js"></script>
+        <script src="~/scripts/imagesloaded.pkgd.min.js"></script>
+        <script src="~/scripts/hammer.min.js"></script>
+        <script src="~/scripts/sequence.min.js"></script>
+        <script src="~/scripts/sequence-theme.basic.js"></script>
+        <script src="~/scripts/mustang.min.js"></script>
+        <script src="~/scripts/jquery.countTo.js"></script>
+        <script src="~/scripts/jquery.waypoints.min.js"></script>
+        <script src="~/scripts/move-top.js"></script>
+        <script src="~/scripts/cms.js"></script>*@
+    <script type="text/javascript">
+        $(function ($) {
+            // custom formatting example
+            $('.timer').data('countToOptions', {
+                formatter: function (value, options) {
+                    return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+                }
+            });
+
+            // start all the timers
+            $('#header-banners').waypoint(function () {
+                $('.timer').each(count);
+            });
+
+            function count(options) {
+                var $this = $(this);
+                options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+                $this.countTo(options);
+            }
+
+        });
+    </script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-85437578-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

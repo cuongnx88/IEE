@@ -1,0 +1,374 @@
+﻿@model IEE.Web.Areas.ttn_content.Models.QuestionCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<style>
+    #dim {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background: url('/Content/img/dim.png');
+        display: none;
+        text-align: left;
+        margin: 0 auto;
+    }
+
+    #contextDiv {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 300px;
+        height: 350px;
+        border: solid 2px #0094ff;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 0px 8px 0 8px;
+        margin: 0 auto;
+    }
+</style>
+
+<h2>Thêm mới Câu hỏi</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamContentID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ExamContentID, (SelectList)ViewBag.ExamContentID, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamContentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.QuestionNo, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.QuestionNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.QuestionContent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.QuestionContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.TypeID, (SelectList)ViewBag.Type, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HasInputAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @*@Html.CheckBox("HasInputAnswer",new { id= "HasInputAnswer",onclick="" })*@
+                    <input type="checkbox" id="HasInputAnswer" name="HasInputAnswer" />
+                    @Html.ValidationMessageFor(model => model.HasInputAnswer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+
+                    @{
+                        var classStatus = "" + Model.Status + "Status";
+                    }
+                    @*<input type="button" class="@classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                    @Html.CheckBoxFor(model => model.Status, new { @style = "display:none" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Status)
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Câu trả lời", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @for (int i = 0; i < 4; i++)
+            {
+            <div class="form-horizontal" style="float:left;">
+
+                @*<div class="form-group">
+            @Html.LabelFor(model => model.Answers[i].AnswerType, htmlAttributes: new { @class = "control-label col-md-7" })
+            <div class="col-md-10">
+                @Html.DropDownList("AnswerType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Answers[i].AnswerType, "", new { @class = "text-danger" })
+
+            </div>
+        </div>*@
+                <div class="form-group Mark" id="markDiv-@i">
+                    @Html.LabelFor(model => model.Answers[i].Mark, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        A @Html.RadioButtonFor(model => model.Answers[i].Mark, "A", null)
+                        B @Html.RadioButtonFor(model => model.Answers[i].Mark, "B", null)
+                        C @Html.RadioButtonFor(model => model.Answers[i].Mark, "C", null)
+                        D @Html.RadioButtonFor(model => model.Answers[i].Mark, "D", null)
+                        @Html.ValidationMessageFor(model => model.Answers[i].Mark, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].AnswerContent, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Answers[i].AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
+                        @Html.ValidationMessageFor(model => model.Answers[i].AnswerContent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].Explanation, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Answers[i].Explanation, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
+                        @Html.ValidationMessageFor(model => model.Answers[i].Explanation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].IsRightAnswer, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @{
+                                var classAnswer = "" + Model.Answers[i].IsRightAnswer + "Answer";
+                            }
+                            @* <input type="button" class="@classAnswer" id="lblRightAnswer" style="background:url(/Content/img/falseIcon.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                            @Html.CheckBoxFor(model => model.Answers[i].IsRightAnswer, new { @style = "display:none" })
+                            @Html.ValidationMessageFor(model => model.Answers[i].IsRightAnswer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Answers[i].Status, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+
+                            @{
+                                var _classStatus = "" + Model.Answers[i].Status + "Status";
+                            }
+                            @*<input type="button" class="@_classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                            @Html.CheckBoxFor(model => model.Answers[i].Status, new { @style = "display:none" })
+                            @Html.ValidationMessageFor(model => model.Answers[i].Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+      
+    
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm mới" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div id="dim">
+    <div style="border:solid 1px; height:200px;width:500px;" id="contextDiv">Test</div>
+</div>
+<div>
+    @Html.ActionLink("Về danh sách", "Index")
+</div>
+@*<script src="~/Scripts/jquery.js"></script>*@
+<script>
+
+   
+    $("#HasInputAnswer").on('ifChecked', function () {
+        //if ($('#TypeID').val!=3) {
+        //    $('.Mark').hide();
+        //}
+        $('.Mark').hide();
+      
+    });
+    $("#HasInputAnswer").on('ifUnchecked', function () {
+        $('.Mark').show();
+    });
+   
+    //$(document).ready(function () {
+    //    $("#AnswerType").trigger('change');
+    //});
+
+
+    $('#TypeID').change(function () {
+        
+        if ($('#TypeID').val() == 3) {
+            $('#calculatorDiv').show();
+        }
+        else {
+            $('#calculatorDiv').hide();
+            $("#UserCalculator").val($("#UserCalculator option:first").val());
+        }
+    });
+
+    $(document).ready(function () {
+
+        $("#dim").css("height", $(document).height());
+
+    });
+    var roxyFileman = '/Scripts/fileman/index.html';
+
+    var editor = CKEDITOR.replace('QuestionContent', {
+
+        filebrowserBrowseUrl: roxyFileman,
+        filebrowserImageBrowseUrl: roxyFileman + '?type=image',
+        removeDialogTabs: 'link:upload;image:upload',
+        // Define the toolbar groups as it is a more accessible solution.
+        toolbarGroups: [
+            { "name": "basicstyles", "groups": ["basicstyles"] },
+            { "name": "links", "groups": ["links"] },
+            { "name": "paragraph", "groups": ["list", "blocks"] },
+            { "name": "document", "groups": ["mode"] },
+            { "name": "insert", "groups": ["insert"] },
+            { "name": "styles", "groups": ["styles"] },
+            { "name": "about", "groups": ["about"] }
+        ],
+        // Remove the redundant buttons from toolbar groups defined above.
+        removeButtons: 'Strike,Subscript,Superscript,Anchor,Styles,Specialchar',
+        // Dialog windows are also simplified.
+        removeDialogTabs: 'link:advanced'
+    });
+
+    //var t = '';
+    //function gText(e) {
+    //    t = (document.all) ? document.selection.createRange().text : document.getSelection();
+    //    alert(t);
+    //}
+
+    //document.onmouseup = gText;
+    //if (!document.all) document.captureEvents(Event.MOUSEUP);
+
+    //editor.on('instanceReady', function (e) {
+
+    //    editor.addCommand("myCommand", {
+    //        exec: function (editor) {
+    //            var div = $("#contextDiv");
+    //            $('#dim').fadeIn();
+    //            div.show();
+    //            var command = 'underline';
+    //            editor.execCommand(command);
+    //            //div.css({
+    //            //    position: "absolute",
+    //            //    top: 500,
+    //            //    left: 500
+    //            //});
+
+    //            //var delayTimer = setTimeout(function () {
+    //            //    $that.fadeIn("slow");
+    //            //}, 100);
+
+    //            //div.mouseover(function (event) {
+    //            //    if (delayTimer)
+    //            //        clearTimeout(delayTimer);
+    //            //}).mouseout(function () {
+    //            //    if (delayTimer)
+    //            //        clearTimeout(delayTimer);
+    //            //    var $that = $(this);
+    //            //    delayTimer = setTimeout(function () {
+    //            //        $that.fadeOut("slow");
+    //            //    }, 500)
+    //            //});
+    //        }
+    //    });
+    //    // define command
+    //    var myCommand = {
+    //        label: "Add Question",
+    //        command: 'myCommand',
+    //        group: 'button'
+    //    };
+
+    //    // add listener
+    //    editor.contextMenu.addListener(function (element, selection) {
+    //        return {
+    //            myCommand: CKEDITOR.TRISTATE_OFF
+    //        };
+    //    });
+
+    //    // add command
+    //    editor.addMenuItems({
+    //        myCommand: {
+    //            label: "Add Question",
+    //            command: 'myCommand',
+    //            group: 'button',
+    //            order: 1
+    //        }
+    //    });
+    //});
+
+    $("#QuestionNo").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+    $('#lblStatus').click(function () {
+
+        var $this = $('#Status');
+        if ($('#lblStatus').hasClass("FalseStatus")) {
+            $this.prop('checked', 'true');
+            $('#lblStatus').css('background', 'url(/Content/img/ActiveStatus.png) no-repeat');
+            $('#lblStatus').css('height', '31px');
+            $('#lblStatus').css('width', '41px');
+            $('#lblStatus').removeClass("FalseStatus");
+            $('#lblStatus').addClass("TrueStatus");
+
+        }
+        else {
+
+            $this.removeAttr('checked');
+            $('#lblStatus').css('background', 'url(/Content/img/inActiveStatus.png) no-repeat');
+            $('#lblStatus').css('height', '31px');
+            $('#lblStatus').css('width', '41px');
+            $('#lblStatus').removeClass("TrueStatus");
+            $('#lblStatus').addClass("FalseStatus");
+        }
+
+
+    });
+
+</script>

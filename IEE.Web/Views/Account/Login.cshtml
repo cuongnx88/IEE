@@ -1,0 +1,98 @@
+﻿@using IEE.ViewModel
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học viên anh ngữ IEE | Login</title>
+    <link rel="shortcut icon" href="~/content/img/favicon.png">
+
+    <link href="~/content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="~/content/ttn_content/animate.css" rel="stylesheet">
+    <link href="~/content/ttn_content/style.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">IEE</h1>
+            </div>
+            <h3>Đăng nhập</h3>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-t", role = "form" }))
+            {
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "", @placeholder = "Email" })
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "", @placeholder = "Mật khẩu" })
+                </div>
+                @*<div class="form-group">
+                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-control", @required = "", @placeholder = "Mật khẩu" })
+                <span>Ghi nhớ</span>
+            </div>*@
+                <div class="form-group">
+                    @Html.Label("Duy trì đăng nhập", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-2">
+                        <div>
+
+                            @{
+                                var classStatus = "" + Model.RememberMe + "Status";
+                            }
+                            <input type="button" class="@classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />
+                            @Html.CheckBoxFor(model => model.RememberMe, new { @style = "display:none" })
+                            @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                @*<button class="btn btn-primary block full-width m-bs" type="submit"><strong>Log in</strong></button>*@
+                <input class="btn btn-primary block full-width m-bs" type="submit" value="Login" />
+                <a href="/SATOnline/dang-ky">Bạn chưa có tài khoản?</a>
+                <a href="/Account/ForgotPassword">Quên mật khẩu?</a>
+            }
+        </div>
+        
+    </div>
+    
+    
+    <!-- Mainly scripts -->
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    
+    <script>
+        $('#lblStatus').click(function () {
+
+
+            var $this = $('#RememberMe');
+            if ($('#lblStatus').hasClass("FalseStatus")) {
+                $this.prop('checked', 'true');
+                $('#lblStatus').css('background', 'url(/Content/img/ActiveStatus.png) no-repeat');
+                $('#lblStatus').css('height', '31px');
+                $('#lblStatus').css('width', '41px');
+                $('#lblStatus').removeClass("FalseStatus");
+                $('#lblStatus').addClass("TrueStatus");
+
+            }
+            else {
+
+                $this.removeAttr('checked');
+                $('#lblStatus').css('background', 'url(/Content/img/inActiveStatus.png) no-repeat');
+                $('#lblStatus').css('height', '31px');
+                $('#lblStatus').css('width', '41px');
+                $('#lblStatus').removeClass("TrueStatus");
+                $('#lblStatus').addClass("FalseStatus");
+            }
+
+
+        });
+    </script>
+</body>
+</html>

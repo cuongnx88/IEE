@@ -1,0 +1,29 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.UniversityHighlight>
+<section id="section-university" class="oranges-section ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 text-center m-t-lg m-b-lg">
+                <h4 class="white align-center" style="line-height: 30px;">Danh sách các trường đại học học viên IEE đã apply thành công</h4>
+            </div>
+            <div class="col-lg-12 p-md-b">
+                <div class="university-regular slider">
+                    @foreach (var item in Model)
+                    {
+                    <div class="university-photo">
+                        <img src="~/photo/university/@item.Photo">
+                        <div class="university-infor">
+                            <div class="university-detail">
+                                <h5 class="m-l-sm black text-bold">@item.Name</h5>
+                                <h6 class="m-l-sm black m-t-none">@item.Address</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    }
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+

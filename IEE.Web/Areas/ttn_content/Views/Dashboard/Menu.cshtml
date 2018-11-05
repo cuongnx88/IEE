@@ -1,0 +1,73 @@
+﻿
+<ul class="nav navbar-nav">
+    @if (User.IsInRole("Admin"))
+    {
+        <li class="dropdown">
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Thông tin nổi bật <span class="caret"></span></a>
+            <ul role="menu" class="dropdown-menu">
+                <li><a href="/ttn_content/student">Bảng vàng học viên</a></li>
+                <li><a href="/ttn_content/teacher">Đội ngũ giáo viên</a></li>
+                <li><a href="/ttn_content/university">Trường đại học</a></li>
+            </ul>
+
+        </li>
+        <li class="dropdown">
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Bài viết <span class="caret"></span></a>
+            <ul role="menu" class="dropdown-menu">
+                <li><a href="/ttn_content/post">Quản lý bài viết</a></li>
+                <li><a href="/ttn_content/banner">Banner</a></li>
+                <li><a href="/ttn_content/testimonial">Cảm nhận người dùng</a></li>
+                <li><a href="/ttn_content/council">Hội đồng chuyên môn</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Tư vấn & Lịch học/khải giảng <span class="caret"></span></a>
+            <ul role="menu" class="dropdown-menu">
+                <li><a href="/ttn_content/consultant/">Danh sách tư vấn</a></li>
+                <li><a href="/ttn_content/calendar/">Lịch học/khải giảng</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Quản trị hệ thống <span class="caret"></span></a>
+            <ul role="menu" class="dropdown-menu">
+                <li><a href="/ttn_content/staff">Quản lý nhân viên</a></li>
+                <li><a href="/ttn_content/Category">Quản lý phân nhóm bài viết</a></li>
+                <li><a href="/ttn_content/setting">Quản lý thiết lập</a></li>
+                <li><a href="/ttn_content/media">Quản lý tập tin</a></li>
+                <li><a href="/ttn_content/TutorialVideo/">Quản lý video</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> SAT Online <span class="caret"></span></a>
+            <ul role="menu" class="dropdown-menu">
+                <li><a href="/ttn_content/SATAccount">Tài khoản đăng ký</a></li>
+                <li><a href="/ttn_content/ExamForm">Đề thi</a></li>
+                <li><a href="/ttn_content/ExamContent">Nội dung</a></li>
+                <li><a href="/ttn_content/Question">Câu hỏi</a></li>
+                <li><a href="/ttn_content/Answer">Câu trả lời</a></li>
+                <li><a href="/ttn_content/Score">Mã Điểm</a></li>
+
+            </ul>
+        </li>
+
+    }
+</ul>
+<ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> @User.Identity.Name <span class="caret"></span></a>
+        <ul role="menu" class="dropdown-menu">
+            <li><a href="/ttn_content/profile/staff">Thông tin cá nhân</a></li>
+            <li><a href="/ttn_content/profile/changepassword">Đổi mật khẩu</a></li>
+            <li>
+                <a href="/account/logout">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    
+</ul>
+
+
+

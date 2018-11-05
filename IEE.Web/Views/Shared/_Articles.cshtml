@@ -1,0 +1,77 @@
+﻿﻿@model List<IEE.Infrastructure.DbContext.Post>
+
+
+<div id="main-left-content">
+
+    @{
+
+
+
+        if (Model.Count > 2)
+        {
+            var big = Model[0];
+            var mediumTop = Model[1];
+            var mediumBot = Model[2];
+            Model.RemoveRange(0, 3);
+            <div id="big-news" class="row">
+
+
+                <div id="big-news-left" class="col-md-8">
+                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = big.Title.ToSeoUrl(), id = big.Id })"><img class="img-responsive" src="~/Photo/post/@big.Photo"></a>
+                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = big.Title.ToSeoUrl(), id = big.Id })"><p id="big-news-left-title">@big.Title</p></a>
+                    <p id="big-news-left-description">@big.Summarize</p>
+                </div>
+
+                <div id="big-news-right" class="col-md-4">
+                    <div class="big-news-right-each">
+                        <a href="@Url.RouteUrl("NewsSEORoute", new { title = mediumTop.Title.ToSeoUrl(), id = mediumTop.Id })"><img class="img-responsive" src="~/Photo/post/@mediumTop.Photo"></a>
+                        <a href="@Url.RouteUrl("NewsSEORoute", new { title = mediumTop.Title.ToSeoUrl(), id = mediumTop.Id })"><p class="big-news-right-each-title">@mediumTop.Title</p></a>
+                    </div>
+                    <div class="big-news-right-each">
+                        <a href="@Url.RouteUrl("NewsSEORoute", new { title = mediumBot.Title.ToSeoUrl(), id = mediumBot.Id })"><img class="img-responsive" src="~/Photo/post/@mediumBot.Photo"></a>
+                        <a href="@Url.RouteUrl("NewsSEORoute", new { title = mediumBot.Title.ToSeoUrl(), id = mediumBot.Id })"><p class="big-news-right-each-title">@mediumBot.Title</p></a>
+                    </div>
+
+                </div>
+
+            </div>
+            foreach (var item in Model)
+            {
+
+
+                <div class="news-each">
+                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })"><img class="img-responsive" src="~/Photo/post/@item.Photo"></a>
+                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })"><p class="news-each-title">@item.Title</p></a>
+                    @if (item.PostCategories.Select(c => c.Category).FirstOrDefault() != null && item.CreatedDate.HasValue)
+                    {
+                        <p class="time-news-each"><a href="@Url.RouteUrl("CatSEORoute",new {category= item.PostCategories.Select(c => c.Category).FirstOrDefault().Name.ToSeoUrl() })">@item.PostCategories.Select(c => c.Category).FirstOrDefault().Name</a> - @item.CreatedDate.Value.ToString("dd/MM/yyyy")</p>}
+                    <p class="news-each-description">@item.Summarize </p>
+                </div>
+                <hr>
+            }
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+
+
+                <div class="news-each">
+                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })"><img class="img-responsive" src="~/Photo/post/@item.Photo"></a>
+                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })"><p class="news-each-title">@item.Title</p></a>
+                    @if (item.PostCategories.Select(c => c.Category).FirstOrDefault() != null && item.CreatedDate.HasValue)
+                    {
+                        <p class="time-news-each"><a href="@Url.RouteUrl("CatSEORoute",new {category= item.PostCategories.Select(c => c.Category).FirstOrDefault().Name.ToSeoUrl() })">@item.PostCategories.Select(c => c.Category).FirstOrDefault().Name</a> - @item.CreatedDate.Value.ToString("dd/MM/yyyy")</p>
+                    }
+                    <p class="news-each-description">@item.Summarize </p>
+                </div>
+                <hr>
+            }
+        }
+    }
+
+
+
+
+
+</div>

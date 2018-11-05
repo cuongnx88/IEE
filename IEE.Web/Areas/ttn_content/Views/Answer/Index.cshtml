@@ -1,0 +1,97 @@
+﻿@model IEE.Web.Areas.ttn_content.Models.AnswerViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+<style>
+    .toggle-display {
+        visibility: collapse;
+    }
+</style>
+<h2>Danh sách<span style="float:right"><input type="text" id="searchQuestion" placeholder="Tìm kiếm" /><button id="btnSearch"><i class="fa fa-search"></i></button></span></h2>
+
+<p>
+    @Html.ActionLink("Tạo mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Câu hỏi</th>
+        <th>
+            Câu trả lời
+        </th>
+        <th>
+            Là câu trả lời đúng
+        </th>
+        <th>
+            Kiểu trả lời
+        </th>
+        <th>
+            Trạng thái
+        </th>
+    </tr>
+
+    @foreach (var item in Model.ListQuestion)
+    {
+        <tr id="questionTitle">
+            <td>
+                @if (item.SATAnswers.Count > 0)
+                {
+                    <a href="javascript:;" onclick="showMore('@item.ID');"><i class="fa fa-plus green _i_@item.ID"></i></a>
+                }
+
+                <b>@item.Title</b>
+
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            @if (item.SATAnswers.Count < 4 && (item.HasInputAnswer==null || item.HasInputAnswer == false))
+            {
+                <td>@Html.ActionLink("Thêm trả lời", "Create", new { questionId = item.ID })</td>
+            }
+            else if (item.SATAnswers.Count < 1 && (item.HasInputAnswer!=null && item.HasInputAnswer == true))
+            {
+                <td>@Html.ActionLink("Thêm trả lời", "Create", new { questionId = item.ID })</td>
+            }
+        </tr>
+
+        foreach (var answerItem in item.SATAnswers)
+        {
+            var answType = answerItem.AnswerType == 0 ? "Chọn câu" : "Nhập vào";
+            var isRight = answerItem.IsRightAnswer == true ? "Đúng" : "Sai";
+            <tr class="listAnswerOf_@answerItem.QuestionID toggle-display">
+                <td></td>
+                @if (item.HasInputAnswer==null || item.HasInputAnswer == false)
+                {
+                    <td>@answerItem.Mark - @MvcHtmlString.Create(answerItem.AnswerContent)</td>
+                }
+                else if (item.HasInputAnswer!=null && item.HasInputAnswer == true)
+                {
+                <td>@MvcHtmlString.Create(answerItem.AnswerContent)</td>}
+
+                <td>@isRight</td>
+                <td>@answType </td>
+                <td>@Html.DisplayFor(modelItem => answerItem.Status)</td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = answerItem.ID }) |
+                    @Html.ActionLink("Chi tiết", "Details", new { id = answerItem.ID }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = answerItem.ID }, new { onclick = "return confirm('Bạn có chắc chắn muốn xóa');" })
+                </td>
+            </tr>
+
+        }
+
+    }
+
+</table>
+
+<script>
+
+    function showMore(questionID) {
+        $('._i_' + questionID + '').toggleClass('fa-minus');
+        $('.listAnswerOf_' + questionID + '').toggleClass('toggle-display');
+
+    }
+</script>

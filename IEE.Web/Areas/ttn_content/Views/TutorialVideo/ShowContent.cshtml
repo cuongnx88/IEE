@@ -1,0 +1,186 @@
+﻿@model IEE.Infrastructure.DbContext.TutorialVideo
+@using IEE.Web.Models
+@{
+    ViewBag.Title = "ShowContent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+            <div id="content-video">
+                <div id="navigation-bar">
+                    <div style="padding:0 0 0 1.5%">
+                        <a href="#"><p>Trang chủ</p></a>
+                        <p>--</p>
+                        <a href="#"><p>Video</p></a>
+                        <p>--</p>
+                        <a href="#"><p class="active">@Model.Title</p></a>
+                    </div>
+                    <div style="clear:both"></div>
+                    <hr>
+                </div>
+                <!-- end navigation bar -->
+                @{ 
+                    var videoLink = Model.Link.Split('/');
+                    var videoId = "";
+                    if (videoLink!=null&&videoLink.Last()!=null)
+                    {
+                        var last = videoLink.Last();
+                        if (last.Contains("watch"))
+                        {
+                            videoId = last.Substring(last.Length - 11);
+                        }
+                        else
+                        {
+                            videoId = last;
+                        }
+
+                    }
+                    var src = "https://www.youtube.com/embed/" + videoId;
+                }
+                <div id="main-video">
+                    <div id="main-video-left" class="col-md-9" style="padding-right:2%; padding-left:0;">
+                        <iframe width="90%" height="445" src="@src" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div id="main-video-right" class="col-md-3">
+                        <p id="video-lienquan">Video liên quan</p>
+                        <div class="inner-main-video-right">
+                            @foreach (var item in Model.Category.TutorialVideos)
+                            {
+                                if (item.ID == Model.ID)
+                                {
+                                    continue;
+                                }
+                                <div id="related-video">
+                                    <a href="#"><img src="~/Photo/Uploads/@item.Thumbnail" title="@item.Title"></a>
+                                    <a href="@Url.RouteUrl("TutorVideo",new { id= item.ID,videoName=item.Title.ToSeoUrl(),catName=item.Category.Name.ToSeoUrl()})"><p>@item.Title</p></a>
+                                </div>
+                            }
+                           
+                        </div>
+                    </div>
+                </div>
+                <!-- end main-video -->
+                <div class="col-md-9" style="padding-right:1.8%; padding-left:0;">
+                    <div id="main-left">
+
+                        <div id="main-left-content">
+                            <div id="main-video-info">
+                                <h1 id="video-title">@Model.Title</h1>
+                                <div id="social-network">
+                                    <a href="@ViewBag.Facebook"><img src="~/Content/img/fb-ico.png"></a>
+                                    @*<a href="@ViewBag.Facebook"><img src="~/Content/img/twit-ico.png"></a>
+                                    <a href="#"><img src="~/Content/img/gmail-ico.png"></a>*@
+                                </div>
+                                <div style="clear:both"></div>
+                                <div id="video-description">
+                                    <p>
+                                        @Model.Description
+                                    </p>
+                                </div>
+                                <hr>
+                                @*<textarea placeholder="Đặt câu hỏi"></textarea>
+                                <p style="font-weight:bold; font-size:1.2em; margin:0">Câu hỏi</p>
+                                <hr style="margin:1px 0 2%;">
+                                <div class="quest-video">
+                                    <p>
+                                        Tôi vẫn chưa hiểu Video này lắm , có thể giải thích kỹ hơn về phần xây dựng bài luận SAT được không . Tks
+                                    </p>
+                                    <a href="#"><p class="rep-video">Bình luận</p></a>
+                                    <p class="rep-video"> -- </p>
+                                    <a href="#"><p class="rep-video">Đánh dấu</p></a>
+
+                                    <a href="#"><p class="time-use">Ngoan Cu</p></a>
+                                    <p class="time-use"> -- </p>
+                                    <a href="#"><p class="time-use">1 ngày trước</p></a>
+
+                                    <div style="clear:both"></div>
+                                    <hr>
+                                </div>
+                                <div class="quest-video">
+                                    <p>
+                                        Video hay và cũng là cái nhiều người cần , nhưng tôi vẫn chưa hiểu vì sao lại phải làm theo các bước như thế ? Tôi thấy Có thể đảo 1 số bước , và kết quả thì tôi nghĩ là cũng như vậy ? Tôi nghĩ như vậy liệu có đúng không ?
+                                    </p>
+                                    <a href="#"><p class="rep-video">Bình luận</p></a>
+                                    <p class="rep-video"> -- </p>
+                                    <a href="#"><p class="rep-video">Đánh dấu</p></a>
+
+                                    <a href="#"><p class="time-use">Ngoan Cu</p></a>
+                                    <p class="time-use"> -- </p>
+                                    <a href="#"><p class="time-use">1 ngày trước</p></a>
+
+                                    <div style="clear:both"></div>
+                                    <div class="ans-video">
+                                        <hr>
+                                        <p>
+                                            Cảm ơn bạn đã quan tậm về video . Về vấn đề này thì IEE xin trả lời là việc đảo thứ tự các bước không có ảnh hưởng gì nhé , chỉ là trình bày như vậy thì sẽ dễ hiểu hơn thôi .
+                                        </p>
+                                        <a href="#"><p class="rep-video">Bình luận</p></a>
+                                        <p class="rep-video"> -- </p>
+                                        <a href="#"><p class="rep-video">Đánh dấu</p></a>
+
+                                        <a href="#"><p class="time-use">Cuong NX</p></a>
+                                        <p class="time-use"> -- </p>
+                                        <a href="#"><p class="time-use">1 ngày trước</p></a>
+
+                                        <div style="clear:both"></div>
+                                    </div>
+                                    <div class="ans-video">
+                                        <hr>
+                                        <p>
+                                            Có góp ý nhỏ là làm theo các bước như vậy sẽ dễ gây thiện cảm cho người chấm bài hơn , điều này đã được nghiên cứu , tuy không ảnh hưởng nhiều đến kết quả nhưng cũng có thể giúp đỡ trong những trường hợp điểm suýt soát . Chúc bạn làm bài tốt
+                                        </p>
+                                        <a href="#"><p class="rep-video">Bình luận</p></a>
+                                        <p class="rep-video"> -- </p>
+                                        <a href="#"><p class="rep-video">Đánh dấu</p></a>
+
+                                        <a href="#"><p class="time-use">Cuong NX</p></a>
+                                        <p class="time-use"> -- </p>
+                                        <a href="#"><p class="time-use">1 ngày trước</p></a>
+
+                                        <div style="clear:both"></div>
+                                        <a href="#"><p style="font-weight:bold">Hiện tất cả câu trả lời</p></a>
+                                    </div>
+                                    <hr>
+                                </div>*@
+                            </div>
+                            <!-- end video -->
+
+                        </div>
+                        <!-- end main-left-content -->
+                        <div style="clear:both"></div>
+                    </div>
+                    <!-- end main-left -->
+                </div>
+                <div class="col-md-3" id="main-right">
+                    <div id="menu-video">
+                        <ul>
+                            @{
+                                var active = "";
+                                var listRightMenu = Utils.Instance.GetListRightMenu();
+                            }
+                            @foreach (var item in listRightMenu)
+                            {
+                                if (listRightMenu.IndexOf(item) == 0)
+                                {
+                                    active = "class=active";
+                                }
+                                else
+                                {
+                                    active = "";
+                                }
+                                <li @active><a href="@Url.RouteUrl("CatSEORoute",new { Category =item.Name.ToSeoUrl()})"> @item.Name</a></li>
+                            }
+
+                        </ul>
+                    </div>
+
+                    @Html.Partial("_RightPart", Utils.Instance.GetListBanner().Where(b => b.Position.Contains("Right")).ToList())
+                </div>
+            </div>
+            <!--end content video -->
+        </div>
+    </div>
+</article>
+

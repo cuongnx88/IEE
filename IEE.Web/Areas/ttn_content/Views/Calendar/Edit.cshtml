@@ -1,0 +1,134 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.ViewModel;
+@model CalendarViewModel
+@{
+    ViewBag.Title = "Sửa đổi lịch học/khải giảng";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+    List<int> appointments = (List<int>)ViewBag.DaysInWeek;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Sửa đổi lịch học/khải giảng</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("edit", "calendar", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="date-range">
+                        <label class="col-sm-2 control-label">Thời gian</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "Từ ngày..." })
+                                        @Html.ValidationMessageFor(model => model.FromDate)
+                                        <span class="input-group-addon">đến</span>
+                                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "Đến ngày..." })
+                                        @Html.ValidationMessageFor(model => model.ToDate)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tóm lược</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.Summarize, new { @class = "form-control", rows = "5", maxlength = "250" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Lịch</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @{
+
+                                        string day = string.Empty;
+                                    }
+                                    @for (int i = 0; i < 7; i++)
+                                    {
+                                        bool assigned = false;
+                                        if (appointments != null)
+                                        {
+                                            assigned = appointments.Contains(i);
+                                        }
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox"
+                                                   name="selectedAppointment"
+                                                   value="@i"
+                                                   @(Html.Raw(assigned ? "checked=\"checked\"" : "")) />
+                                            @if (i == 0)
+                                            {
+                                                day = "Thứ 2";
+                                            }
+                                            else if (i == 1)
+                                            {
+                                                day = "Thứ 3";
+                                            }
+                                            else if (i == 2)
+                                            {
+                                                day = "Thứ 4";
+                                            }
+                                            else if (i == 3)
+                                            {
+                                                day = "Thứ 5";
+                                            }
+                                            else if (i == 4)
+                                            {
+                                                day = "Thứ 6";
+                                            }
+                                            else if (i == 5)
+                                            {
+                                                day = "Thứ 7";
+                                            }
+                                            else
+                                            {
+                                                day = "Chủ nhật";
+                                            }
+
+                                            @day
+                                        </label>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

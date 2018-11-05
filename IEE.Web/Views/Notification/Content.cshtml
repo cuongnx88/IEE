@@ -1,0 +1,58 @@
+﻿@model IEE.Infrastructure.DbContext.Post
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Page.cshtml";
+    ViewBag.MetaKeys = "";
+    ViewBag.MetaDescription = "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+}
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Thông báo
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-8 ">
+                    <div class="news-content p-md box-shadow">
+                        @if (Model != null)
+                        {
+                            <h4 class="text-bold">@Model.Title</h4>
+                            <h6 class="m-b-md">
+                                <i>
+                                    @{
+                                        string dayStr = string.Empty;
+                                        int day = (int)DateTime.Now.Subtract(Model.PublishedDate.Value).TotalDays;
+                                    }
+                                    @if (day != 0)
+                                    {
+                                        dayStr = day + " ngày trước";
+                                    }
+                                    else
+                                    {
+                                        dayStr = "Hôm nay";
+                                    }
+                                    @dayStr
+                                </i>
+                            </h6>
+                            <div id="news-content-detail">
+                                @Html.Raw(Model.Detail)
+                            </div>
+                        }
+                    </div>
+                </div>
+                @{Html.RenderAction("LeftPostRandom", "CmsBase");}
+            </div>
+        </div>
+    </div>
+</section>

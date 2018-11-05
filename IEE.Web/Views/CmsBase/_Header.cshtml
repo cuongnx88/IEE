@@ -1,0 +1,163 @@
+﻿@using IEE.Infrastructure.DbContext
+@model IEnumerable<IEE.Infrastructure.DbContext.Category>
+@{ 
+    Setting hotline = (Setting)ViewBag.Hotline;
+
+    string facebook     = ViewBag.Facebook;
+    string youtube      = ViewBag.Youtube;
+    string linked       = ViewBag.Linked;
+    string gplus        = ViewBag.Gplus;
+    string instagram    = ViewBag.Instagram;
+}
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 navbar-default">
+                <div class="header-logo">
+                    <a href="/"></a>
+
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                
+            </div>
+            <div class="col-lg-8">
+                <div class="header-social">
+                    <ul class="list-inline social-icon">
+                        <li>
+                            <a href="@facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="@linked" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                        <li>
+                            <a href="@gplus" target="_blank"><i class="fa fa-google-plus"></i></a>
+                        </li>
+                        <li>
+                            <a href="@instagram" target="_blank"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li>
+                            <a href="@youtube" target="_blank"><i class="fa fa-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-hotline">
+                    <span>Hotline </span><span>@hotline.Value</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="header-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <div class="nav navbar-nav ">
+                            <div class="item ">
+                                <a href="/">Trang chủ</a>
+                            </div>
+                            @foreach (var item in Model)
+                            {
+                            <div class="item page-scroll">
+
+                                
+                                @if (item.Controller.Equals("about"))
+                                {
+                                    <a href="/gioi-thieu">@item.Name</a>
+                                }
+                                else if (item.Controller.Equals("abroad"))
+                                {
+                                    <a href="/du-hoc-my">@item.Name</a>
+                                }
+                                else if (item.Controller.Equals("news"))
+                                {
+                                    <a href="/tin-tuc">@item.Name</a>
+                                }
+                                else if (item.Controller.Equals("calendars"))
+                                {
+                                    <a href="/lich-hoc">@item.Name</a>
+                                }
+                                else if (item.Controller.Equals("prog"))
+                                {
+                                    <a href="/chuong-trinh/@item.Name">@item.Name</a>
+                                }
+                                
+                                @if (item.ChildCategory.Count > 0)
+                                {
+                                    var children = item.ChildCategory.Where(t=>t.IsDeleted==false).OrderBy(t => t.OrderNumber).ThenBy(t => t.Name);
+                                <div class="item-subs">
+                                    <ul class="@item.Controller">
+
+                                        @foreach (var child in children)
+                                        {
+
+                                            if (item.Controller.Equals("about"))
+                                            {
+                                                <li>
+                                                    @*<a href="/gioi-thieu/@child.Id/@child.Name.ToSeoUrl()">@child.Name</a>*@
+                                                    <a href="@Url.RouteUrl("CatSEORoute",new { Category=child.Name.ToSeoUrl()})">@child.Name</a>
+                                                </li>
+                                            }
+                                            else if (!string.IsNullOrEmpty(child.keyword) && child.keyword.Equals("council"))
+                                            {
+                                            <li>
+                                                <a href="/hoi-dong-thanh-vien">Hội đồng chuyên môn</a>
+                                            </li>
+                                            }
+                                            else if (!string.IsNullOrEmpty(child.keyword) && child.keyword.Equals("difference"))
+                                            {
+                                            <li>
+                                                <a href="/gioi-thieu">@child.Name.ToSeoUrl()</a>
+                                            </li>
+                                            }
+                                            else if (item.Controller.Equals("news"))
+                                            {
+                                                <li>
+                                                    @*<a href="/tin-tuc/@child.Id/1/@child.Name.ToSeoUrl()">@child.Name</a>*@
+                                                    <a href="@Url.RouteUrl("CatSEORoute",new { Category=child.Name.ToSeoUrl()})">@child.Name</a>
+                                                </li>
+                                            }
+                                            else if (item.Controller.Equals("prog"))
+                                            {
+                                                <li>
+                                                    <a href="/chuong-trinh/@child.Name.ToSeoUrl()">@child.Name</a>
+                                                </li>
+                                            }
+                                            else if (item.Controller.Equals("abroad"))
+                                            {
+                                            <li>
+                                                @*<a href="/du-hoc-my/@child.Name.ToSeoUrl()">@child.Name</a>*@
+                                                <a href="@Url.RouteUrl("Abroad",new { Category=child.Name.ToSeoUrl()})">@child.Name</a>
+                                            </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                                }
+                            </div>
+
+                            }
+                            <div class="item page-scroll item-header-search">
+                                <div class="header-search">
+                                    @using (Html.BeginForm("index", "find", FormMethod.Get))
+                                    {
+                                        @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @placeholder = "Tìm kiếm" })
+                                        <button type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

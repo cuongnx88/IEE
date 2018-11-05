@@ -1,0 +1,103 @@
+﻿﻿@using IEE.Infrastructure.DbContext
+@model IEE.Infrastructure.DbContext.Post
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Title;
+
+    ViewBag.MetaKeys = Model.MetaKey != null ? Model.MetaKey : "";
+    ViewBag.MetaDescription = !string.IsNullOrEmpty(Model.MetaDescription) ? Model.MetaDescription : "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+
+
+
+
+    string domain = string.Empty, currentUrl = string.Empty, summarize = string.Empty, photo = string.Empty, title = string.Empty;
+    Uri url = HttpContext.Current.Request.Url;
+    domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+
+    title = Model.Title;
+    currentUrl = domain + "/about/group/" + Model.Id;
+    if (!string.IsNullOrEmpty(Model.Summarize))
+    {
+        summarize = Model.Summarize.Length <= 200 ? Model.Summarize : Model.Summarize.Substring(0, 200) + "...";
+    }
+
+    if (string.IsNullOrEmpty(Model.Photo))
+    {
+        photo = domain + "/photo/header-logo.png";
+    }
+    else
+    {
+        photo = domain + "/photo/post/" + Model.Photo;
+    }
+
+}
+@section MetaTags
+{
+    <meta property="og:url" content="@url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@summarize" />
+    <meta property="og:image" content="@photo" />
+
+}
+
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+            <div class="col-md-9" style="padding-right:2%; padding-left:0;">
+                <div id="main-left">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="#"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="#"><p>Tin tức</p></a>
+                            <p>--</p>
+                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = Model.Title.ToSeoUrl(), id = Model.Id })"><p class="active">@Model.Title</p></a>
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+
+                    <div id="main-left-content">
+                        <div id="news">
+
+                            <h1 id="news-title">@Model.Title</h1>
+                            <p id="news-time">
+                                @if (Model.PublishedDate.HasValue)
+                                {
+                                    @Model.PublishedDate.Value.ToString("dd-MM-yyyy")
+
+                                }
+                            </p>
+                            <hr>
+                            <p id="news-description">
+                               @* @Model.Summarize*@
+                            </p>
+
+                            @MvcHtmlString.Create(Model.Detail)
+                        </div>
+                    </div>
+                    <!-- end news -->
+                    <hr>
+                    <div id="related-articles">
+                        <h2>Bài viết liên quan :</h2>
+                        <ul>
+
+                            @foreach (var item in (List<Post>)ViewBag.RelatePost)
+                            {
+                                <li><a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })">@item.Title</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <!-- end related-articles -->
+                </div>
+                <!-- end main-left-content -->
+                <div style="clear:both"></div>
+            </div>
+            <!-- end main-left -->
+            <div class="col-md-3" id="main-right">
+                @Html.Partial("_RightPart", ViewBag.Banners as List<IEE.Infrastructure.DbContext.Banner>)
+            </div>
+        </div>
+    </div>
+</article>

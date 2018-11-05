@@ -1,0 +1,75 @@
+﻿@model IEE.Infrastructure.DbContext.SATExamContent
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SATExamContent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamContentIndex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamContentIndex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttachImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttachImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contents)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Intro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Intro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SATExamForm.Direction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SATExamForm.Direction)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,120 @@
+#header-menu {
+	background:#ff6221;
+}
+#header-menu .nav {
+  position: relative;
+  width: 100%;
+  
+}
+#header-menu .item {
+  float: left;
+  margin:0 20px;
+  
+}
+#header-menu .item-header-search{
+	float:right;
+}
+#header-menu .item :hover{	
+	
+}
+#header-menu .col-md-8{
+	padding-left:0px;
+}
+#header-menu .item:first-child{
+	margin-left:0px;
+}
+#header-menu .item a {
+  padding: 15px 0px;
+  margin: 1px;
+  display: block;
+  color:#fff;
+  font-weight:bold;
+  font-size:16px;
+  line-height:25px;
+}
+#header-menu .item a:first-child{
+	padding-left:0px;
+}
+#header-menu .item .item-subs {
+  display: none;
+  position: absolute;
+  border:1px solid #e9e9e9;
+  background:#fff;
+  width: 100%;
+  left: 0;
+  z-index:9
+}
+
+#header-menu .item a:hover {
+  text-decoration:none;
+}
+#header-menu .item:hover > .item-subs {
+  display: block;
+  background:#fff;
+} 
+#header-menu .item-subs ul{
+	list-style:none;
+}
+
+#header-menu .item-subs li{
+	float:left;
+	padding:0px 15px;
+}
+#header-menu .item-subs a{
+	color:#ff6221;
+	line-height:15px;
+	font-size:14px;
+}
+#header-menu .header-search{
+	float: right;
+    line-height: 30px;
+	margin-top: 10px;
+    border:1px solid #fff;
+}
+#header-menu .header-search input[type=text]{
+	border:none;
+	padding:2px 4px;
+	width:230px;
+	border:none;
+	background:inherit;
+	outline:none;
+    
+	color:#ff6221
+}
+#header-menu .header-search input[type=text]:focus {
+    border:none;
+	background:inherit;
+	outline:none;
+    border:1px solid #e9e9e9;
+	background:#fff;
+	color:#000;
+}
+#header-menu .header-search ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #fff;
+	font-size:16px;
+	text-align:right;
+	font-weight:bold;
+}
+#header-menu .header-search :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #fff;
+   opacity:  1;
+   font-size:16px;
+   text-align:right;
+   font-weight:bold;
+}
+#header-menu .header-search ::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff;
+   opacity:  1;
+   font-size:16px;
+   text-align:right;
+   font-weight:bold;
+}
+#header-menu .header-search :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #fff;
+   font-size:16px;
+   text-align:right;
+   font-weight:bold;
+}
+#header-menu .header-search button{
+	color:#fff;
+}

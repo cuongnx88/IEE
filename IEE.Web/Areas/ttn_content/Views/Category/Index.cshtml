@@ -1,0 +1,131 @@
+﻿
+@model PagedList.IPagedList<IEE.Infrastructure.DbContext.Category>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Phân nhóm";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Danh sách phân nhóm</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-9 m-b-xs">
+                        <a href="/ttn_content/Category/create" class="btn btn-sm btn-primary">Tạo mới phân nhóm</a>
+                    </div>
+                    <div class="col-sm-3">
+                        @using (Html.BeginForm("index", "Category", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <div class="input-group">
+                                @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @class = "input-sm form-control", @placeholder = "Tìm kiếm" })
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-sm btn-primary"> Go!</button>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+
+                                <th style="width:60px">ID</th>
+                                <th>Tiêu đề </th>
+                                <th style="width:120px">Kiểu</th>
+                                <th style="width:60px">Thứ tự</th>
+                                <td style="width:100px">Trạng thái</td>
+                                <th style="width:100px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var _type = "";}
+                            @foreach (var item in Model)
+                            {
+                                var _bold = "";
+                                if (item.ParentId == null)
+                                {
+                                    _bold = "style=font-weight:bold;";
+
+                                }
+                                else
+                                {
+                                    _bold = "";
+                                }
+
+                                <tr>
+
+                                    <td>
+                                        @item.Id
+                                    </td>
+                                    <td @_bold>@item.Name</td>
+                                    <td>
+                                        @if (item.IsMenu && item.IsSystem.HasValue && item.IsSystem.Value)
+                                        {
+                                            _type = "Menu, Hệ thống";
+
+                                        }
+                                        else if (item.IsMenu)
+                                        {
+                                            _type = "Menu";
+
+                                        }
+                                        else if (item.IsSystem.HasValue && item.IsSystem.Value)
+                                        {
+                                            _type = "Hệ thống";
+                                        }
+
+                                        @_type
+
+                                    </td>
+
+                                    <td>
+                                        @if (item.OrderNumber.HasValue)
+                                        {
+                                            @item.OrderNumber.Value
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                            @if (item.IsDeleted == true)
+                                            {
+                                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                                            }
+
+                                        </a>
+                                    </td>
+                                    <td class="center tooltip-command">
+
+                                        @if (item.IsSystem.HasValue && !item.IsSystem.Value)
+                                        {
+                                            <a href="@Url.Action("edit", "Category" , new { id=item.Id.ToString()})" class="btn btn-outline btn-primary dim" title="Sửa dữ liệu"><i class="fa fa-pencil"></i></a>
+                                            <a href="@Url.Action("delete", "Category" , new { id=item.Id.ToString()})" class="btn btn-outline btn-danger  dim " onclick="return confirm('Bạn có muốn khóa bản ghi này?');" title="Xóa dữ liệu"><i class="fa fa-trash-o"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("edit", "Category" , new { id=item.Id.ToString()})" class="btn btn-outline btn-primary dim" title="Sửa dữ liệu"><i class="fa fa-pencil"></i></a>
+                                            <a href="#" class="btn btn-outline btn-danger  dim  delete disabled" title="Xóa dữ liệu"><i class="fa fa-trash-o"></i></a>
+                                        }
+                                    </td>
+
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>

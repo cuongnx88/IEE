@@ -1,0 +1,136 @@
+﻿@model IEE.Infrastructure.DbContext.TutorialVideo
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<h2>Sửa</h2>
+
+@using (Html.BeginForm("Edit", "TutorialVideo", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Video</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        @*<div class="form-group">
+            @Html.Label("Type", "Kiểu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Type, "IELT", new { htmlAttributes = new { @class = "form-control", @checked = "checked" } })IELT &nbsp;
+                @Html.RadioButtonFor(model => model.Type, "SAT", new { htmlAttributes = new { @class = "form-control" } })SAT
+
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 20 })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CatId, "CatId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CatId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CatId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Thumbnail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+       
+                    @Html.HiddenFor(model => model.CreateDate, new { htmlAttributes = new { @class = "form-control" } })
+                   
+           
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Hình ảnh đại diện</label>
+            <div class="col-sm-10">
+
+
+                <div class="col-md-6">
+                    <div class="btn-group">
+
+                        @Html.HiddenFor(model => model.Thumbnail, new { @class = "form-control", @style = "display:none;" })
+                        <input type="file" name="file" id="files" @*onchange="preview(this)"*@ class="hide">
+                        <label title="Upload image file" for="file" class="btn btn-primary" onclick="document.getElementById('files').click()">
+                            Upload
+                        </label>
+                        <div id='previewImg'></div>
+                        <img id="displayImg" src="~/Photo/Uploads/@Html.DisplayFor(model=>model.Thumbnail)" style="display: block; width: 120px;height:auto;" />
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Danh sách", "Index")
+</div>
+<script>
+    $('#files').change(function () {
+        previewThumbnail();
+    });
+
+    function previewThumbnail() {
+        
+        if ($('#files').prop('files') && $('#files').prop('files')[0]) {
+
+            var $file = $('#files').prop('files')[0];
+
+            var fileName = $file.name;
+            var reader = new FileReader();
+            reader.readAsDataURL($file);
+            reader.onload = function (e) {
+                $("#displayImg").attr("src", "" + e.target.result);
+            }
+
+        }
+    }
+</script>

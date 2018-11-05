@@ -1,0 +1,159 @@
+﻿@model IEE.Infrastructure.DbContext.SATAnswer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+}
+
+<h2>Tạo mới Câu trả lời</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.QuestionID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("QuestionID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.QuestionID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AnswerType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AnswerType", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AnswerType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group" id="markDiv">
+        @Html.LabelFor(model => model.Mark, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            A @Html.RadioButtonFor(model => model.Mark, "A", null)
+            B @Html.RadioButtonFor(model => model.Mark, "B", null)
+            C @Html.RadioButtonFor(model => model.Mark, "C", null)
+            D @Html.RadioButtonFor(model => model.Mark, "D", null)
+            @Html.ValidationMessageFor(model => model.Mark, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AnswerContent, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
+            @Html.ValidationMessageFor(model => model.AnswerContent, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Explanation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Explanation, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
+            @Html.ValidationMessageFor(model => model.Explanation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsRightAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @{
+                    var classAnswer = "" + Model.IsRightAnswer + "Answer";
+                }
+                <input type="button" class="@classAnswer" id="lblRightAnswer" style="background:url(/Content/img/falseIcon.png) no-repeat; height:31px;width:41px;border:none;" />
+                @Html.CheckBoxFor(model => model.IsRightAnswer, new { @style = "display:none" })
+                @Html.ValidationMessageFor(model => model.IsRightAnswer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+
+                @{
+                    var classStatus = "" + Model.Status + "Status";
+                }
+                <input type="button" class="@classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />
+                @Html.CheckBoxFor(model => model.Status, new { @style = "display:none" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Tạo mới" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Về danh sách", "Index")
+</div>
+<script>
+
+    $(document).ready(function () {
+        $("#AnswerType").trigger('change');
+    });
+
+    $("#AnswerType").change(function () {
+        if ($("#AnswerType").val() == "1") {
+            $('#markDiv').hide();
+        }
+        else {
+            $('#markDiv').show();
+
+        }
+    });
+    $('#lblRightAnswer').click(function () {
+
+
+        var $this = $('#IsRightAnswer');
+        if ($('#lblRightAnswer').hasClass("FalseAnswer")) {
+            $this.prop('checked', 'true');
+            $('#lblRightAnswer').css('background', 'url(/Content/img/trueIcon.png) no-repeat');
+            $('#lblRightAnswer').css('height', '31px');
+            $('#lblRightAnswer').css('width', '41px');
+            $('#lblRightAnswer').removeClass("FalseAnswer");
+            $('#lblRightAnswer').addClass("TrueAnswer");
+
+        }
+        else {
+
+            $this.removeAttr('checked');
+            $('#lblRightAnswer').css('background', 'url(/Content/img/falseIcon.png) no-repeat');
+            $('#lblRightAnswer').css('height', '31px');
+            $('#lblRightAnswer').css('width', '41px');
+            $('#lblRightAnswer').removeClass("TrueAnswer");
+            $('#lblRightAnswer').addClass("FalseAnswer");
+        }
+
+
+    });
+    $('#lblStatus').click(function () {
+
+        var $this = $('#Status');
+        if ($('#lblStatus').hasClass("FalseStatus")) {
+            $this.prop('checked', 'true');
+            $('#lblStatus').css('background', 'url(/Content/img/ActiveStatus.png) no-repeat');
+            $('#lblStatus').css('height', '31px');
+            $('#lblStatus').css('width', '41px');
+            $('#lblStatus').removeClass("FalseStatus");
+            $('#lblStatus').addClass("TrueStatus");
+
+        }
+        else {
+
+            $this.removeAttr('checked');
+            $('#lblStatus').css('background', 'url(/Content/img/inActiveStatus.png) no-repeat');
+            $('#lblStatus').css('height', '31px');
+            $('#lblStatus').css('width', '41px');
+            $('#lblStatus').removeClass("TrueStatus");
+            $('#lblStatus').addClass("FalseStatus");
+        }
+
+
+    });
+
+</script>

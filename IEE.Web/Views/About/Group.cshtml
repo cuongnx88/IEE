@@ -1,0 +1,88 @@
+﻿@model IEE.Infrastructure.DbContext.Post
+@{
+
+    Layout = "~/Views/Shared/_Page.cshtml";
+
+    string domain=string.Empty, currentUrl = string.Empty, summarize = string.Empty, photo = string.Empty, title = string.Empty;
+    Uri url = HttpContext.Current.Request.Url;
+    domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+
+    if(Model!= null)
+    {
+        title = Model.Title;
+        currentUrl = domain + "/about/group/" + Model.Id;
+
+        summarize = Model.Summarize.Length <= 200 ? Model.Summarize : Model.Summarize.Substring(0, 200) + "...";
+        if(string.IsNullOrEmpty(Model.Photo))
+        {
+            photo = domain + "/photo/header-logo.png";
+        }
+        else
+        {
+            photo = domain + "/photo/post/" + Model.Photo;
+        }
+
+    }
+    else
+    {
+        return;
+    }
+    ViewBag.Title = title;
+
+}
+@section MetaTags
+{
+    <meta property="og:url" content="@url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@summarize" />
+    <meta property="og:image" content="@photo" />
+
+}
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            Giới thiệu
+                        </li>
+                        @if (Model != null)
+                        {
+                        <li>
+                            @Model.Title
+                        </li>
+                        }
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md">
+                <div class="col-md-8 ">
+                    <div class="m-b-md">
+
+                        <div class="fb-like" data-href="@currentUrl" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                    </div>
+
+
+                    @if (Model != null)
+                    {
+                    <div id="news-content-detail">
+                        @Html.Raw(Model.Detail)
+                    </div>
+                    }
+                    
+                </div>
+                @{Html.RenderAction("LeftAbout", "CmsBase");}
+            </div>
+
+        </div>
+    </div>
+</section>
+
+

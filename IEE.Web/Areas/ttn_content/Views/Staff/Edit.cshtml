@@ -1,0 +1,181 @@
+﻿@using IEE.ViewModel;
+@using IEE.Infrastructure.DbContext
+@model User
+@{
+    ViewBag.Title = "Sửa đổi thông tin nhân viên";
+    Layout = "~/areas/ttn_content/views/shared/_ttn_content.cshtml";
+    List<Role> roles = (List<Role>)ViewBag.Roles;
+    List<Role> userRoles = (List<Role>)ViewBag.UserRoles;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins white-bg">
+            <div class="ibox-title">
+                <h5>Sửa đổi thông tin nhân viên</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("edit", "staff", null, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Photo)
+                    @Html.HiddenFor(model => model.Password)
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Họ và tên</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="data_date">
+                        <label class="col-sm-2 control-label">Ngày sinh</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group date ">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        @Html.TextBoxFor(model => model.Birthday, new { @class = "form-control", @Value = Model.Birthday.Value.ToString("dd/MM/yyyy") })
+                                        @Html.ValidationMessageFor(model => model.Birthday)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Địa chỉ</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", maxlength = "250" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Điện thoại</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", maxlength = "11", type = "number" })
+                                    @Html.ValidationMessageFor(model => model.Phone)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                            </div>
+                            <span class="help-block m-b-none">Sử dụng Email để đăng nhập và nhận thông báo từ hệ thống.</span>
+                        </div>
+
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hình ảnh</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    @if (!string.IsNullOrEmpty(Model.Photo))
+                                    {
+                                        <div class="img-preview img-preview-sm">
+                                            <img height="100" width="100" src="~/photo/staff/@Model.Photo" />
+                                        </div>
+                                    }
+                                    <div class="btn-group">
+                                        <label title="Upload image file" for="file" class="btn btn-primary">
+                                            <input type="file" multiple="multiple" name="file" id="file" class="hide">
+                                            Upload hình ảnh
+                                        </label>
+                                        @if (!string.IsNullOrEmpty(Model.Photo))
+                                        {
+                                            <a title="Donload hình ảnh" id="download" class="btn btn-primary" href="/ttn_content/staff/download?fileName=@Model.Photo">Download</a>
+                                        }
+                                        else
+                                        {
+                                            <a title="Donload hình ảnh" id="download" class="btn btn-primary disabled" href="#">Download</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Phân quyền</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    @foreach (var u in roles)
+                                    {
+                                        bool assigned = userRoles.Any(t => t.Id == u.Id);
+                                        <label class="checkbox-inline i-checks">
+                                            <input type="checkbox"
+                                                   name="selectedRoles"
+                                                   value="@u.Id"
+                                                   @(Html.Raw(assigned ? "checked=\"checked\"" : "")) />
+                                            @u.Title
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Khóa tài khoản</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <label class="checkbox-inline i-checks">
+                                        @Html.CheckBox("IsLocked")
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <a class="btn btn-primary" href="@Url.Action("settingpassword","profile", new {id=Model.Id })">   thiết lập mật khẩu   </a>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            @Html.ValidationSummary(true)
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+

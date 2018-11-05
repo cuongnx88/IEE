@@ -1,0 +1,91 @@
+﻿@model IEnumerable<IEE.Infrastructure.DbContext.UniversityHighlight>
+@{
+    ViewBag.Title = "Đội ngũ giáo viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string domain;
+    Uri url = HttpContext.Current.Request.Url;
+    domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+
+    var currentUrl = domain + "/about/student";
+
+    var photo = domain + "/photo/post/header-logo.png";
+}
+@section MetaTags
+{
+    <meta property="og:url" content="@currentUrl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Top trường" />
+    <meta property="og:image" content="@photo" />
+
+}
+<style>
+    .oranges {
+        color: #ff6a00;
+    }
+</style>
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="#"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="/top-schools"><p class="active"> Top trường</p></a>
+
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+                    @*<ol class="breadcrumb">
+                            <li>
+                                <a href="#"><p>Trang chủ</p></a>
+                            </li>
+                            <li>
+                                Giới thiệu
+                            </li>
+                            <li>
+
+                            </li>
+                        </ol>*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md">
+                <div class="col-md-12 p-md council-title">
+                    <h3 style="text-align:center;">Top trường đại học</h3>
+                    <h5 style="text-align:center;">Danh sách những trường đại học  với học bổng hàng đầu</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 p-md council-content">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 m-b-lg" style="justify-content:center;">
+                        <div class="news-item-photo">
+                            <img src="~/Photo/university/@item.Photo" style="height:325px;" class="img-responsive" />
+                            @*<div class="news-photo-bg">
+
+
+                                </div>*@
+                        </div>
+                        @*<h5 class="oranges text-uppercase m-t" style="text-align:center;">@item.Title</h5>*@
+                        <h3 style="text-align:center;"class="oranges">@item.Name</h3>
+                        <h4 class="text-uppercase " style="text-align:center;">Top @item.Ranking</h4>
+                        <div class="council-summarize">
+                            <p style="text-align:center;">  @Html.Raw(@item.Summarize)</p>
+                        </div>
+                      
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+

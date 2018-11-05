@@ -1,0 +1,84 @@
+﻿@using IEE.Web.Models
+@using IEE.Infrastructure.DbContext
+@model List<TutorialVideo>
+@{
+    ViewBag.Title = "AllVideo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<article>
+    <div class="container-fluid" style="padding:0 8.3%">
+        <div class="row" style="padding:2%">
+            <div class="col-md-9" style="padding-right:2%; padding-left:0;">
+                <div id="main-left">
+                    <div id="navigation-bar">
+                        <div style="padding:0 0 0 1.5%">
+                            <a href="/"><p>Trang chủ</p></a>
+                            <p>--</p>
+                            <a href="/video"><p class="active">Video</p></a>
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr>
+                    </div>
+
+                    <!-- end main-left-content -->
+                    <div style="clear:both"></div>
+
+                    <!-- end main-left -->
+
+                    <div id="main-left-content">
+
+                        <div id="video" class="row">
+
+                            @foreach (var item in Model)
+                            {
+                            <div class="video-each">
+                                <div class="video-each-img-area">
+                                    <a href="@Url.RouteUrl("TutorVideo", new { id = item.ID, videoName = item.Title.ToSeoUrl(), catName = item.Category.Name.ToSeoUrl() })">
+                                    @*<a href="@Url.RouteUrl("TutorVideo",new {catName=item.Category.Name.ToSeoUrl(), videoName =item.Title,id=item.ID})">*@
+                                    <img class="video-each-main-img" src="~/Photo/Uploads/@item.Thumbnail"></a>
+                                    @*<a href="@Url.RouteUrl("TutorVideo",new { videoName =item.Title.ToSeoUrl(),id=item.ID})"><img class="video-each-play-button" src="~/Content/img/play button.png"></a>*@
+                                </div>
+                                <a href="#"><p>@item.Title</p></a>
+                            </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="main-right">
+                <div id="menu-video">
+                    <ul>
+                        @{
+                            var active = "";
+                            var listRightMenu = Utils.Instance.GetListRightMenu();
+                            var utils = Utils.Instance;
+                        }
+                        @foreach (var item in listRightMenu)
+                        {
+                            if (listRightMenu.IndexOf(item) == 0)
+                            {
+                                active = "class=active";
+                            }
+                            else
+                            {
+                                active = "";
+                            }
+                            <li @active><a href="@Url.RouteUrl("CatSEORoute", new { Category = item.Name.ToSeoUrl() })"> @item.Name</a></li>
+                        }
+
+                    </ul>
+                </div>
+                @{
+                    var banner = utils.GetListBanner().Where(b => b.Position!=null&& b.Position.Contains("Right"));
+                    if (banner != null)
+                    {
+                        @Html.Partial("_RightPart", banner.ToList())
+                    }
+                }
+               
+            </div>
+
+        </div>
+    </div>
+</article>

@@ -1,0 +1,57 @@
+﻿@using IEE.Infrastructure.DbContext
+@using IEE.Web.Areas.ttn_content.Models
+@model PartialViewModel
+
+    @if (Model.Cate != null && Model.ListPost != null && Model.ListPost.Count > 0)
+    {
+        var cat = Model.Cate.Name;
+        var listPost = Model.ListPost;
+        <div class="big-title-home-news">
+            <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+            <hr>
+        </div>
+
+        <div id="blog-home-1st">
+            <a href="@Url.RouteUrl("NewsSEORoute", new { title = listPost[0].Title.ToSeoUrl(), id = listPost[0].Id })"><img src="~/Photo/post/@listPost[0].Photo" class="img-responsive" style="height:100%;width:35vh"></a>
+            <a href="@Url.RouteUrl("NewsSEORoute", new { title = listPost[0].Title.ToSeoUrl(), id = listPost[0].Id })">
+                <p id="blog-home-1st-title">
+                    @listPost[0].Title
+                </p>
+            </a>
+            <p id="blog-home-1st-description" class="text-paragraph">
+                @{ 
+                    var sum = "";
+                }
+                @if (listPost[0].Summarize.Count()>150)
+                {
+                    sum = listPost[0].Summarize.Substring(0, 150);
+                }
+                else
+                {
+                    sum = listPost[0].Summarize;
+                }
+                @sum <span>...</span>
+            </p>
+        </div>
+                        <div style="clear:both"></div>
+                        <div class="row" style="margin-top:2%;">
+                            @for (int i = 1; i < listPost.Count; i++)
+                            {
+                                <div class="col-xs-4 blog-home-child">
+                                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = listPost[i].Title.ToSeoUrl(), id = listPost[i].Id })"><img src="~/Photo/post/@listPost[i].Photo" class="img-responsive"></a>
+                                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = listPost[i].Title.ToSeoUrl(), id = listPost[i].Id })"><p>@listPost[i].Title</p></a>
+                                </div>
+                            }
+
+                        </div>
+    }
+    else if (Model.Cate != null)
+    {
+        var cat = Model.Cate.Name;
+        <div class="big-title-home-news">
+            <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+            <hr>
+        </div>
+    }
+
+

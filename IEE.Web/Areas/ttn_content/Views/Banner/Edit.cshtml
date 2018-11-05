@@ -1,0 +1,232 @@
+﻿@using IEE.Web.Models
+@using IEE.ViewModel;
+@model BannerViewModel
+@{
+    ViewBag.Title = "Chỉnh sửa banner";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Chỉnh sửa banner</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("Edit", "Banner", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Photo)
+                    @Html.HiddenFor(model => model.CreatedBy)
+                    @Html.HiddenFor(model => model.CreatedDate)
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề</label>
+
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tóm lược</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.TextAreaFor(model => model.Summarize, new { @class = "form-control", maxlength = "500" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nội dung</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.TextAreaFor(model => model.Detail, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Hình ảnh đại diện</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (!string.IsNullOrEmpty(Model.Photo))
+                                    {
+                                        <div id='previewImg'>
+                                            <img src="/photo/banner/@Model.Photo" style="max-width:100%;" id="Photo" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div id='previewImg'></div>
+                                    }
+                                </div>
+                                <div class="col-md-12 m-t-md">
+                                    <div class="btn-group">
+                                        <label title="Upload image file" for="file" class="btn btn-primary" onclick="document.getElementById('files').click()">
+                                            <input type="file" multiple="multiple" name="file" id="file" onchange="preview(this)" class="hide">
+                                            Upload hình ảnh
+                                        </label>
+
+                                        @if (!string.IsNullOrEmpty(Model.Photo))
+                                        {
+                                            <a title="Donload hình ảnh" id="download" class="btn btn-primary" href="/ttn_content/banner/download?fileName=@Model.Photo">Download</a>
+                                        }
+                                        else
+                                        {
+                                            <a title="Donload hình ảnh" id="download" class="btn btn-primary disabled" href="#">Download</a>
+                                        }
+                                    </div>
+                                    <span class="help-block m-b-none">Hình ảnh banner cho header nên có kích thước 1000px X 565px.</span>
+                                    <span class="help-block m-b-none">Hình ảnh banner cho footer nên có kích thước 1280px X 400px.</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Trạng thái</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="checkbox-inline i-checks">
+                                        @Html.CheckBoxFor(model => model.IsLock) Xuất bản?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="i-checks">
+                                        @Html.CheckBoxFor(model => model.JustPhoto) Chỉ hiển thị hình ảnh?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="i-checks">
+                                        @Html.CheckBoxFor(model => model.IsHeader) Hiển thị trên footer?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Vị trí</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="i-checks">
+                                        @{
+                                            var listPos = Utils.Instance.GetListPosition();
+                                            var split = Model.Position != null ? Model.Position.Split(',') : null;
+
+                                        }
+
+                                        @foreach (var item in listPos)
+                                        {
+                                            var check = "";
+                                            if (split!=null)
+                                            {
+                                                foreach (var spliItem in split)
+                                                {
+                                                    if (spliItem.Trim() != "" && spliItem == item)
+                                                    {
+                                                        check = "checked=checked";
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        check = "";
+                                                    }
+
+                                                }
+                                            }
+
+
+                                            <input type="checkbox" name="BannerPosition" value="@item"  @check />@item
+                                        }
+
+                                        @*<input type="checkbox" name="BannerPosition" value="Header" />Đầu trang &nbsp;
+                                            <input type="checkbox" name="BannerPosition" value="Footer" />Cuối trang &nbsp;
+                                            <input type="checkbox" name="BannerPosition" value="Right" /> Bên phải*@
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group linkvideo">
+                        <label class="col-sm-2 control-label">Link</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Link, new { @class = "form-control", maxlength = "250" })
+                                </div>
+                            </div>
+                            <span class="help-block m-b-none">Hyperlink sử dụng cho banner.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Thứ tự</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.BannerIndex, new { @type = "number", min = "0", @class = "form-control", maxlength = "20" })
+                                </div>
+                            </div>
+                            <span class="help-block m-b-none">Thứ tự hiển thị trên trang chủ.</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">   Lưu   </button>
+                        </div>
+                    </div>
+                                            }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SUMMERNOTE -->
+<link href="~/content/ttn_content/plugins/summernote/summernote.css" rel="stylesheet">
+<link href="~/content/ttn_content/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+<script src="~/scripts/plugins/summernote/summernote.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var roxyFileman = '/Scripts/fileman/index.html';
+
+        CKEDITOR.replace('Detail', {
+            filebrowserBrowseUrl: roxyFileman,
+            filebrowserImageBrowseUrl: roxyFileman + '?type=image',
+            removeDialogTabs: 'link:upload;image:upload'
+        });
+
+    });
+</script>
+
+
+
+
+

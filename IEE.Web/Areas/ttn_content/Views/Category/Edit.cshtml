@@ -1,0 +1,187 @@
+﻿@using IEE.Web.Models
+@using IEE.Infrastructure.DbContext
+@using IEE.ViewModel;
+@model CategoryViewModel
+@{
+    ViewBag.Title = "Sửa đổi phân nhóm";
+    Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
+    //List<CategoryModel> parents = (List<CategoryModel>)ViewBag.Parents;
+    List<Category> listCategory = (List<Category>)ViewBag.Categories;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Sửa đổi phân nhóm</h5>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("edit", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.CreatedBy)
+                    @Html.HiddenFor(model => model.CreatedDate)
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tiêu đề</label>
+
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", maxlength = "250" })
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Phân nhóm</label>
+
+                        <div class="col-sm-6">
+                            @{
+                                var parent = "checked=checked";
+                                if (ViewBag.isParent != null && ViewBag.isParent == true)
+                                {
+                                    parent = "checked=checked";
+                                }
+                                else if (ViewBag.isParent != null && ViewBag.isParent == false)
+                                {
+                                    parent = "";
+                                }
+                            }
+                            <input type="checkbox" value="true" name="isParent" id="parentChk" @parent />Danh mục cha
+                            @Html.DropDownListFor(model => model.ParentId,
+                                          new SelectList(listCategory, "Id", "Name"),
+                                          "Lựa chọn chương trình",
+                                          new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ParentId)
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tóm lược</label>
+                            <div class="col-sm-10">
+                                @Html.TextAreaFor(model => model.Summarize, new { @class = "form-control", rows = "5", maxlength = "250" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Trạng thái</label>
+                            <div class="col-sm-10">
+                                <div class="col-md-6">
+                                    <label class="i-checks">
+                                        @Html.CheckBoxFor(model => model.IsMenu) Mục này là Menu
+                                    </label>
+                                    <label class="i-checks">
+
+                                        @Html.CheckBoxFor(model => model.IsSystem) Mục này là hệ thống
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Keyword</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.keyword, new { @class = "form-control", maxlength = "50" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sắp xếp</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.OrderNumber, new { @class = "form-control", maxlength = "10", type = "number", step = "any" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Vị trí</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        @{
+                                            var listPos = Utils.Instance.GetListPosition();
+                                            var listType = Utils.Instance.GetListDisplayType();
+                                            var split = Model.Position != null ? Model.Position.Split(',') : null;
+
+                                        }
+
+                                        @foreach (var item in listPos)
+                                        {
+                                            var check = "";
+                                            if (split != null)
+                                            {
+
+
+                                                foreach (var spliItem in split)
+                                                {
+                                                    if (spliItem.Trim() != "" && spliItem == item)
+                                                    {
+                                                        check = "checked=checked";
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        check = "";
+                                                    }
+
+                                                }
+                                            }
+                                            <label class="i-checks">
+                                                <input type="checkbox" name="CatPosition" value="@item" @check />@Utils.Instance.GetVNName(item)
+                                            </label>
+                                        }
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Kiểu hiển thị</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @foreach (var item in listType)
+                                        {
+                                            var check = "";
+                                            if (item==Model.DisplayType)
+                                            {
+                                                check = "checked=checked";
+                                            }
+                                            else
+                                            {
+                                                check = "";
+                                            }
+                                            <label class="i-checks">
+                                                <input type="radio" name="DisplayType" value="@item" @check />@Utils.Instance.GetVNName(item)&nbsp;
+                                            </label>
+                                        }
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit">   Lưu   </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                                            }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#parentChk').on('ifChecked', function (event) {
+        //alert(event.type + ' callback');
+        $('select').prop('disabled', 'disabled');
+    });
+    $('#parentChk').on('ifUnchecked', function (event) {
+        //alert(event.type + ' callback');
+        $('select').removeAttr('disabled');
+    });
+
+</script>

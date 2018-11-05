@@ -1,0 +1,123 @@
+﻿@using IEE.Infrastructure.DbContext
+@model IEE.Infrastructure.DbContext.Post
+@{
+    string title = Model != null ? Model.Title : "";
+    ViewBag.Title = title;
+    ViewBag.MetaKeys = Model.MetaKey != null ? Model.MetaKey : "";
+    ViewBag.MetaDescription = !string.IsNullOrEmpty(Model.MetaDescription) ? Model.MetaDescription : "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+
+
+    Layout = "~/Views/Shared/_Page.cshtml";
+    Category Category = (Category)ViewBag.Category;
+
+    string domain = string.Empty, currentUrl = string.Empty, summarize = string.Empty, photo = string.Empty;
+    Uri url = HttpContext.Current.Request.Url;
+    domain = url.AbsoluteUri.Replace(url.PathAndQuery, string.Empty);
+
+    if (Model != null)
+    {
+        title = Model.Title;
+        currentUrl = domain + "/about/group/" + Model.Id;
+        if(!string.IsNullOrEmpty(Model.Summarize))
+        {
+            summarize = Model.Summarize.Length <= 200 ? Model.Summarize : Model.Summarize.Substring(0, 200) + "...";
+        }
+
+        if (string.IsNullOrEmpty(Model.Photo))
+        {
+            photo = domain + "/photo/header-logo.png";
+        }
+        else
+        {
+            photo = domain + "/photo/post/" + Model.Photo;
+        }
+
+    }
+
+}
+@section MetaTags
+{
+    <meta property="og:url" content="@url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="@summarize" />
+    <meta property="og:image" content="@photo" />
+
+}
+
+
+<section id="page-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <strong><a href="/">IEE</a></strong>
+                        </li>
+                        <li>
+                            @Category.Name
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-8 ">
+                    <div class="news-content p-md box-shadow">
+                        
+                        
+
+                        <div class="content-detail">
+                            <div class="m-b-md">
+                                <div class="fb-like" data-href="@currentUrl" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                            </div>
+
+                            @if (Model != null)
+                            {
+                            <h4 class="text-bold">@Model.Title</h4>
+                            <div id="news-content-detail">
+                                @Html.Raw(Model.Detail)
+                            </div>
+                            }
+                        </div>
+                        <div class="content-relate m-t-md">
+                            @{
+                                if (Model != null && Model.PostCategories.Select(c=>c.Category) != null)
+                                {
+                                    var CategoryObj = Model.PostCategories.Select(c => c.Category).FirstOrDefault();
+                                    <ul class="menu-item" style="list-style:none; padding-left:0;">
+
+                                        <li style="line-height:35px; font-size:14px; font-weight:bold; border-bottom:1px solid #ff6221">Các bài viết liên quan</li>
+
+                                        @{
+                                            var posts = CategoryObj.PostCategories.Select(p=>p.Post).Where(t =>t!=null && t.Id != Model.Id).Take(5);
+                                            foreach (var post in posts)
+                                            {
+                                            <li style="line-height:35px;"><a href="/tin-tuc/@post.Id/@post.Title.ToSeoUrl()" style="color:#ff6221; font-size:14px; text-decoration:none;">@post.Title</a> </li>
+                                            }
+                                        }
+                                    </ul>
+                                }
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                @{ 
+                    int CategoryId = 0;
+                    if(Category.ParentId!=null && Category.ParentId.Value == 5)
+                    {
+                        CategoryId = Category.Id;
+                    }
+                    else {
+                        CategoryId = Category.ParentId.Value;
+                    }
+                }
+                @{Html.RenderAction("LeftPostProgramRandom", "CmsBase", new { Category = CategoryId});}
+            </div>
+        </div>
+    </div>
+</section>
