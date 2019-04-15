@@ -1,16 +1,8 @@
-﻿using System;
+﻿using IEE.Infrastructure;
+using IEE.Infrastructure.DbContext;
 using System.Collections.Generic;
 using System.Linq;
-using IEE.ViewModel;
 using System.Web.Mvc;
-using IEE.Infrastructure.DbContext;
-using IEE.Model;
-using AutoMapper;
-using System.Configuration;
-using System.Web;
-using IEE.Web.Business;
-using IEE.Infrastructure;
-using IEE.Web.Areas.ttn_content.Models;
 
 namespace IEE.Web.Controllers
 {
@@ -71,18 +63,32 @@ namespace IEE.Web.Controllers
             ViewBag.Hotline = db.Settings.FirstOrDefault(t => t.Id == 1).Value;
             ViewBag.Address = db.Settings.FirstOrDefault(t => t.Key == "address").Value;
             ViewBag.Phone = db.Settings.FirstOrDefault(t => t.Key.Equals("phone")).Value;
+
+           
+
             var unitOfWork = new UnitOfWork();
             var post = _postRepo.Get(t => t.Id == id && t.Status == true);
             var catID = post.PostCategories.Where(p => p.PostID == id).Select(c => c.CategoryID).FirstOrDefault();
-            var relatePost = (from p in unitOfWork.DataContext.Posts
-                              join pc in unitOfWork.DataContext.PostCategories
-                              on p.Id equals pc.PostID
-                              join c in unitOfWork.DataContext.Categories
-                              on pc.CategoryID equals c.Id
-                              where c.Id == catID && p.Id!=id
-                              orderby  p.CreatedDate descending
-                              select p).Take(5).ToList();
-            ViewBag.RelatePost = relatePost;
+            if (catID!=null)
+            {
+              
+                var relatePost = (from p in unitOfWork.DataContext.Posts
+                                  join pc in unitOfWork.DataContext.PostCategories
+                                  on p.Id equals pc.PostID
+                                  join c in unitOfWork.DataContext.Categories
+                                  on pc.CategoryID equals c.Id
+                                  where c.Id == catID && p.Id != id
+                                  orderby p.CreatedDate descending
+                                  select p).Take(5).ToList();
+                ViewBag.RelatePost = relatePost;
+                var cat = _categoryRepo.GetById(catID.Value);
+                if (cat != null)
+                {
+                    ViewBag.category = cat.Name;
+                };
+            }
+            
+            
             return View(post);
         }
         public ActionResult Preview(int id)
@@ -92,6 +98,7 @@ namespace IEE.Web.Controllers
         }
         public ActionResult Category(string category, int? trang)
         {
+            var route = Request.RequestContext.RouteData;
             var banners = db.Banners.Where(t => t.IsDeleted == false && t.IsLock == true && t.IsHeader == false).OrderBy(banner => banner.BannerIndex).ToList();
             ViewBag.Banners = banners;
             ViewBag.Facebook = db.Settings.FirstOrDefault(t => t.Id == 2).Value;
@@ -104,14 +111,16 @@ namespace IEE.Web.Controllers
             ViewBag.Address = db.Settings.FirstOrDefault(t => t.Key == "address").Value;
             ViewBag.Phone = db.Settings.FirstOrDefault(t => t.Key.Equals("phone")).Value;
             var listCat = _categoryRepo.GetAll();
+
             var catModel = new Category();
             trang = trang == null ? 0 : trang;
 
             foreach (var item in listCat)
             {
-                if (item.Name.ToSeoUrl() == category)
+                if (item.Name.ToSeoUrl() == category && item.IsDeleted == false)
                 {
                     catModel = item;
+                    
                     break;
                 }
             }
@@ -122,9 +131,14 @@ namespace IEE.Web.Controllers
             ViewBag.CategoryId = catModel.Id;
             ViewBag.Trang = trang.Value;
             ViewBag.PageCount = pageCount;
-            ViewBag.TotalPage = catModel.PostCategories.Select(p => p.Post).Count() / pageCount;
+            var postInCat = catModel.PostCategories.Select(p => p.Post).Count();
+            ViewBag.TotalPage = (postInCat / pageCount) < 1 ? 1 : (postInCat / pageCount) + 1;
             ViewBag.Cat = category;
-           
+
+            ViewBag.Title = db.Settings.FirstOrDefault(t => t.Key.Equals("title")).Value;
+            ViewBag.MetaKeys = db.Settings.FirstOrDefault(t => t.Key.Equals("meta_key")).Value;
+            ViewBag.MetaDescription = db.Settings.FirstOrDefault(t => t.Key.Equals("meta_description")).Value;
+
             //    var partialViewModel = new PartialViewModel();
             //    partialViewModel.Cate = catModel;
             //    if (catModel.PostCategories.Where(c => c.CategoryID == catModel.Id) != null && catModel.PostCategories.Where(c => c.CategoryID == catModel.Id).Count() > 0)
@@ -137,8 +151,8 @@ namespace IEE.Web.Controllers
             //        }
             //        partialViewModel.ListPost = list;
             //    }
-               
-            
+
+
             //ViewBag.PartialViewModel = partialViewModel;
 
             return View(catModel);

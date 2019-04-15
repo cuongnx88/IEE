@@ -15,17 +15,17 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-sm-9 m-b-xs">
-                        
+
                     </div>
                     <div class="col-sm-3">
                         @using (Html.BeginForm("Index", "setting", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
                         {
-                        <div class="input-group">
-                            @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @class = "input-sm form-control", @placeholder = "Tìm kiếm" })
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-sm btn-primary"> Go!</button>
-                            </span>
-                        </div>
+                            <div class="input-group">
+                                @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @class = "input-sm form-control", @placeholder = "Tìm kiếm" })
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-sm btn-primary"> Go!</button>
+                                </span>
+                            </div>
                         }
                     </div>
                 </div>
@@ -41,17 +41,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @{var i = 1; }
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td>@item.Id</td>
-                                <td>@item.Key</td>
-                                <td>@item.Value</td>
-                                <td class="center tooltip-command">
-                                    <a href="@Url.Action("edit", "setting" , new { id=item.Id.ToString()})" class="btn btn-outline btn-primary dim" title="Sửa dữ liệu"><i class="fa fa-pencil"></i></a>
-                                </td>
-
-                            </tr>
+                                <tr>
+                                    <td>@i</td>
+                                    <td><b> @item.Key</b></td>
+                                    <td>@item.Value</td>
+                                    <td class="center tooltip-command">
+                                        <a href="@Url.Action("edit", "setting" , new { id=item.Id.ToString()})" class="btn btn-outline btn-primary dim" title="Sửa dữ liệu"><i class="fa fa-pencil"></i></a>
+                                    </td>
+                                    
+                                </tr>
+                                ++i;
                             }
                         </tbody>
                     </table>

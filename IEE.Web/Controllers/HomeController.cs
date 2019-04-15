@@ -179,7 +179,7 @@ namespace IEE.Web.Controllers
             //var calendar = dbContext.GetRepository<Calendar>().GetMany(x => DbFunctions.DiffDays(x.CreatedDate, DateTime.Now) >=0 ).OrderBy(c => c.CreatedDate).Take(3).ToList();
             //ViewBag.Calendar = calendar;
 
-            var files = dbContext.GetRepository<Medium>().GetMany(m => m.Type == 1).OrderByDescending(f=>f.CreatedDate).ToList();
+            var files = dbContext.GetRepository<Medium>().GetMany(m => m.Type ==2).OrderByDescending(f=>f.CreatedDate).ToList();//uploaded document
             ViewBag.Files = files;
 
             var topUniversity = _universityHighlight.GetTop(6).OrderBy(r=>r.Ranking).ToList();
@@ -204,6 +204,11 @@ namespace IEE.Web.Controllers
             ViewBag.Hotline = _settingRepo.Get(t => t.Id == 1).Value;
             ViewBag.Address = _settingRepo.Get(t => t.Key == "address").Value;
             ViewBag.Phone = _settingRepo.Get(t => t.Key.Equals("phone")).Value;
+
+            ViewBag.Title = db.Settings.FirstOrDefault(t => t.Key.Equals("title")).Value;
+            ViewBag.MetaKeys = db.Settings.FirstOrDefault(t => t.Key.Equals("meta_key")).Value;
+            ViewBag.MetaDescription = db.Settings.FirstOrDefault(t => t.Key.Equals("meta_description")).Value;
+
             return View();
         }
         public void SetInforHomepage(SATEntities db)

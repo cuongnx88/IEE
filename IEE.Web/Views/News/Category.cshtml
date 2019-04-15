@@ -1,6 +1,6 @@
 ﻿﻿
 @{
-    ViewBag.Title = "Tin tức";
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using IEE.Web.Models;
@@ -14,16 +14,15 @@
     var partialViewModel = new PartialViewModel();
     partialViewModel.Cate = Model;
 
-    ViewBag.MetaKeys = Model.MetaKey != null ? Model.MetaKey : "";
-    ViewBag.MetaDescription = !string.IsNullOrEmpty(Model.MetaDescription) ? Model.MetaDescription : "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
-
+   
 }
 @if (Model.PostCategories != null && Model.PostCategories.Select(p => p.Post).Where(p => p != null).Count() > 0)
 {
     var skip = (int)ViewBag.PageCount * (int)ViewBag.Trang;
-    var postModel = Model.PostCategories.Select(p => p.Post).Where(p => p != null).Skip(skip).Take((int)ViewBag.PageCount).OrderByDescending(p => p.CreatedDate).ToList();
+    var _pageCount = (int)ViewBag.PageCount;
+    var _trang = (int)ViewBag.Trang;
+    var postModel = Model.PostCategories.Select(p => p.Post).Where(p => p != null).ToList().OrderByDescending(p => p.PublishedDate).Skip((_trang-1)*_pageCount).Take(_pageCount).ToList();
     partialViewModel.ListPost = postModel;
-   
 }
 <article>
     <div class="container-fluid" style="padding:0 8.3%">

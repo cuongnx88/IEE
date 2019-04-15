@@ -1,5 +1,5 @@
 ﻿@model IEE.Web.Areas.ttn_content.Models.AnswerViewModel
-
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/ttn_content/Views/Shared/_ttn_content.cshtml";
@@ -9,11 +9,21 @@
         visibility: collapse;
     }
 </style>
-<h2>Danh sách<span style="float:right"><input type="text" id="searchQuestion" placeholder="Tìm kiếm" /><button id="btnSearch"><i class="fa fa-search"></i></button></span></h2>
+<h2>Danh sách@*<span style="float:right"><input type="text" id="searchQuestion" placeholder="Tìm kiếm" /><button id="btnSearch"><i class="fa fa-search"></i></button></span>*@</h2>
 
 <p>
     @Html.ActionLink("Tạo mới", "Create")
 </p>
+@using (Html.BeginForm("Index", "Answer", FormMethod.Post))
+{
+
+    <div class="input-group">
+        @Html.TextBox("keyword", ViewBag.CurrentFilter as string, new { @class = "input-sm form-control", @placeholder = "Nhập tiêu đề", @style = "width:50%;float:right;" })
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-sm btn-primary"> Tìm kiếm</button>
+        </span>
+    </div>
+}
 <table class="table">
     <tr>
         <th>Câu hỏi</th>
@@ -47,11 +57,11 @@
             <td></td>
             <td></td>
             <td></td>
-            @if (item.SATAnswers.Count < 4 && (item.HasInputAnswer==null || item.HasInputAnswer == false))
+            @if (item.SATAnswers.Count < 4 && (item.HasInputAnswer == null || item.HasInputAnswer == false))
             {
                 <td>@Html.ActionLink("Thêm trả lời", "Create", new { questionId = item.ID })</td>
             }
-            else if (item.SATAnswers.Count < 1 && (item.HasInputAnswer!=null && item.HasInputAnswer == true))
+            else if (item.SATAnswers.Count < 1 && (item.HasInputAnswer != null && item.HasInputAnswer == true))
             {
                 <td>@Html.ActionLink("Thêm trả lời", "Create", new { questionId = item.ID })</td>
             }
@@ -63,13 +73,13 @@
             var isRight = answerItem.IsRightAnswer == true ? "Đúng" : "Sai";
             <tr class="listAnswerOf_@answerItem.QuestionID toggle-display">
                 <td></td>
-                @if (item.HasInputAnswer==null || item.HasInputAnswer == false)
+                @if (item.HasInputAnswer == null || item.HasInputAnswer == false)
                 {
                     <td>@answerItem.Mark - @MvcHtmlString.Create(answerItem.AnswerContent)</td>
                 }
-                else if (item.HasInputAnswer!=null && item.HasInputAnswer == true)
+                else if (item.HasInputAnswer != null && item.HasInputAnswer == true)
                 {
-                <td>@MvcHtmlString.Create(answerItem.AnswerContent)</td>}
+                    <td>@MvcHtmlString.Create(answerItem.AnswerContent)</td>}
 
                 <td>@isRight</td>
                 <td>@answType </td>
@@ -86,7 +96,7 @@
     }
 
 </table>
-
+@Html.PagedListPager(Model.ListQuestion, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
 <script>
 
     function showMore(questionID) {

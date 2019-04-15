@@ -365,4 +365,10 @@ namespace IEE.Web.Models
             return Convert.ToInt32(str);
         }
     }
+
+    public class DisabledSection
+    {
+        public List<int> Section { get; set; }
+        public int DisabledInExam { get; set; }
+    }
 }

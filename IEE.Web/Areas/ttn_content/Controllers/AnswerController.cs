@@ -1,13 +1,14 @@
-﻿using System;
+﻿using IEE.Infrastructure.DbContext;
+using IEE.Web.Areas.ttn_content.Models;
+using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using IEE.Infrastructure.DbContext;
-using IEE.Web.Areas.ttn_content.Models;
 
 namespace IEE.Web.Areas.ttn_content.Controllers
 {
@@ -16,10 +17,36 @@ namespace IEE.Web.Areas.ttn_content.Controllers
         private SATEntities db = new SATEntities();
 
         // GET: ttn_content/SATAnswers
-        public ActionResult Index()
+        public ActionResult Index(int? page, string CurrentFilter, string keyword)
         {
-            var viewModel = new AnswerViewModel();
-            return View(viewModel);
+            int pageNumber = (page ?? 1);
+            using (var db = new SATEntities())
+            {
+                var model = new AnswerViewModel();
+                model.ListQuestion = db.SATQuestions.Include("SATAnswers").ToList().Where(q => q.Status == true).ToPagedList(pageNumber, int.Parse(ConfigurationManager.AppSettings["PageSize"]));
+
+
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    model.ListQuestion = model.ListQuestion.ToList().Where(t => t.Title.ToLower().Contains(keyword.ToLower())).ToPagedList(pageNumber, int.Parse(ConfigurationManager.AppSettings["PageSize"]));
+                }
+
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    page = 1;
+                }
+                else
+                {
+                    keyword = CurrentFilter;
+                }
+
+                ViewBag.CurrentFilter = keyword;
+
+                model.ListQuestion = model.ListQuestion.ToList().OrderByDescending(t => t.ID).ToPagedList(pageNumber, int.Parse(ConfigurationManager.AppSettings["PageSize"]));
+                return View(model);
+
+            }
+
         }
 
 

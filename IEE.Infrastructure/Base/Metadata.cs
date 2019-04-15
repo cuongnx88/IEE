@@ -8,9 +8,9 @@ namespace IEE.Infrastructure.DbContext
     [MetadataType(typeof(SATQuestionMetadata))]
     public partial class SATQuestion
     {
-      public class SATQuestionMetadata
+        public class SATQuestionMetadata
         {
-            [Display(Name ="Nội dung")]
+            [Display(Name = "Nội dung")]
             [Required(ErrorMessage = "{0} không được để trống")]
             public string QuestionContent { get; set; }
             [Display(Name = "Trạng thái")]
@@ -18,7 +18,7 @@ namespace IEE.Infrastructure.DbContext
             [Display(Name = "Kiểu")]
             public int TypeID { get; set; }
             [Display(Name = "Tiêu đề ngắn gọn")]
-            [Required(ErrorMessage ="{0} không được để trống")]
+            [Required(ErrorMessage = "{0} không được để trống")]
             public string Title { get; set; }
             [Display(Name = "Số thứ tự")]
             [Required(ErrorMessage = "{0} không được để trống")]
@@ -37,7 +37,7 @@ namespace IEE.Infrastructure.DbContext
     {
         public class SATTypeMetadata
         {
-            [Display(Name ="Kiểu")]
+            [Display(Name = "Kiểu")]
             public int TypeName { get; set; }
         }
     }
@@ -47,7 +47,7 @@ namespace IEE.Infrastructure.DbContext
     {
         public class SATAnswerMetadata
         {
-            [Display(Name ="Nội dung câu trả lời")]
+            [Display(Name = "Nội dung câu trả lời")]
             [Required(ErrorMessage = "{0} không được để trống")]
             public string AnswerContent { get; set; }
             [Display(Name = "Là câu trả lời đúng")]
@@ -56,7 +56,7 @@ namespace IEE.Infrastructure.DbContext
             public bool Status { get; set; }
             [Display(Name = "Câu hỏi")]
             public int QuestionID { get; set; }
-            [Display(Name ="Kiểu câu trả lời")]
+            [Display(Name = "Kiểu câu trả lời")]
             public int AnswerType { get; set; }
             [Display(Name = "Thứ tự")]
             //[Required(ErrorMessage = "{0} không được để trống")]
@@ -114,7 +114,7 @@ namespace IEE.Infrastructure.DbContext
         }
     }
 
-    public class SATAccountRegisterModel:User
+    public class SATAccountRegisterModel : User
     {
         [Required(ErrorMessage = "Xác nhận Mật khẩu không được để trống")]
         public string ConfirmPassword { get; set; }
@@ -160,7 +160,7 @@ namespace IEE.Infrastructure.DbContext
             public string AttachImage { get; set; }
             [Display(Name = "Nội dung")]
             public string Contents { get; set; }
-            
+
             [Display(Name = "Mẫu bài thi")]
             public int ExamFormID { get; set; }
             [Display(Name = "Trạng thái")]
@@ -183,7 +183,8 @@ namespace IEE.Infrastructure.DbContext
     [MetadataType(typeof(MediaMetadata))]
     public partial class Medium
     {
-        public class MediaMetadata {
+        public class MediaMetadata
+        {
 
             public int Id { get; set; }
             public string Name { get; set; }
@@ -209,7 +210,7 @@ namespace IEE.Infrastructure.DbContext
         {
             public int ID { get; set; }
             [Required(ErrorMessage = "{0} không được để trống")]
-            [Display(Name ="Link")]
+            [Display(Name = "Link")]
             public string Link { get; set; }
             [Required(ErrorMessage = "{0} không được để trống")]
             [Display(Name = "Tiêu đề")]

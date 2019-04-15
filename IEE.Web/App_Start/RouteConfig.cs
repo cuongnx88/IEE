@@ -19,7 +19,11 @@ namespace IEE.Web
                 "gioi-thieu",
                 new { controller = "About", action = "Index", id = UrlParameter.Optional }
             );
-
+            routes.MapRoute(
+               "Contact",
+               "lien-he",
+               new { controller = "Contact", action = "Index", id = UrlParameter.Optional }
+           );
             routes.MapRoute(
                 "GroupAbout",
                 "gioi-thieu/{id}/{alias}",
@@ -31,16 +35,16 @@ namespace IEE.Web
                 new { controller = "About", action = "Council", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                "GroupAbroad",
-                "du-hoc-my/{id}/{alias}",
-                new { controller = "Abroad", action = "Group", id = UrlParameter.Optional }
-            );
-            routes.MapRoute(
-                "Abroad",
-                "du-hoc-my/{Category}",
-                new { controller = "Abroad", action = "Index", Category = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    "GroupAbroad",
+            //    "du-hoc-my/{id}/{alias}",
+            //    new { controller = "Abroad", action = "Group", id = UrlParameter.Optional }
+            //);
+            //routes.MapRoute(
+            //    "Abroad",
+            //    "du-hoc-my/{Category}",
+            //    new { controller = "Abroad", action = "Index", Category = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
                 "Consult",
@@ -143,15 +147,24 @@ namespace IEE.Web
             new { controller = "About", action = "Students" }
         );
 
-
+            routes.MapRoute(
+                name: "Homepage",
+                url: "",
+                defaults: new
+                {
+                    controller = "Home",
+                    action = "Index",
+                }
+            );
+            
             routes.MapRoute(
                 "CatSEORoute",
-                "tin-tuc/{Category}",
+                "{Category}",
                  new { controller = "News", action = "Category",Category= UrlParameter.Optional }
                 );
             routes.MapRoute(
                 "NewsSEORoute",
-                "{title}-{id}",
+                "{category}/{title}-{id}",
                  new { controller = "News", action = "Content", id = UrlParameter.Optional }
                 );
             routes.MapRoute(
@@ -185,15 +198,7 @@ namespace IEE.Web
             );
            
 
-            routes.MapRoute(
-                name: "Homepage",
-                url: "{controller}/{action}",
-                defaults: new
-                {
-                    controller = "Home",
-                    action = "Index",
-                }
-            );
+            
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}/{title}",

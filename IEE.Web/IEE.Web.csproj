@@ -98,6 +98,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Web.Mvc, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -240,10 +241,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DefaultConnection.mdf" />
-    <Content Include="App_Data\DefaultConnection_log.ldf">
-      <DependentUpon>DefaultConnection.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
@@ -1394,9 +1391,13 @@
     <Content Include="Areas\ttn_content\Views\SATAccount\_DisplayMessage.cshtml" />
     <Content Include="Areas\ttn_content\Views\Question\CreateWithAnswer.cshtml" />
     <Content Include="Areas\ttn_content\Views\Question\EditWithAnswer.cshtml" />
+    <Content Include="Areas\ttn_content\Views\Question\_InputAnswerDiv.cshtml" />
+    <Content Include="Areas\ttn_content\Views\Question\_AnswerDiv.cshtml" />
+    <Content Include="Areas\ttn_content\Views\Question\_InputAnswerDivEdit.cshtml" />
+    <Content Include="Areas\ttn_content\Views\Question\_AnswerDivEdit.cshtml" />
+    <None Include="Properties\PublishProfiles\cp.iee.edu.vn.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
-    <None Include="Properties\PublishProfiles\iee.pubxml" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
     <Content Include="Scripts\ckeditor\LICENSE.md" />
     <Content Include="Scripts\ckeditor\plugins\scayt\CHANGELOG.md" />
@@ -1433,6 +1434,7 @@
     <Content Include="Scripts\fileman\lang\tr.json" />
     <Content Include="Scripts\fileman\web.config" />
     <Content Include="Scripts\fileman\lang\vi.json" />
+    <None Include="Properties\PublishProfiles\iee.edu.vn.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\demo\chartjs-demo.js" />
     <Content Include="Scripts\demo\flot-demo.js" />
@@ -1540,8 +1542,6 @@
     <Content Include="Views\CmsBase\_Header.cshtml" />
     <Content Include="Views\CmsBase\_Footer.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Post\Index.cshtml" />
-    <Content Include="Views\Post\Detail.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Prog\Index.cshtml" />
     <Content Include="Views\Abroad\Index.cshtml" />
@@ -1601,9 +1601,11 @@
     <Content Include="Views\About\Schools.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\SATTest\_ChooseSection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Content\Uploads\" />
     <Folder Include="Photo\post\" />
     <Folder Include="Photo\staff\" />

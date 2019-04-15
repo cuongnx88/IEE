@@ -1,9 +1,9 @@
 ﻿﻿@using IEE.Infrastructure.DbContext;
 @using IEE.Web.Models;
 @{
-    ViewBag.Title = "";
-    ViewBag.MetaKeys = "";
-    ViewBag.MetaDescription = "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
+    //ViewBag.Title = "";
+    //ViewBag.MetaKeys = "";
+    //ViewBag.MetaDescription = "Đơn vị luyện thi SAT, IELTS, TOEFL ibt & tư vấn du học Mỹ hàng đầu";
     List<Banner> banners = ViewBag.Banners != null ? (List<Banner>)ViewBag.Banners : new List<Banner>();
     IEnumerable<Testimonial> testimonials = (IEnumerable<Testimonial>)ViewBag.Testimonials;
     //    IEnumerable<Post> top = (IEnumerable<Post>)ViewBag.Top;
@@ -29,7 +29,7 @@
 
     var openingPost = (List<Post>)ViewBag.OpeningPost;
     var blog = (List<Post>)ViewBag.Blog;
-    ViewBag.Title = "Tin tức";
+    //ViewBag.Title = "Tin tức";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
@@ -120,8 +120,8 @@
                         foreach (var item in openingPost)
                         {
                             <div>
-                                <a title="@item.Title" href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })"><img src="~/Photo/post/@item.Photo"></a>
-                                <h5><a title="@item.Title" href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id = item.Id })">@item.Title</a></h5>
+                                <a title="@item.Title" href="@Url.RouteUrl("NewsSEORoute", new { category= _catName.ToSeoUrl(), title = item.Title.ToSeoUrl(), id = item.Id })"><img src="~/Photo/post/@item.Photo"></a>
+                                <h5><a title="@item.Title" href="@Url.RouteUrl("NewsSEORoute", new { category=_catName.ToSeoUrl(), title = item.Title.ToSeoUrl(), id = item.Id })">@item.Title</a></h5>
                                 @{
                                     var actionSumm = "";
                                     if (item.Summarize != null)
@@ -376,7 +376,7 @@
 
                                         <div class="document-home">
                                             <img src="/content/img/word-icon.png">
-                                            <a href="@item.Link">@item.DisplayName</a>
+                                            <a href="/media/download?file=@item.Id">@item.DisplayName</a>
                                             <div class="clear"></div>
                                         </div>
 
@@ -399,7 +399,7 @@
 
                                         <div class="document-home">
                                             <img src="/content/img/word-icon.png">
-                                            <a href="@item.Link">@item.DisplayName</a>
+                                            <a href="/media/download?file=@item.Id">@item.DisplayName</a>
                                             <div class="clear"></div>
                                         </div>
 
@@ -426,8 +426,8 @@
 
 
                         <div id="blog-home-1st">
-                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = blog[0].Title.ToSeoUrl(), id = blog[0].Id })"><img src="~/Photo/post/@blog[0].Photo" class="img-responsive"></a>
-                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = blog[0].Title.ToSeoUrl(), id = blog[0].Id })">
+                            <a href="@Url.RouteUrl("NewsSEORoute", new {category="BLOG".ToSeoUrl(), title = blog[0].Title.ToSeoUrl(), id = blog[0].Id })"><img src="~/Photo/post/@blog[0].Photo" class="img-responsive"></a>
+                            <a href="@Url.RouteUrl("NewsSEORoute", new { category="BLOG".ToSeoUrl(),title = blog[0].Title.ToSeoUrl(), id = blog[0].Id })">
                                 <p id="blog-home-1st-title">
                                     @blog[0].Title
                                 </p>
@@ -441,8 +441,8 @@
                             @for (int i = 1; i < blog.Count; i++)
                             {
                                 <div class="col-xs-4 blog-home-child">
-                                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = blog[i].Title.ToSeoUrl(), id = blog[i].Id })"><img src="~/Photo/post/@blog[i].Photo"></a>
-                                    <a href="@Url.RouteUrl("NewsSEORoute", new { title = blog[i].Title.ToSeoUrl(), id = blog[i].Id })"><p>@blog[i].Title</p></a>
+                                    <a href="@Url.RouteUrl("NewsSEORoute", new {category="BLOG".ToSeoUrl(), title = blog[i].Title.ToSeoUrl(), id = blog[i].Id })"><img src="~/Photo/post/@blog[i].Photo"></a>
+                                    <a href="@Url.RouteUrl("NewsSEORoute", new {category="BLOG".ToSeoUrl(), title = blog[i].Title.ToSeoUrl(), id = blog[i].Id })"><p>@blog[i].Title</p></a>
                                 </div>
                             }
 
@@ -475,8 +475,8 @@
                             foreach (var item in (List<Post>)ViewBag.IeeActivityPost)
                             {
                                 <div class="new-term-info-home">
-                                    <a href="#"><img src="Photo/post/@item.Photo"></a>
-                                    <a href="#"><p class="new-term-home-title">@item.Title</p></a>
+                                    <a href="@Url.RouteUrl("NewsSEORoute", new {category=ViewBag.IeeActivityCat, title = item.Title.ToSeoUrl(), id = item.Id })"><img src="Photo/post/@item.Photo"></a>
+                                    <a href="@Url.RouteUrl("NewsSEORoute", new {category=ViewBag.IeeActivityCat, title = item.Title.ToSeoUrl(), id = item.Id })"><p class="new-term-home-title">@item.Title</p></a>
                                     <p class="new-term-home-time">@item.Summarize</p>
                                     @* @if (!string.IsNullOrEmpty(item.FromTime))
                                         {

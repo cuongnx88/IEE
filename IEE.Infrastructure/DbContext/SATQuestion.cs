@@ -29,6 +29,7 @@ namespace IEE.Infrastructure.DbContext
         public Nullable<int> ExamContentID { get; set; }
         public int QuestionNo { get; set; }
         public Nullable<bool> HasInputAnswer { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SATAnswer> SATAnswers { get; set; }

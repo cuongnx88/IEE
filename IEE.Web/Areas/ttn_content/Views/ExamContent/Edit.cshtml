@@ -30,6 +30,10 @@
         margin: 0 auto;
     }
 
+    /*.toggle-display {
+        visibility: collapse;
+       
+    }*/
 
     [data-tip] {
         position: relative;
@@ -77,7 +81,6 @@
         [data-tip]:hover:after {
             display: block;
         }
-   
 </style>
 <h2>Nội dung Bài thi</h2>
 @using (Html.BeginForm("Edit", "ExamContent", FormMethod.Post, new { viewModel = Model }))
@@ -161,11 +164,22 @@
         </div>
         <div class="form-group">
             <div class="control-label col-md-2"></div>
+            @if (Model.ContentLines?.Count > 0 || ViewBag.ContentLines != null)
+            {
+                <a href="javascript:;" onclick="showMore();"><i class="fa fa-minus green toggleBtn"></i><span id="displayText">Thu gọn</span></a>
+            }
+        </div>
+      
+        <div class="form-group">
+
+            <div class="control-label col-md-2"></div>
 
             @{
                 if (Model.ContentLines?.Count > 0)
                 {
-                    <div class="col-md-10" id="contentLinesDiv" style="display:block;">
+
+
+                    <div class="col-md-10" id="contentLinesDiv" style="display:none;">
                         @for (int i = 0; i < Model.ContentLines.Count; i++)
                         {
                             @Html.HiddenFor(model => model.ContentLines[i].ID)
@@ -186,7 +200,7 @@
                 else if (ViewBag.ContentLines != null)
                 {
                     var editContentLines = ViewBag.ContentLines;
-                    <div class="col-md-10" id="contentLinesDiv" style="display:block;">
+                    <div class="col-md-10 toggle-display" id="contentLinesDiv" style="display:none;">
                         @for (int i = 0; i < editContentLines.Count; i++)
                         {
                             <div data-tip="Dòng @(i+1)">
@@ -371,7 +385,7 @@
         var contentId = $('#ExamContent_ID').val();
         var qID = $('#listQuestion').val();
         var selectText = getSelectTextFromCK();
-       
+
         $.ajax({
             url: '/ttn_content/ExamContent/AddQuestionToLine?questionID=' + qID + '&selectedText=' + selectText + '&examContentId=' + contentId,
             method: 'POST'
@@ -392,13 +406,13 @@
         });
     });
     $('#ExamContent_ExamFormID').change(function () {
-      
+
         var formID = $('#ExamContent_ExamFormID').val();
         $.ajax({
             url: '/ttn_content/ExamContent/GetType?formID=' + formID,
             method: 'POST'
         }).done(function (data) {
-            
+
             if (data.typeName === "Reading") {
                 $('#inputMethodDiv').show();
                 console.log(CKEDITOR.instances);
@@ -407,13 +421,13 @@
                 //$("#ExamContent_Contents").val('');
                 $('#contentLinesDiv').show();
             }
-            else if (data.typeName === "Writing")  {
+            else if (data.typeName === "Writing") {
                 $('#inputMethodDiv').hide();
                 $('#contentLinesDiv').hide();
                 var editor = CKEDITOR.replace('ExamContent.Contents');
                 editor.setData($("#ExamContent_Contents").val());
                 editorReady(editor);
-                
+
                 $('#contentInfo').show();
                 var hide = setTimeout(function () {
                     $('#contentInfo').fadeOut();
@@ -462,9 +476,9 @@
                     processData: false, // Not to process data
                     method: 'POST'
                 }).success(function (uploadData) {
-                    
+
                     var docTexts = uploadData.texts;
-                  
+
                     var arr = docTexts.split(';');
                     //var arr = docTexts.split(/\r?\n/);
                     var docLines = "";
@@ -477,7 +491,7 @@
                     //}
                     arr.forEach(function (line) {
                         if (line != '') {
-                            var replaceLine=line.replace(/'/g,"&#39;");
+                            var replaceLine = line.replace(/'/g, "&#39;");
                             lineIdx++;
                             var lineTip = lineIdx;
                             docLines += "<div data-tip = 'Dòng " + lineTip + "'><input type='text'  placeholder='" + lineIdx + "' class = 'form-control' name='inputLine' value='" + replaceLine + "' ></div>";
@@ -486,10 +500,10 @@
                     });
 
                     $("#contentLinesDiv").html(docLines);
-                        $("#contentLinesDiv").show();
-                    }).done(function (uploadData) {
-                      
-                    });
+                    $("#contentLinesDiv").show();
+                }).done(function (uploadData) {
+
+                });
             }
 
         }
@@ -612,4 +626,25 @@
         $('#dim').fadeOut();
 
     });
+
+
+    function showMore() {
+        //$('.toggleBtn').toggleClass('fa-minus');
+        //if ($('#displayText').text() === "Mở rộng") {
+        //    $('#displayText').text("Thu gọn");
+        //}
+        //else {
+        //    $('#displayText').text("Mở rộng");
+        //}
+        
+        $('#contentLinesDiv').slideToggle(850, function () {
+            $('#contentLinesDiv').is(":visible") ? $('.toggleBtn').removeClass('fa-plus').addClass('fa-minus') :$('.toggleBtn').addClass('fa-plus').removeClass('fa-minus');
+            $('#displayText').text(function () {
+                return $('#contentLinesDiv').is(":visible") ? "Thu gọn" : "Mở rộng";
+            });
+
+        });
+
+    }
+    
 </script>

@@ -34,7 +34,7 @@
 </style>
 
 <h2>Thêm mới Câu hỏi</h2>
-
+<input type="hidden" id="formValue" value="@ViewBag.FormValue" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -86,14 +86,15 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @*@Html.CheckBox("HasInputAnswer",new { id= "HasInputAnswer",onclick="" })*@
-                    <input type="checkbox" id="HasInputAnswer" name="HasInputAnswer" />
+                    @*<input type="checkbox" id="HasInputAnswer" name="HasInputAnswer" />*@
+                    @Html.CheckBoxFor(model => model.HasInputAnswer)
                     @Html.ValidationMessageFor(model => model.HasInputAnswer, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 <div class="checkbox">
 
@@ -101,8 +102,8 @@
                         var classStatus = "" + Model.Status + "Status";
                     }
                     @*<input type="button" class="@classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />*@
-                    @Html.CheckBoxFor(model => model.Status, new { @style = "display:none" })
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Status, new { @style = "display:none" })
+                  @*  @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })*@
                 </div>
             </div>
         </div>
@@ -118,76 +119,131 @@
                 </div>
             </div>*@
     </div>
-
+    <hr />
     <div class="form-group">
         @Html.Label("Câu trả lời", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @for (int i = 0; i < 4; i++)
+        <div class="col-md-10" id="answerDiv">
+            @if (ViewBag.IsInputAnswer != null && ViewBag.IsInputAnswer == true)
             {
-            <div class="form-horizontal" style="float:left;">
+                for (int i = 0; i < 1; i++)
+                {
+                    <div class="form-horizontal" style="float:left;">
 
-                @*<div class="form-group">
-            @Html.LabelFor(model => model.Answers[i].AnswerType, htmlAttributes: new { @class = "control-label col-md-7" })
-            <div class="col-md-10">
-                @Html.DropDownList("AnswerType", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Answers[i].AnswerType, "", new { @class = "text-danger" })
+                        @*<div class="form-group Mark" id="markDiv-@i">
+                            @Html.LabelFor(model => model.Answers[i].Mark, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                A @Html.RadioButtonFor(model => model.Answers[i].Mark, "A", null)
+                                B @Html.RadioButtonFor(model => model.Answers[i].Mark, "B", null)
+                                C @Html.RadioButtonFor(model => model.Answers[i].Mark, "C", null)
+                                D @Html.RadioButtonFor(model => model.Answers[i].Mark, "D", null)
+                                @Html.ValidationMessageFor(model => model.Answers[i].Mark, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].AnswerContent, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Answers[i].AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", rows = "5", @style = "resize:none;" })
+                                @Html.ValidationMessageFor(model => model.Answers[i].AnswerContent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].Explanation, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Answers[i].Explanation, htmlAttributes: new { @class = "form-control", width = "90%", rows = "5", @style = "resize:none;" })
+                                @Html.ValidationMessageFor(model => model.Answers[i].Explanation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].IsRightAnswer, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @{
+                                        var classAnswer = "" + Model.Answers[i].IsRightAnswer + "Answer";
+                                    }
+                                    @Html.CheckBoxFor(model => model.Answers[i].IsRightAnswer, new { @style = "display:none" })
+                                    @Html.ValidationMessageFor(model => model.Answers[i].IsRightAnswer, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
 
-            </div>
-        </div>*@
-                <div class="form-group Mark" id="markDiv-@i">
-                    @Html.LabelFor(model => model.Answers[i].Mark, new { @class = "control-label col-md-7", style = "text-align:left;" })
-                    <div class="col-md-10">
-                        A @Html.RadioButtonFor(model => model.Answers[i].Mark, "A", null)
-                        B @Html.RadioButtonFor(model => model.Answers[i].Mark, "B", null)
-                        C @Html.RadioButtonFor(model => model.Answers[i].Mark, "C", null)
-                        D @Html.RadioButtonFor(model => model.Answers[i].Mark, "D", null)
-                        @Html.ValidationMessageFor(model => model.Answers[i].Mark, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Answers[i].AnswerContent, new { @class = "control-label col-md-7", style = "text-align:left;" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Answers[i].AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
-                        @Html.ValidationMessageFor(model => model.Answers[i].AnswerContent, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Answers[i].Explanation, new { @class = "control-label col-md-7", style = "text-align:left;" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Answers[i].Explanation, htmlAttributes: new { @class = "form-control", width = "90%", row = "5", @style = "resize:none;" })
-                        @Html.ValidationMessageFor(model => model.Answers[i].Explanation, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Answers[i].IsRightAnswer, new { @class = "control-label col-md-7", style = "text-align:left;" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @{
-                                var classAnswer = "" + Model.Answers[i].IsRightAnswer + "Answer";
-                            }
-                            @* <input type="button" class="@classAnswer" id="lblRightAnswer" style="background:url(/Content/img/falseIcon.png) no-repeat; height:31px;width:41px;border:none;" />*@
-                            @Html.CheckBoxFor(model => model.Answers[i].IsRightAnswer, new { @style = "display:none" })
-                            @Html.ValidationMessageFor(model => model.Answers[i].IsRightAnswer, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].Status, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                <div class="checkboxAnswer">
+
+                                    @{
+                                        var _classStatus = "" + Model.Answers[i].Status + "Status";
+                                    }
+
+                                    @Html.CheckBoxFor(model => model.Answers[i].Status, new { @style = "display:none" })
+                                    @Html.ValidationMessageFor(model => model.Answers[i].Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Answers[i].Status, new { @class = "control-label col-md-7", style = "text-align:left;" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-
-                            @{
-                                var _classStatus = "" + Model.Answers[i].Status + "Status";
-                            }
-                            @*<input type="button" class="@_classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />*@
-                            @Html.CheckBoxFor(model => model.Answers[i].Status, new { @style = "display:none" })
-                            @Html.ValidationMessageFor(model => model.Answers[i].Status, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
+                }
             }
+            else if (ViewBag.IsInputAnswer != null && ViewBag.IsInputAnswer == false)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    <div class="form-horizontal" style="float:left;">
+
+                        <div class="form-group Mark" id="markDiv-@i">
+                            @Html.LabelFor(model => model.Answers[i].Mark, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                A @Html.RadioButtonFor(model => model.Answers[i].Mark, "A", null)
+                                B @Html.RadioButtonFor(model => model.Answers[i].Mark, "B", null)
+                                C @Html.RadioButtonFor(model => model.Answers[i].Mark, "C", null)
+                                D @Html.RadioButtonFor(model => model.Answers[i].Mark, "D", null)
+                                @Html.ValidationMessageFor(model => model.Answers[i].Mark, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].AnswerContent, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Answers[i].AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", rows = "5", @style = "resize:none;" })
+                                @Html.ValidationMessageFor(model => model.Answers[i].AnswerContent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].Explanation, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Answers[i].Explanation, htmlAttributes: new { @class = "form-control", width = "90%", rows = "5", @style = "resize:none;" })
+                                @Html.ValidationMessageFor(model => model.Answers[i].Explanation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].IsRightAnswer, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @{
+                                        var classAnswer = "" + Model.Answers[i].IsRightAnswer + "Answer";
+                                    }
+                                    @Html.CheckBoxFor(model => model.Answers[i].IsRightAnswer, new { @style = "display:none" })
+                                    @Html.ValidationMessageFor(model => model.Answers[i].IsRightAnswer, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Answers[i].Status, new { @class = "control-label col-md-7", style = "text-align:left;" })
+                            <div class="col-md-10">
+                                <div class="checkboxAnswer">
+
+                                    @{
+                                        var _classStatus = "" + Model.Answers[i].Status + "Status";
+                                    }
+
+                                    @Html.CheckBoxFor(model => model.Answers[i].Status, new { @style = "display:none" })
+                                    @Html.ValidationMessageFor(model => model.Answers[i].Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
         </div>
     </div>
       
@@ -195,11 +251,15 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Thêm mới" class="btn btn-default" />
+                <input name="btnSave" type="submit" value="Tạo mới & Đăng" class="btn btn-success" /> &nbsp;&nbsp;&nbsp; <input  name="btnSave"  type="submit" value="Lưu nháp" class="btn btn-success" /> &nbsp;&nbsp;&nbsp; <a href="/ttn_content/Question/"><i class="btn btn-default">Hủy</i></a>
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+               
             </div>
         </div>
     </div>
 }
+
 <div id="dim">
     <div style="border:solid 1px; height:200px;width:500px;" id="contextDiv">Test</div>
 </div>
@@ -209,18 +269,43 @@
 @*<script src="~/Scripts/jquery.js"></script>*@
 <script>
 
-   
     $("#HasInputAnswer").on('ifChecked', function () {
         //if ($('#TypeID').val!=3) {
         //    $('.Mark').hide();
         //}
-        $('.Mark').hide();
+
+        //$('.Mark').hide();
+        var _data = $('#formValue').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Question/GetAnswerDivCreate?isInput=true',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: _data,
+            success: function (result) {
+               
+                $('#answerDiv').html(result.data.Content);
+              
+            }
+        })
       
     });
     $("#HasInputAnswer").on('ifUnchecked', function () {
-        $('.Mark').show();
+        var _data = $('#formValue').val();
+        //$('.Mark').show();
+        $.ajax({
+            type: 'POST',
+            url: '/Question/GetAnswerDivCreate?&isInput=false'  ,
+            contentType: 'application/json',
+            dataType: 'json',
+            data: _data,
+            success: function (result) {
+              
+                $('#answerDiv').html(result.data.Content);
+            }
+        })
     });
-   
+
     //$(document).ready(function () {
     //    $("#AnswerType").trigger('change');
     //});
@@ -238,7 +323,6 @@
     });
 
     $(document).ready(function () {
-
         $("#dim").css("height", $(document).height());
 
     });

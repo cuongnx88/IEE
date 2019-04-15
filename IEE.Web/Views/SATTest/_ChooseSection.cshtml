@@ -1,0 +1,109 @@
+﻿@model IEE.Web.Models.DisabledSection
+
+<ul class="nav nav-pill">
+    @if (Model.Section == null || !Model.Section.Contains(1))
+    {
+        <li class="col-sm-3 first active"><a href="#1b" data-toggle="tab" onclick="chooseSection(1);"><span><b> 1 - Reading</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="1" id="readingTab" /></li>
+    }
+    else
+    {
+        <li class="col-sm-3 first active"><a><span><b style="color:#d0d0d0"> 1 - Reading</b></span></a></li>
+
+    }
+
+    @if (Model.Section == null || !Model.Section.Contains(2))
+    {
+        <li class="col-sm-3 two"><a href="#2b" data-toggle="tab" onclick="chooseSection(2);"><span><b> 2 - Writing & Language</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="2" id="writingTab" /></li>
+    }
+    else
+    {
+        <li class="col-sm-3 two"><a><span><b style="color:#d0d0d0"> 2 - Writing & Language</b></span></a></li>
+    }
+    @if (Model.Section == null || !Model.Section.Contains(3))
+    {
+        <li class="col-sm-3 two three"><a href="#3b" data-toggle="tab" onclick="chooseSection(3);"><span><b> 3 - Math No Calculator</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="3" id="math1Tab" /></li>
+    }
+    else
+    {
+        <li class="col-sm-3 two three"><a><span><b style="color:#d0d0d0"> 3 - Math No Calculator</b></span></a></li>
+
+    }
+    @if (Model.Section == null || !Model.Section.Contains(4))
+    {
+        <li class="col-sm-3 last"><a href="#4b" data-toggle="tab" onclick="chooseSection(4);"><span><b> 4 - Math Calculator</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="4" id="math2Tab" /></li>
+    }
+    else
+    {
+        <li class="col-sm-3 last"><a><span><b style="color:#d0d0d0"> 4 - Math Calculator</b></span></a></li>
+    }
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="1b">
+        <h3>Reading</h3>
+        <p>
+            Kỹ năng Reading được thực hiện trong vòng 65 phút, 52 câu hỏi.<br />
+            Chuyển đến phần Section 1 của phiếu trả lời để trả lời câu hỏi của phần này. <br />
+        </p>
+        Mỗi đoạn văn/ mỗi cặp đoạn văn dưới đây đi kèm với một số câu hỏi. Sau khi đọc xong đoạn văn/ cặp đoạn văn, hãy chọn câu trả lời dựa trên những ý kiến được biểu đạt tường minh hay hàm ẩn trong đoạn văn và trong các biểu đồ (ví dụ như biểu đồ cột hay biểu đồ đường).
+
+        @if (Model.Section == null || !Model.Section.Contains(1))
+        {
+            <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+        }
+
+        <div class="clear"></div>
+    </div>
+    <div class="tab-pane" id="2b">
+        <h3>Writing & Language</h3>
+        <p>Kỹ năng Writing được thực hiện trong vòng 35 phút, 44 câu hỏi. Chuyển đến phần Section 2 của phiếu trả lời để trả lời câu hỏi của phần này. </p>
+        <p>Hướng dẫn:</p>
+        -	Mỗi đoạn văn đều có kèm theo các câu hỏi. Một số câu hỏi sẽ hỏi bạn xem tác giả nên viết lại và tăng cường tính biểu đạt của đoạn văn như thế nào. Một số câu hỏi sẽ yêu cầu bạn sửa lỗi trong câu trúc câu, cách sử dụng hay dấu câu. Sẽ có những câu hỏi yêu cầu bạn phải xem kĩ một biểu đồ khi bạn viết lại hay sửa đoạn văn.<br />
+        -	Một số câu hỏi sẽ liên quan đến một phần của đoạn văn được gạch chân. Một số câu hỏi sẽ liên quan đến những chi tiết trong đoạn văn hoặc yêu cầu bạn phải đọc toàn bộ đoạn văn.<br />
+        -	Sau khi bạn đọc đoạn văn, hãy chọn câu trả lời giúp cải thiện đoạn văn hiệu quả nhất hay giúp đoạn văn tuân theo quy chuẩn văn viết tiếng Anh. Rất nhiều câu hỏi có lựa chọn “NO CHANGE”. Hãy chọn câu trả lời “NO CHANGE” khi bạn thấy rằng các phần còn lại của đoạn văn nên được giữ nguyên.<br />
+
+        @if (Model.Section == null || !Model.Section.Contains(2))
+        {
+            <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="tab-pane" id="3b">
+        <h3>Math No Calculator</h3>
+        <p>Kỹ năng Math No Calculator được thực hiện trong vòng 25 phút, 20 câu hỏi. Chuyển đến phần Section 3 của phiếu trả lời để trả lời câu hỏi của phần này. </p>
+        <p>Hướng dẫn:</p>
+        Câu hỏi số 1 – 15 yêu cầu bạn phải tìm ra câu trả lời đúng cho câu hỏi bằng cách chọn lựa một trong bốn đáp án được đưa ra và tô kín hình tròn tương ứng với đáp án trong phiếu trả lời. Câu hỏi 16-20 yêu cầu bạn trả lời câu hỏi và điền đáp án của bạn vào ô cho sẵn trong phiếu trả lời. Sẽ có các hướng dẫn chi tiết về cách điền câu trả lời vào ô cho sẵn trước câu hỏi số 16. Bạn có thể sử dụng quyển đề bài để ghi nháp.
+        <p>Ghi chú:</p>
+        1.	Bạn không được sử dụng máy tính bỏ túi.<br />
+        2.	Các biến số và kí hiệu là biểu hiện cho số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+        3.	Hình vẽ được vẽ theo tỉ lệ (nếu không có ghi chú đặc biệt nào khác).<br />
+        4.	Hình vẽ nằm trên mặt phẳng (nếu không có ghi chú đặc biệt nào khác).<br />
+        5.	Tập xác định của hàm số f(x) là tập số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+        <img src="~/Content/img/step3.png" />
+        @if (Model.Section == null || !Model.Section.Contains(3))
+        {
+            <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="tab-pane" id="4b">
+        <h3>Math Calculator</h3>
+        <p>Kỹ năng Math Calculator được thực hiện trong vòng 55 phút, 38 câu hỏi. Chuyển đến phần Section 4 của phiếu trả lời để trả lời câu hỏi của phần này. </p>
+        -	Câu hỏi số 1 – 30 yêu cầu bạn phải tìm ra câu trả lời đúng cho câu hỏi bằng cách chọn lựa một trong bốn đáp án được đưa ra và tô kín hình tròn tương ứng với đáp án trong phiếu trả lời. Câu hỏi 31 - 38 yêu cầu bạn trả lời câu hỏi và điền đáp án của bạn vào ô cho sẵn trong phiếu trả lời. Sẽ có các hướng dẫn chi tiết về cách điền câu trả lời vào ô cho sẵn trước câu hỏi số 16. Bạn có thể sử dụng quyển đề bài để ghi nháp.
+        <p>Ghi chú:</p>
+        1.	Bạn không được sử dụng máy tính bỏ túi.<br />
+        2.	Các biến số và kí hiệu là biểu hiện cho số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+        3.	Hình vẽ được vẽ theo tỉ lệ (nếu không có ghi chú đặc biệt nào khác).<br />
+        4.	Hình vẽ nằm trên mặt phẳng (nếu không có ghi chú đặc biệt nào khác).<br />
+        5.	Tập xác định của hàm số f(x) là tập số thực (nếu không có ghi chú đặc biệt nào khác).<br />
+        <img src="~/Content/img/step4.png" />
+        @if (Model.Section == null || !Model.Section.Contains(4))
+        {
+            <button type="submit" href="@Url.RouteUrl("SATTest")" class="quizButton" style="border:none;">Start</button>
+
+        }
+        <div class="clear"></div>
+    </div>
+</div>

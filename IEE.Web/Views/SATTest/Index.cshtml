@@ -5,71 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var utils = Utils.Instance;
 }
-
 @if (Model.Count > 0)
 {
-    <h2>Danh sách các bài thi</h2>
-    <table class="table">
-        <tr>
-            <th>
-                STT
-            </th>
-            <th>
-                Section
-            </th>
-            <th>
-                Thời gian thi
-            </th>
-            <th>
-                Số câu trả lời đúng
-            </th>
-            <th>
-                Tổng số điểm
-            </th>
+    <h2>Kết quả các bài thi</h2>
+    <div style="width: 90%; margin: 0px auto;">
+        <table class="table" border="1" style="width:75%;left:50%;border-top:1px solid #000000;"  >
+            <tr>
+                <th>
+                    Đề thi
+                </th>
+                <th>
+                    Section
+                </th>
+                <th>
+                    Thời gian thi
+                </th>
+                <th>
+                    Số câu trả lời đúng
+                </th>
+                <th>
+                    Tổng số điểm
+                </th>
 
-            <th></th>
-        </tr>
+                @*<th></th>*@
+            </tr>
 
-        @foreach (var item in Model)
-        {
-            if (item.SATTestSections != null && item.SATTestSections.Count > 0)
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td>@(Model.IndexOf(item) + 1)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayFor(modelItem => item.TotalScore)</td>
-                </tr>
-                foreach (var sectionItem in item.SATTestSections)
+                if (item.SATTestSections != null && item.SATTestSections.Count > 0)
                 {
-                    if (utils.GetSectionScore(sectionItem.ID) == 0)
-                    {
-                        continue;
-                    }
+                    var testSection = item.SATTestSections.ToList();
                     <tr>
+                        <td>@(Model.IndexOf(item) + 1)</td>
                         <td></td>
-                        <td>
-                            @utils.GetSectionName(sectionItem.Section)
-                        </td>
-                        <td>
-                            @sectionItem.StartTime
-                        </td>
-                        <td>@sectionItem.TotalRightAnswer</td>
-                        <td>
-                            @utils.GetSectionScore(sectionItem.ID)
-                        </td>
-
-
                         <td></td>
+                        <td></td>
+                        <td style="font-size:20px;"><b>@Html.DisplayFor(modelItem => item.TotalScore)</b></td>
                     </tr>
+                    foreach (var sectionItem in testSection)
+                    {
+                        if (utils.GetSectionScore(sectionItem.ID) == 0)
+                        {
+                            continue;
+                        }
+                        <tr>
+                            <td></td>
+                            <td>
+                                @utils.GetSectionName(sectionItem.Section)
+                            </td>
+                            <td>
+                                @sectionItem.StartTime
+                            </td>
+                            <td>@sectionItem.TotalRightAnswer</td>
+                            @if (testSection.IndexOf(sectionItem) == 2)
+                            {
+                                <td rowspan=2>
+                                    <div style="margin-top:15px;font-size:20px;"> @utils.GetSectionScore(sectionItem.ID)</div>
+                                </td>
+                            }
+                            else if (testSection.IndexOf(sectionItem) == 3)
+                            {
+                                @*<td style="border:none;" ></td>*@
+                            }
+                            else
+                            {
+                                <td style="font-size:20px;">@utils.GetSectionScore(sectionItem.ID)</td>
+                            }
+
+
+
+                            @*<td></td>*@
+                        </tr>
+                    }
                 }
+
+
             }
 
+        </table>
+    </div>
 
-        }
-
-    </table>
     if (Model.Count < 2)
     {
         <p><a href="@Url.RouteUrl("SATTest")" class="btn-success"><h3>Vào thi</h3></a></p>
@@ -115,7 +130,7 @@ else
 
                         </ul>
                         <ul class="nav nav-pill">
-                          
+
                             @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(1))
                             {
                                 <li class="col-sm-3 first active"><a href="#1b" data-toggle="tab" onclick="chooseSection(1);"><span><b> 1 - Reading</b></span></a><input style="display:none" type="radio" name=" chooseSection" value="1" id="readingTab" /></li>
@@ -131,7 +146,7 @@ else
                             }
                             else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(2))
                             {
-                                <li class="col-sm-3 two"><a href="#2b" data-toggle="tab" ><span><b> 2 - Writing & Language</b></span></a></li>
+                                <li class="col-sm-3 two"><a href="#2b" data-toggle="tab"><span><b> 2 - Writing & Language</b></span></a></li>
                             }
 
 
@@ -141,7 +156,7 @@ else
                             }
                             else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(3))
                             {
-                                <li class="col-sm-3 two three"><a href="#3b" data-toggle="tab" ><span><b> 3 - Math No Calculator</b></span></a></li>
+                                <li class="col-sm-3 two three"><a href="#3b" data-toggle="tab"><span><b> 3 - Math No Calculator</b></span></a></li>
                             }
 
                             @if (Session["DisabledSection"] == null || !((List<int>)Session["DisabledSection"]).Contains(4))
@@ -150,7 +165,7 @@ else
                             }
                             else if (Session["DisabledSection"] != null || ((List<int>)Session["DisabledSection"]).Contains(4))
                             {
-                                <li class="col-sm-3 last"><a href="#4b" data-toggle="tab" ><span><b> 4 - Math Calculator</b></span></a></li>
+                                <li class="col-sm-3 last"><a href="#4b" data-toggle="tab"><span><b> 4 - Math Calculator</b></span></a></li>
                             }
                         </ul>
                         <div class="tab-content">

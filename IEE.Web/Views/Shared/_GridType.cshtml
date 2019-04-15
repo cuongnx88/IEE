@@ -5,11 +5,11 @@
 
 @if (Model.Cate != null && Model.ListPost != null && Model.ListPost.Count > 0)
 {
-    var cat = Model.Cate.Name;
+    var cat = Model.Cate.Name.ToSeoUrl();
     var listPost = Model.ListPost;
    
     <div class="big-title-home-news">
-        <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat.ToSeoUrl()})" style="color:#fff">@cat</a></p>
+        <p class="text-change-tittle"><a href="@Url.RouteUrl("CatSEORoute",new { Category=cat})" style="color:#fff">@cat</a></p>
         <hr>
     </div>
     
@@ -21,8 +21,8 @@
                    @foreach (var item in listPost)
                    {
                         <div class="col-xs-4 video-home">
-                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id =item.Id })"><img src="~/Photo/post/@item.Photo"></a>
-                            <a href="@Url.RouteUrl("NewsSEORoute", new { title = item.Title.ToSeoUrl(), id =item.Id })"><p>@item.Title</p></a>
+                            <a href="@Url.RouteUrl("NewsSEORoute", new {category=cat,  title = item.Title.ToSeoUrl(), id =item.Id })"><img src="~/Photo/post/@item.Photo"></a>
+                            <a href="@Url.RouteUrl("NewsSEORoute", new {category=cat,  title = item.Title.ToSeoUrl(), id =item.Id })"><p>@item.Title</p></a>
                         </div>
                    }
             

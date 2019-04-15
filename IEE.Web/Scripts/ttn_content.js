@@ -9,7 +9,7 @@
 
     $('input').iCheck({
         checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green',
+        radioClass: 'iradio_square-green'
     });
 
     $('#date-range .input-daterange').datepicker({

@@ -248,20 +248,33 @@ namespace IEE.Web.Areas.ttn_content.Controllers
         {
             try
             {
-                var post = _postRepository.Get(t => t.Id == id);
-                var catPost = post.PostCategories.ToList();
-                using (var unitOfWork = new UnitOfWork())
+                using (var db = new SATEntities())
                 {
-                    var catPostRepo = unitOfWork.GetRepository<PostCategory>();
-
-                    foreach (var item in catPost)
+                    var _catPost = db.PostCategories.Where(x => x.PostID == id).ToList();
+                    db.PostCategories.RemoveRange(_catPost);
+                    var _post = db.Posts.Find(id);
+                    if (_post!=null)
                     {
-                        catPostRepo.DeleteAndSubmit(item);
+                        db.Posts.Remove(_post);
                     }
-
+                    db.SaveChanges();
+                    return RedirectToAction("index");
                 }
-                _postRepository.DeleteAndSubmit(post);
-                return RedirectToAction("index");
+                //var post = _postRepository.Get(t => t.Id == id);
+                //var catPost = post.PostCategories.ToList();
+                //using (var unitOfWork = new UnitOfWork())
+                //{
+                //    var catPostRepo = unitOfWork.GetRepository<PostCategory>();
+
+                //    foreach (var item in catPost)
+                //    {
+                //        catPostRepo.Delete(item);
+                //    }
+                //    catPostRepo.SaveChanges();
+                //}
+                //_postRepository.DeleteAndSubmit(post);
+                //_postRepository.SaveChanges();
+                //return RedirectToAction("index");
             }
             catch (Exception ex)
             {

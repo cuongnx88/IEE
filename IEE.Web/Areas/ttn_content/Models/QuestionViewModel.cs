@@ -18,7 +18,7 @@ namespace IEE.Web.Areas.ttn_content.Models
         public string Title { get; set; }
         public Nullable<int> ExamContentID { get; set; }
         public int QuestionNo { get; set; }
-        public Nullable<bool> HasInputAnswer { get; set; }
+        public bool HasInputAnswer { get; set; }
 
         public List<SATAnswer> Answers { get; set; }
 
@@ -43,7 +43,7 @@ namespace IEE.Web.Areas.ttn_content.Models
         public string Title { get; set; }
         public Nullable<int> ExamContentID { get; set; }
         public int QuestionNo { get; set; }
-        public Nullable<bool> HasInputAnswer { get; set; }
+        public bool HasInputAnswer { get; set; }
 
         public List<SATAnswer> Answers { get; set; }
 
@@ -56,7 +56,21 @@ namespace IEE.Web.Areas.ttn_content.Models
             Answers = new List<SATAnswer>();
             using (var db= new SATEntities())
             {
-                Answers = db.SATAnswers.Where(a => a.QuestionID == questionId).ToList();
+                var questionEnt = db.SATQuestions.Find(questionId);
+                var listAsnwer= db.SATAnswers.Where(a => a.QuestionID == questionId).ToList();
+                foreach (var item in listAsnwer)
+                {
+                    if (questionEnt.HasInputAnswer.HasValue && questionEnt.HasInputAnswer.Value && !item.Status)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Answers.Add(new SATAnswer { ID= item.ID,Explanation=item.Explanation, AnswerContent = item.AnswerContent, AnswerType = item.AnswerType, IsRightAnswer = item.IsRightAnswer, Mark = item.Mark, Status = item.Status, QuestionID = item.QuestionID });
+                    }
+                    
+                }
+              
             }
             //for (int i = 0; i < 4; i++)
             //{

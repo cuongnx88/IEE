@@ -5,7 +5,6 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -98,7 +97,7 @@ namespace IEE.Web.Controllers
         {
 
             var choose = collection.Get("sectionValue");
-            var examCode = collection.Get("examCode");
+            var examCode = !string.IsNullOrEmpty(collection.Get("examCode")) ? int.Parse(collection.Get("examCode")) : 1;
             using (var db = new SATEntities())
             {
                 using (var transaction = db.Database.BeginTransaction())
@@ -110,7 +109,7 @@ namespace IEE.Web.Controllers
                         var now = DateTime.Now;
                         var section = int.Parse(choose);
 
-                        var _existTest = db.SATTests.Include("User").Any(u => u.UserID == user.Id && (u.User.IsDeleted == null || u.User.IsDeleted == false));
+                        var _existTest = db.SATTests.Include("User").Any(u => u.UserID == user.Id && (u.User.IsDeleted == null || u.User.IsDeleted == false) && u.ExamCode == examCode);
                         if (_existTest)
                         {
                             var testData = db.SATTests.FirstOrDefault(t => t.UserID == user.Id && t.Status == false);
@@ -142,7 +141,7 @@ namespace IEE.Web.Controllers
                             var duration = Utils.Instance.GetSectionDuration(section);
                             // add pre define test
                             var beginTest = new SATTest();
-                            beginTest.ExamCode = examCode != null ? int.Parse(examCode) : 1;
+                            beginTest.ExamCode = examCode;
                             beginTest.StartTime = now;
                             beginTest.EndTime = now.AddMinutes(duration);
                             beginTest.SubmitTime = beginTest.EndTime;
@@ -299,20 +298,23 @@ namespace IEE.Web.Controllers
                         if (Session["ListAnswer"] != null)
                         {
                             viewModel.ListAnswer = (List<SATUserAnswer>)Session["ListAnswer"];
-                            var listUA = viewModel.ListAnswer.Where(a => a != null).Select(a => a.UserAnswer.Value).ToList();
-                            
-                            if (ViewBag.Questions.Count > listUA.Count)
+                            var listUA = viewModel.ListAnswer.Where(a => a != null).Select(a => a.UserAnswer).ToList();
+                            if (ViewBag.Questions != null)
                             {
-                                listUA.Add(0);
+                                while (ViewBag.Questions.Count > listUA.Count)
+                                {
+                                    listUA.Add(0);
 
+                                }
+                                while (viewModel.ListAnswer.Count() < ViewBag.Questions.Count)
+                                {
+                                    viewModel.ListAnswer.Add(new SATUserAnswer());
+                                }
+
+                                ViewBag.UserAnswerId = listUA;
                             }
-                            if (viewModel.ListAnswer.Count() < ViewBag.Questions.Count)
-                            {
-                                viewModel.ListAnswer.Add(new SATUserAnswer());
-                            }
-                            ViewBag.UserAnswerId = listUA;
                         }
-                        if (Session["AnsweredQuestion"]!=null)
+                        if (Session["AnsweredQuestion"] != null)
                         {
                             ViewBag.AnsweredQuestion = (List<int>)Session["AnsweredQuestion"];
                         }
@@ -330,7 +332,7 @@ namespace IEE.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult BeginTest(TestViewModel viewModel, FormCollection collection, string submitBtnPress,string answeredQuestion)
+        public ActionResult BeginTest(TestViewModel viewModel, FormCollection collection, string submitBtnPress, string answeredQuestion)
         {
 
             using (var db = new SATEntities())
@@ -370,10 +372,10 @@ namespace IEE.Web.Controllers
                     Session["ListAnswer"] = viewModel.ListAnswer;
                     if (!string.IsNullOrEmpty(answeredQuestion))
                     {
-                        List<int> qId = answeredQuestion.Split(',').Where(a=>!string.IsNullOrEmpty(a)).Select(a=>int.Parse(a)).ToList();
+                        List<int> qId = answeredQuestion.Split(',').Where(a => !string.IsNullOrEmpty(a)).Select(a => int.Parse(a)).ToList();
                         Session["AnsweredQuestion"] = qId;
                     }
-                   
+
                     foreach (var item in viewModel.ListAnswer)
                     {
                         var userAnswer = new SATUserAnswer();
@@ -386,7 +388,7 @@ namespace IEE.Web.Controllers
                         //update section score
                         if (!string.IsNullOrEmpty(item.AnswerContent))
                         {
-                            
+
                             var rightAnsw = db.SATAnswers.Any(a => a.AnswerContent == userAnswer.AnswerContent);
                             if (rightAnsw)
                             {
@@ -441,7 +443,7 @@ namespace IEE.Web.Controllers
                 db.SaveChanges();
 
 
-                if (contentIdx == lastFormContent)
+                if (contentIdx == lastFormContent || lastFormContent == 0)
                 {
                     //section = section + 1;
                     Session["Section"] = section;
@@ -452,8 +454,22 @@ namespace IEE.Web.Controllers
                         disabledSection.Add(section);
                         Session["DisabledSection"] = disabledSection;
                         Session["Section"] = null;
+                        Session["DisabledInExam"] = theTest.ExamCode;
 
-                        return RedirectToRoute("SATTestIndex");
+                        var disableSectionModel = new DisabledSection { Section = disabledSection, DisabledInExam = theTest.ExamCode };
+                        if (Session["DisabledSectionModel"] != null)
+                        {
+                            var _sectionModel = Session["DisabledSectionModel"] as DisabledSection;
+                            _sectionModel.Section.AddRange(disableSectionModel.Section);
+                            Session["DisabledSectionModel"] = _sectionModel;
+                        }
+                        else
+                        {
+                            Session["DisabledSectionModel"] = disableSectionModel;
+
+                        }
+                        //Session["DisableSectionRender"] = Utils.Instance.RenderViewToString("~/Views/SATTest/_ChooseSection.cshtml", disableSectionModel);
+                        return RedirectToAction("Test");
                     }
                 }
                 else
@@ -466,6 +482,25 @@ namespace IEE.Web.Controllers
 
 
         }
+        public string GetAllSection(int examCode)
+        {
+            if (Session["DisabledSectionModel"] != null)
+            {
+                var model = Session["DisabledSectionModel"] as DisabledSection;
+                if (examCode == model.DisabledInExam)
+                {
+                    return Utils.Instance.RenderViewToString("~/Views/SATTest/_ChooseSection.cshtml", model);
+                }
+                else
+                {
+                    var newModel = new DisabledSection();
+                    //model.Section = new List<int>();
+                    return Utils.Instance.RenderViewToString("~/Views/SATTest/_ChooseSection.cshtml", newModel);
+                }
+            }
+            return Utils.Instance.RenderViewToString("~/Views/SATTest/_ChooseSection.cshtml", new DisabledSection());
+        }
+
 
         public string GetRemainingTime(Guid guid)
         {

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using IEE.ViewModel;
-using System.Web.Mvc;
+﻿using IEE.Infrastructure;
 using IEE.Infrastructure.DbContext;
-
-using AutoMapper;
-using PagedList;
-using System.Configuration;
-using System.IO;
-using System.Web;
-using IEE.Infrastructure;
 using IEE.Web.Models;
-using System.Threading.Tasks;
-using System.Web.Hosting;
-using System.Drawing;
 using Microsoft.Office.Interop.Word;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Mvc;
 
 namespace IEE.Web.Areas.ttn_content.Controllers
 {
@@ -287,7 +282,7 @@ namespace IEE.Web.Areas.ttn_content.Controllers
                         doc.Close();
                         docApp.Quit();
                         stopwatch.Stop();
-                        return Json(new { media, roundSize, docContent = content,sw=stopwatch.ElapsedMilliseconds }, JsonRequestBehavior.AllowGet);
+                        return Json(new { media, roundSize, docContent = content, sw = stopwatch.ElapsedMilliseconds }, JsonRequestBehavior.AllowGet);
                     }
                     var text = System.IO.File.ReadAllText(file.FullName);
                     text = text.Replace(System.Environment.NewLine, "</br>");
@@ -298,6 +293,24 @@ namespace IEE.Web.Areas.ttn_content.Controllers
                 return Json(new { media }, JsonRequestBehavior.AllowGet);
             }
 
+
+        }
+        public ActionResult Download(int file)
+        {
+            var media = _mediaRepo.GetById(file);
+            if (media != null)
+            {
+                var path = Path.GetFullPath(HostingEnvironment.MapPath(media.Link));
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo.Exists)
+                {
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+                    string fileName = media.DisplayName+fileInfo.Extension;
+                    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+                }
+               
+            }
+            return RedirectToRoute("HomePage");
 
         }
 

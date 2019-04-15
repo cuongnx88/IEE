@@ -11,7 +11,7 @@
     var questions = (List<SATQuestion>)ViewBag.Questions;
     var contentIndex = Session["ContentIndex"] != null ? int.Parse(Session["ContentIndex"].ToString()) : 0;
     var lastContentIndex = Session["LastContent"] != null ? int.Parse(Session["LastContent"].ToString()) : 0;
-    List<int> userAnsw = new List<int>();
+    List<int?> userAnsw = new List<int?>();
 }
 @using (Html.BeginForm("BeginTest", "SATTest", FormMethod.Post, new { id = "frmTest" }))
 {
@@ -75,7 +75,7 @@
                                 <div>
                                     <div class="read-child-numb"></div>
                                     <div class="read-child-text" style="text-indent:5em">
-                                        @formContent.Contents
+                                        @MvcHtmlString.Create(formContent.Contents)
                                     </div>
                                     <div style="clear:both"></div>
                                 </div>
@@ -178,7 +178,7 @@
                                         }
                                         @if (formContent != null)
                                         {
-                                            @formContent.Contents
+                                            @MvcHtmlString.Create(formContent.Contents)
                                         }
 
                                     </div>
@@ -224,7 +224,7 @@
 
                                         @if (ViewBag.UserAnswerId != null)
                                         {
-                                            userAnsw = (List<int>)ViewBag.UserAnswerId;
+                                            userAnsw = (List<int?>)ViewBag.UserAnswerId;
 
                                         }
                                         @foreach (var answerItem in item.SATAnswers)
@@ -242,7 +242,7 @@
                                             <div class="ans-div" id="div_@answerItem.ID">
                                                 <p class="ans-letter @actv" onclick="checkAnswer(@answerItem.ID,@item.ID)" id="p_@answerItem.ID">@answerItem.Mark</p>
 
-                                                @Html.RadioButtonFor(model => model.ListAnswer[questions.IndexOf(item)].UserAnswer, answerItem.ID, new { id = "answerID_" + answerItem.ID, @style = "display:none"}) <span> @answerItem.AnswerContent</span>
+                                                @Html.RadioButtonFor(model => model.ListAnswer[questions.IndexOf(item)].UserAnswer, answerItem.ID, new { id = "answerID_" + answerItem.ID, @style = "display:none" }) <span> @answerItem.AnswerContent</span>
                                             </div>
 
                                         }
@@ -271,7 +271,7 @@
                         {
                             foreach (var item in questions)
                             {
-                                if (ViewBag.AnsweredQuestion!=null && ViewBag.AnsweredQuestion.Contains(item.ID))
+                                if (ViewBag.AnsweredQuestion != null && ViewBag.AnsweredQuestion.Contains(item.ID))
                                 {
                                     _actv = "active";
                                 }

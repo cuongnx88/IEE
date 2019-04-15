@@ -1,0 +1,77 @@
+﻿@model IEE.Web.Areas.ttn_content.Models.QuestionCreateViewModel
+
+@for (int i = 0; i < 4; i++)
+{
+    <div class="form-horizontal" style="float:left;">
+        @Html.HiddenFor(model => model.Answers[i].ID)
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Answers[i].AnswerType, htmlAttributes: new { @class = "control-label col-md-7" })
+                <div class="col-md-10">
+                    @Html.DropDownList("AnswerType", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Answers[i].AnswerType, "", new { @class = "text-danger" })
+
+                </div>
+            </div>*@
+        <div class="form-group Mark" id="markDiv-@i">
+            @Html.LabelFor(model => model.Answers[i].Mark, new { @class = "control-label col-md-7", style = "text-align:left;" })
+            <div class="col-md-10 checkboxAnswer">
+                A @Html.RadioButtonFor(model => model.Answers[i].Mark, "A", null)
+                B @Html.RadioButtonFor(model => model.Answers[i].Mark, "B", null)
+                C @Html.RadioButtonFor(model => model.Answers[i].Mark, "C", null)
+                D @Html.RadioButtonFor(model => model.Answers[i].Mark, "D", null)
+                @Html.ValidationMessageFor(model => model.Answers[i].Mark, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Answers[i].AnswerContent, new { @class = "control-label col-md-7", style = "text-align:left;" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Answers[i].AnswerContent, htmlAttributes: new { @class = "form-control", width = "90%", rows = "5", @style = "resize:none;" })
+                @Html.ValidationMessageFor(model => model.Answers[i].AnswerContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Answers[i].Explanation, new { @class = "control-label col-md-7", style = "text-align:left;" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Answers[i].Explanation, htmlAttributes: new { @class = "form-control", width = "90%", rows = "5", @style = "resize:none;" })
+                @Html.ValidationMessageFor(model => model.Answers[i].Explanation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Answers[i].IsRightAnswer, new { @class = "control-label col-md-7", style = "text-align:left;" })
+            <div class="col-md-10">
+                <div class="checkboxAnswer">
+                    @{
+                        var classAnswer = "" + Model.Answers[i].IsRightAnswer + "Answer";
+                    }
+                    @* <input type="button" class="@classAnswer" id="lblRightAnswer" style="background:url(/Content/img/falseIcon.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                    @Html.CheckBoxFor(model => model.Answers[i].IsRightAnswer, new { @style = "display:none" })
+                    @Html.ValidationMessageFor(model => model.Answers[i].IsRightAnswer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Answers[i].Status, new { @class = "control-label col-md-7", style = "text-align:left;" })
+            <div class="col-md-10">
+                <div class="checkboxAnswer">
+
+                    @{
+                        var _classStatus = "" + Model.Answers[i].Status + "Status";
+                    }
+                    @*<input type="button" class="@_classStatus" id="lblStatus" style="background:url(/Content/img/inActiveStatus.png) no-repeat; height:31px;width:41px;border:none;" />*@
+                    @Html.CheckBoxFor(model => model.Answers[i].Status, new { @style = "display:block" })
+                    @Html.ValidationMessageFor(model => model.Answers[i].Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+<script>
+    //$('#inputAnswId').click(alert(1));
+    $('.checkboxAnswer input').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green'
+    });
+</script>

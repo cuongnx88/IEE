@@ -272,6 +272,7 @@
           <Property Name="ExamContentID" Type="int" />
           <Property Name="QuestionNo" Type="int" Nullable="false" />
           <Property Name="HasInputAnswer" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="SATScore">
           <Key>
@@ -1694,6 +1695,7 @@
           <NavigationProperty Name="SATType" Relationship="nhieevwp_webModel.FK_SATQuestions_SATTypes" FromRole="SATQuestion" ToRole="SATType" />
           <NavigationProperty Name="SATWritingUnderlineTexts" Relationship="nhieevwp_webModel.FK_SATWritingUnderlineText_SATQuestions" FromRole="SATQuestion" ToRole="SATWritingUnderlineText" />
           <Property Name="HasInputAnswer" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <Association Name="FK_SATAnswers_SATQuestions">
           <End Type="nhieevwp_webModel.SATQuestion" Role="SATQuestion" Multiplicity="1" />
@@ -2263,6 +2265,7 @@
           <EntitySetMapping Name="SATQuestions">
             <EntityTypeMapping TypeName="nhieevwp_webModel.SATQuestion">
               <MappingFragment StoreEntitySet="SATQuestion">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="HasInputAnswer" ColumnName="HasInputAnswer" />
                 <ScalarProperty Name="QuestionNo" ColumnName="QuestionNo" />
                 <ScalarProperty Name="ExamContentID" ColumnName="ExamContentID" />

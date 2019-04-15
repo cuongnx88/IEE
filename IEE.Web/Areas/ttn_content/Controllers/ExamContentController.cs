@@ -1,16 +1,13 @@
-﻿using System;
+﻿using IEE.Infrastructure.DbContext;
+using IEE.Web.Areas.ttn_content.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using IEE.Infrastructure.DbContext;
-using System.IO;
-using System.Web.Hosting;
-using IEE.Web.Areas.ttn_content.Models;
-using Newtonsoft.Json;
 
 namespace IEE.Web.Areas.ttn_content.Controllers
 {
@@ -67,7 +64,7 @@ namespace IEE.Web.Areas.ttn_content.Controllers
         }
         public ActionResult GetListUnsetQuestion()
         {
-            var listUnSetExamContentIDQuestion = db.SATQuestions.Where(q => q.ExamContentID == null && q.Status == true).ToList();
+            var listUnSetExamContentIDQuestion = db.SATQuestions.Where(q => q.Status == true&&q.TypeID==2).ToList();
             var listQuestion = new List<QuestionList>();
             foreach (var item in listUnSetExamContentIDQuestion)
             {
@@ -244,7 +241,10 @@ namespace IEE.Web.Areas.ttn_content.Controllers
                             foreach (var item in contentLines)
                             {
                                 var line = new SATContentLine();
-                                line.LineIndex = index++;
+
+                                line.LineIndex = index;
+                                index = (index + 1);
+
                                 line.LineText = item;
                                 line.ExamContentID = id;
                                 line.rowguid = Guid.NewGuid();
@@ -255,8 +255,12 @@ namespace IEE.Web.Areas.ttn_content.Controllers
                         else if (viewModel.ContentLines != null)
 
                         {
+                            var index = 0;
                             foreach (var item in viewModel.ContentLines)
                             {
+                                item.LineIndex = index;
+                                index = (index + 1);
+
                                 db.Entry(item).State = EntityState.Modified;
                                 db.SaveChanges();
                             }
